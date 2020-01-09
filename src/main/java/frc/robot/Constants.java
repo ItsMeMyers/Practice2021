@@ -26,6 +26,8 @@ public final class Constants {
     public static final int l2Motor = 4;
     public static final int l3Motor = 5;
 
-    public static int leftStick = 0;
-    public static int rightStick = 1;
+    public static final int turretMotor = 6;
+
+    public static int rightStick = 0;
+    public static int leftStick = 1;
 }

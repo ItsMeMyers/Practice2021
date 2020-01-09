@@ -10,7 +10,6 @@ public class OI {
 
     public static Joystick rightStick = new Joystick(Constants.rightStick);
     public static Joystick leftStick = new Joystick(Constants.leftStick);
-
-    public static Drivetrain drivetrain = new Drivetrain();
     
+    public static Drivetrain drivetrain = new Drivetrain();
 }

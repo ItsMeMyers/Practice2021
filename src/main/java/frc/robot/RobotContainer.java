@@ -23,9 +23,9 @@ import frc.robot.subsystems.Drivetrain;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain drivetrain = new Drivetrain();
+  private final Drivetrain m_drivetrain = new Drivetrain();
 
-  private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(this.drivetrain);
+  private final DriveWithJoysticks m_driveWithJoysticks = new DriveWithJoysticks(this.m_drivetrain);
 
 
 
@@ -54,6 +54,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return driveWithJoysticks;
+    return m_driveWithJoysticks;
   }
 }
