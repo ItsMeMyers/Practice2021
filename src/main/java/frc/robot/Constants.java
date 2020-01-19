@@ -28,9 +28,6 @@ public final class Constants {
 
     public static final int turretMotor = 6;
 
-    public static final int rightStick = 0;
-    public static final int leftStick = 1;
-    public static final int gamepad = 2;
-
-    public static final int aButton = 0;
+    public static int rightStick = 0;
+    public static int leftStick = 1;
 }

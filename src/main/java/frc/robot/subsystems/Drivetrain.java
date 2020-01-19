@@ -21,8 +21,6 @@ public class Drivetrain extends SubsystemBase {
     private boolean invertRight = false;
     private boolean invertLeft = false;
 
-    private boolean halfSpeed = false;
-
     public Drivetrain() {
         r1Motor = new WPI_TalonFX(Constants.r1Motor);
         r2Motor = new WPI_TalonFX(Constants.r2Motor);
@@ -79,12 +77,7 @@ public class Drivetrain extends SubsystemBase {
         if (invertLeft) {
             leftPower *= Constants.INVERT_MOTOR;
         }
-
-        if (halfSpeed) {
-            rightPower *= .5;
-            leftPower *= .5;
-        }
-
+        
         r1Motor.set(rightPower);
         r2Motor.set(rightPower);
         r3Motor.set(rightPower);
@@ -110,15 +103,6 @@ public class Drivetrain extends SubsystemBase {
         l2Motor.set(leftP);
         l3Motor.set(leftP);
     }**/
-
-    public boolean getHalfSpeed() {
-        return halfSpeed;
-    }
-
-    public void toggleHalfSpeed() {
-
-        halfSpeed = !halfSpeed;
-    }
 
     public void stop() {
         
