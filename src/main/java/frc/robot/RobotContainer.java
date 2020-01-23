@@ -8,12 +8,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-
-
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.DriveWithJoysticks;
-import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -23,11 +24,16 @@ import frc.robot.subsystems.Drivetrain;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drivetrain = new Drivetrain();
+  
+  Joystick rightStick = new Joystick(Constants.rightStick);
+  Joystick leftStick = new Joystick(Constants.leftStick);
+  XboxController gamepad = new XboxController(Constants.gamepad);
+  
+  private final Drivetrain drivetrain = new Drivetrain();
+  private final Turret turret = new Turret();
 
-  private final DriveWithJoysticks m_driveWithJoysticks = new DriveWithJoysticks(this.m_drivetrain);
-
-
+  private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drivetrain, rightStick, leftStick);
+  private final MoveTurret moveTurret = new MoveTurret(turret, gamepad);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -44,6 +50,10 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+    final JoystickButton aButton = new JoystickButton(gamepad, Button.kA.value);
+
+    aButton.whenPressed(new HalveSpeed(drivetrain));
   }
 
 
@@ -54,6 +64,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_driveWithJoysticks;
+    //TODO create actual auto command
+    return driveWithJoysticks;
   }
 }

@@ -26,8 +26,26 @@ public final class Constants {
     public static final int l2Motor = 4;
     public static final int l3Motor = 5;
 
-    public static final int turretMotor = 6;
+    // 2 climb
+
+    // 1 intake belt
+
+    // 1 indexer belt
+
+    public static final int shootMotor1 = 6;
+    public static final int shootMotor2 = 7;
+    public static final int turretMotor = 8;
+
+
+    public static final int cMotor1 = 9;
+    public static final int cMotor2 = 10;
+
+    public static final int intakeMotor = 11;
+    public static final int indexerMotor = 12;
+    public static final int lTowerMotor = 13;
+    public static final int feederMotor = 14;
 
     public static int rightStick = 0;
     public static int leftStick = 1;
+    public static int gamepad = 2;
 }
