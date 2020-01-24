@@ -31,6 +31,7 @@ public class RobotContainer {
   
   private final Drivetrain drivetrain = new Drivetrain();
   private final Turret turret = new Turret();
+  private final DataRecorder dataRecorder = new DataRecorder();
 
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drivetrain, rightStick, leftStick);
 
