@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -25,6 +26,8 @@ public class DataRecorder extends SubsystemBase {
 
                 pw.println("speed,distance,success");
 
+                pw.close();
+
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -44,16 +47,26 @@ public class DataRecorder extends SubsystemBase {
     public void setSuccess(boolean scs) {
         this.success = scs;
     }
-    
+
     public void writeData() {
 
-        pw.print("\"");
-        pw.print(speed);
-        pw.print("\", \"");
-        pw.print(distance);
-        pw.print("\", \"");
-        pw.print(success);
-        pw.println("\"");
+        try {
+
+            FileWriter fW = new FileWriter(data, true);
+            pw = new PrintWriter(fW);
+
+            pw.print("\"");
+            pw.print(speed);
+            pw.print("\", \"");
+            pw.print(distance);
+            pw.print("\", \"");
+            pw.print(success);
+            pw.println("\"");
+            pw.close();
+            
+        } catch (IOException e) {
+            e.getStackTrace();
+        }
     }
 
 }
