@@ -6,18 +6,22 @@ import java.io.FileWriter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DataRecorder;
 import frc.robot.subsystems.Turret;
 
 public class RunShooter extends CommandBase {
 
     Turret turret;
     XboxController gamepad;
+    DataRecorder dataRecorder;
 
     private double power = 0.0;
+    private double distance = 0.0;
 
-    public RunShooter(Turret trrt, XboxController gmpd) {
+    public RunShooter(Turret trrt, XboxController gmpd, DataRecorder dR) {
         this.turret = trrt;
         this.gamepad = gmpd;
+        this.dataRecorder = dR;
         addRequirements(turret);
     }
 
@@ -25,6 +29,9 @@ public class RunShooter extends CommandBase {
     public void execute() {
         
         power = gamepad.getY(Hand.kRight);
+        
+        // TODO grab limelight distance data
+        distance = 0.0;
 
         if (Math.abs(power) <= .02) {
             power = 0.0;
@@ -32,6 +39,8 @@ public class RunShooter extends CommandBase {
 
         turret.setSpinPower(power);
         turret.shoot();
+        dataRecorder.setSpeed(power);
+        dataRecorder.setDistance(distance);
     }
 
     // Command runs until interrupted
