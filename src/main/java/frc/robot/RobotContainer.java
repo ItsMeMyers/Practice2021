@@ -33,7 +33,6 @@ public class RobotContainer {
   private final Turret turret = new Turret();
 
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drivetrain, rightStick, leftStick);
-  private final MoveTurret moveTurret = new MoveTurret(turret, gamepad);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
