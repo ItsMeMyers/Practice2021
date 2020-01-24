@@ -55,7 +55,6 @@ public class RobotContainer {
     final JoystickButton bButton = new JoystickButton(gamepad, Button.kB.value);
     final JoystickButton xButton = new JoystickButton(gamepad, Button.kX.value);
 
-    aButton.whenPressed(new HalveSpeed(drivetrain));
     bButton.whenPressed(new RecordData(dataRecorder, true));
     xButton.whenPressed(new RecordData(dataRecorder, false));
   }
