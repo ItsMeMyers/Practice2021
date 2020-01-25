@@ -26,12 +26,6 @@ public final class Constants {
     public static final int l2Motor = 4;
     public static final int l3Motor = 5;
 
-    // 2 climb
-
-    // 1 intake belt
-
-    // 1 indexer belt
-
     public static final int shootMotor1 = 6;
     public static final int shootMotor2 = 7;
     public static final int turretMotor = 8;
@@ -44,6 +38,8 @@ public final class Constants {
     public static final int indexerMotor = 12;
     public static final int lTowerMotor = 13;
     public static final int feederMotor = 14;
+
+    public static final int indicatorSwitch = 15;
 
     public static int rightStick = 0;
     public static int leftStick = 1;
