@@ -16,7 +16,7 @@ public class RunShooter extends CommandBase {
     DigitalInput indicatorSwitch;
 
     private double power = 0.0;
-    private double distance = 0.0;
+    private double dist = 0.0;
 
     public RunShooter(Turret trrt, XboxController gmpd, DigitalInput idSw, DataRecorder dR) {
         this.turret = trrt;
@@ -32,7 +32,10 @@ public class RunShooter extends CommandBase {
         power = gamepad.getTriggerAxis(Hand.kRight);
 
         // TODO grab limelight distance data
-        distance = 0.0;
+        // We have the LimeLight filtering out everything but the reflective target
+        // LimeLight can't properly detect the target at all distances
+        // We're going to use OpenCV to detect the shape, it's going to be a bit before we have working code.
+        dist = 0.0;
 
         if (Math.abs(power) <= .02) {
             power = 0.0;
@@ -43,7 +46,7 @@ public class RunShooter extends CommandBase {
 
         if (indicatorSwitch.get()) {
             dataRecorder.setSpeed(power);
-            dataRecorder.setDistance(distance);
+            dataRecorder.setDistance(dist);
         }
     }
 
