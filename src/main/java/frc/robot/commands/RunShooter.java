@@ -26,7 +26,7 @@ public class RunShooter extends CommandBase {
     @Override
     public void execute() {
         
-        power = gamepad.getY(Hand.kRight);
+        power = gamepad.getTriggerAxis(Hand.kRight);
         
         // TODO grab limelight distance data
         distance = 0.0;
