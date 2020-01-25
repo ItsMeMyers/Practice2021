@@ -15,6 +15,9 @@ public class Turret extends SubsystemBase {
     private double spinPower;
     private double power;
 
+    // TODO Change threshold voltage to a non-placeholder value
+    private final double vThreshold = 1.0;
+
     public Turret() {
         
         shootMotor1 = new WPI_TalonFX(Constants.shootMotor1);
@@ -52,6 +55,12 @@ public class Turret extends SubsystemBase {
     public void shoot() {
         shootMotor1.set(power);
         shootMotor2.set(power);
+    }
+
+    // TODO test this method functionality
+    public boolean voltageSpike() {
+        
+        return (shootMotor1.getBusVoltage() >= vThreshold) || (shootMotor2.getBusVoltage() >= vThreshold);
     }
 
     public void stopTurret() {

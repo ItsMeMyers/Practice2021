@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -29,8 +28,6 @@ public class RobotContainer {
   Joystick rightStick = new Joystick(Constants.rightStick);
   Joystick leftStick = new Joystick(Constants.leftStick);
   XboxController gamepad = new XboxController(Constants.gamepad);
-  
-  DigitalInput indicatorSwitch = new DigitalInput(Constants.indicatorSwitch);
 
   private final Drivetrain drivetrain = new Drivetrain();
   private final Turret turret = new Turret();

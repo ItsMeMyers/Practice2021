@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -13,16 +12,13 @@ public class RunShooter extends CommandBase {
     XboxController gamepad;
     DataRecorder dataRecorder;
 
-    DigitalInput indicatorSwitch;
-
     private double power = 0.0;
     private double dist = 0.0;
 
-    public RunShooter(Turret trrt, XboxController gmpd, DigitalInput idSw, DataRecorder dR) {
+    public RunShooter(Turret trrt, XboxController gmpd, DataRecorder dR) {
         this.turret = trrt;
         this.gamepad = gmpd;
         this.dataRecorder = dR;
-        this.indicatorSwitch = idSw;
         addRequirements(turret);
     }
 
@@ -44,7 +40,7 @@ public class RunShooter extends CommandBase {
         turret.setSpinPower(power);
         turret.shoot();
 
-        if (indicatorSwitch.get()) {
+        if (turret.voltageSpike()) {
             dataRecorder.setSpeed(power);
             dataRecorder.setDistance(dist);
         }

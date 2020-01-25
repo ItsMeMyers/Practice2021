@@ -19,6 +19,7 @@ public final class Constants {
     
     public static final double INVERT_MOTOR = -1.0;
 
+
     public static final int r1Motor = 0;
     public static final int r2Motor = 1;
     public static final int r3Motor = 2;
@@ -38,8 +39,6 @@ public final class Constants {
     public static final int indexerMotor = 12;
     public static final int lTowerMotor = 13;
     public static final int feederMotor = 14;
-
-    public static final int indicatorSwitch = 15;
 
     public static int rightStick = 0;
     public static int leftStick = 1;
