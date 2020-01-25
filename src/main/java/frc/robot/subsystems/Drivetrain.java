@@ -53,6 +53,13 @@ public class Drivetrain extends SubsystemBase {
             rightPwr = -1.0;
         }
 
+        // Sqrt power scalar
+        if (rightPwr < 0) {
+            rightPwr = Math.sqrt(-1.0 * rightPwr);
+        } else {
+            rightPwr = Math.sqrt(rightPwr);
+        }
+
         this.rightPower = rightPwr;
     }
 
@@ -64,30 +71,24 @@ public class Drivetrain extends SubsystemBase {
             leftPwr = -1.0;
         }
 
+        // Sqrt power scalar
+        if (leftPwr < 0) {
+            leftPwr = Math.sqrt(-1.0 * leftPwr);
+        } else {
+            leftPwr = Math.sqrt(leftPwr);
+        }
+
         this.leftPower = leftPwr;
     }
 
     public void drive() {
 
-        //Try out parabolic power scalar
         if (invertRight) {
             rightPower *= Constants.INVERT_MOTOR;
         }
         
         if (invertLeft) {
             leftPower *= Constants.INVERT_MOTOR;
-        }
-
-        if (rightPower < 0) {
-            rightPower = Math.sqrt(-1.0 * rightPower);
-        } else {
-            rightPower = Math.sqrt(rightPower);
-        }
-
-        if (leftPower < 0) {
-            leftPower = Math.sqrt(-1.0 * leftPower);
-        } else {
-            leftPower = Math.sqrt(leftPower);
         }
         
         r1Motor.set(rightPower);
