@@ -55,7 +55,7 @@ public class Drivetrain extends SubsystemBase {
 
         // Sqrt power scalar
         if (rightPwr < 0) {
-            rightPwr = Math.sqrt(-1.0 * rightPwr);
+            rightPwr = -1.0 * (Math.sqrt(-1.0 * rightPwr));
         } else {
             rightPwr = Math.sqrt(rightPwr);
         }
@@ -73,7 +73,7 @@ public class Drivetrain extends SubsystemBase {
 
         // Sqrt power scalar
         if (leftPwr < 0) {
-            leftPwr = Math.sqrt(-1.0 * leftPwr);
+            leftPwr = -1.0 * (Math.sqrt(-1.0 * leftPwr));
         } else {
             leftPwr = Math.sqrt(leftPwr);
         }
