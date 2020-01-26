@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.DriveConstants;
 
 public class Turret extends SubsystemBase {
 
@@ -20,9 +20,9 @@ public class Turret extends SubsystemBase {
 
     public Turret() {
         
-        shootMotor1 = new WPI_TalonFX(Constants.shootMotor1);
-        shootMotor2 = new WPI_TalonFX(Constants.shootMotor2);
-        turretMotor = new WPI_TalonFX(Constants.turretMotor);
+        shootMotor1 = new WPI_TalonFX(DriveConstants.shootMotor1);
+        shootMotor2 = new WPI_TalonFX(DriveConstants.shootMotor2);
+        turretMotor = new WPI_TalonFX(DriveConstants.turretMotor);
 
         shootMotor1.setNeutralMode(NeutralMode.Brake);
         shootMotor2.setNeutralMode(NeutralMode.Brake);

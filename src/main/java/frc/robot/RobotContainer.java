@@ -7,19 +7,39 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
 import java.util.List;
 
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Button;
+
+import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.Drivetrain;
+
+//import static edu.wpi.first.wpilibj.XboxController.Button;
+
+import edu.wpi.first.wpilibj.Joystick;
+
 /**
- * test
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
  * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
@@ -28,15 +48,22 @@ import java.util.List;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   
-  Joystick rightStick = new Joystick(Constants.rightStick);
-  Joystick leftStick = new Joystick(Constants.leftStick);
-  XboxController gamepad = new XboxController(Constants.gamepad);
+  /* Joysticks */
+  Joystick rightStick = new Joystick(DriveConstants.rightStick);
+  Joystick leftStick = new Joystick(DriveConstants.leftStick);
+  Joystick gamepad = new Joystick(DriveConstants.gamepad);
 
-  private final Drivetrain drivetrain = new Drivetrain();
-  private final Turret turret = new Turret();
-  private final DataRecorder dataRecorder = new DataRecorder();
+  /* Drive Train */ 
+  public final Drivetrain drivetrain = new Drivetrain();
 
-  private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drivetrain, rightStick, leftStick);
+  /* Turret */
+  public final Turret turret = new Turret();
+  
+  /* Data Recorder */
+  public final DataRecorder dataRecorder = new DataRecorder();
+
+  /* Data Recorder */
+  public final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drivetrain, rightStick, leftStick);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -53,13 +80,10 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
-    final JoystickButton aButton = new JoystickButton(gamepad, Button.kA.value);
-    final JoystickButton bButton = new JoystickButton(gamepad, Button.kB.value);
-    final JoystickButton xButton = new JoystickButton(gamepad, Button.kX.value);
-
-    bButton.whenPressed(new RecordData(dataRecorder, true));
-    xButton.whenPressed(new RecordData(dataRecorder, false));
+    //Configure Each Button
+    final Button btnIn = new JoystickButton(gamepad, DriveConstants.intakeIn);
+    final Button btnOut = new JoystickButton(gamepad, DriveConstants.intakeOut);
+    final Button btnshooter = new JoystickButton(gamepad, DriveConstants.shooter);
   }
 
 
@@ -69,8 +93,58 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    //TODO create actual auto command
-    return driveWithJoysticks;
+    // Create a voltage constraint to ensure we don't accelerate too fast
+    var autoVoltageConstraint =
+        new DifferentialDriveVoltageConstraint(
+            new SimpleMotorFeedforward(DriveConstants.ksVolts,
+                                       DriveConstants.kvVoltSecondsPerMeter,
+                                       DriveConstants.kaVoltSecondsSquaredPerMeter),
+            DriveConstants.kDriveKinematics,
+            10);
+
+    // Create config for trajectory
+    TrajectoryConfig config =
+        new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond,
+                             AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(DriveConstants.kDriveKinematics)
+            // Apply the voltage constraint
+            .addConstraint(autoVoltageConstraint)
+            //Doesn't reverse the trajectory
+            .setReversed(false);
+
+    // An example trajectory to follow.  All units in meters.
+    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+        // Start at the origin facing the +X direction
+        new Pose2d(0, 0, new Rotation2d(0)),
+        // Pass through these waypoints
+        List.of(
+            new Translation2d(2, 0),
+            new Translation2d(5, 0)
+        ),
+        // End at this location
+        new Pose2d(5, 0, new Rotation2d(0)),
+        // Pass config
+        config
+    );
+
+    RamseteCommand ramseteCommand = new RamseteCommand(
+        exampleTrajectory,
+        drivetrain::getPose,
+        new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
+        new SimpleMotorFeedforward(DriveConstants.ksVolts,
+                                   DriveConstants.kvVoltSecondsPerMeter,
+                                   DriveConstants.kaVoltSecondsSquaredPerMeter),
+        DriveConstants.kDriveKinematics,
+        drivetrain::getWheelSpeeds,
+        new PIDController(DriveConstants.kPDriveVel, 0, 0),
+        new PIDController(DriveConstants.kPDriveVel, 0, 0),
+        // RamseteCommand passes volts to the callback
+        drivetrain::tankDriveVolts,
+        drivetrain
+    );
+
+    // Run path following command, then stop at the end.
+    return ramseteCommand.andThen(() -> drivetrain.tankDriveVolts(0, 0));
   }
 }

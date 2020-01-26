@@ -26,11 +26,11 @@ public class DriveWithJoysticks extends CommandBase {
         right = rightStick.getRawAxis(Joystick.AxisType.kY.value);
         left = leftStick.getRawAxis(Joystick.AxisType.kY.value);
 
-        if (Math.abs(right) <= .02) {
+        if (Math.abs(right) <= .08) {
             right = 0.0;
         }
 
-        if (Math.abs(left) <= .02) {
+        if (Math.abs(left) <= .08) {
             left = 0.0;
         }
 
