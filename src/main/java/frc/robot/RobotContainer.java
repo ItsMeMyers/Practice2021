@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj.trajectory.*;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -101,6 +103,8 @@ public class RobotContainer {
                                        DriveConstants.kaVoltSecondsSquaredPerMeter),
             DriveConstants.kDriveKinematics,
             10);
+    // Creating a trajectory from PathWeaver
+    Trajectory pathWeaverTest = TrajectoryUtil.fromPathweaverJson(Path.get("/home/lvuser/deploy/Mid.wpilib.json"));
 
     // Create config for trajectory
     TrajectoryConfig config =
@@ -129,7 +133,7 @@ public class RobotContainer {
     );
 
     RamseteCommand ramseteCommand = new RamseteCommand(
-        exampleTrajectory,
+        exampleTrajectory, // We input our desired trajectory here
         drivetrain::getPose,
         new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
         new SimpleMotorFeedforward(DriveConstants.ksVolts,
