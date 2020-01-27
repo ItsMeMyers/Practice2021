@@ -15,6 +15,11 @@ public class RunShooter extends CommandBase {
     private double power = 0.0;
     private double dist = 0.0;
 
+    private final double targetHeight = 98.25;
+    private final double mountHeight = 36.0;
+    private final double angleToGround = (Math.PI / 6.0);
+    private double angleToTarget = 0.0;
+
     public RunShooter(Turret trrt, XboxController gmpd, DataRecorder dR) {
         this.turret = trrt;
         this.gamepad = gmpd;
@@ -58,5 +63,13 @@ public class RunShooter extends CommandBase {
     public void end(boolean interrupted) {
 
         turret.stopShooter();
+    }
+
+    public double findDistance() {
+
+        // d = (targetHeight - mountHeight) / (tan(angleToGround+angleToTarget))
+        // TODO implement how to get get angle from limelight 
+        angleToTarget = 0.0;
+        return ((targetHeight - mountHeight) / (double)(Math.tan(angleToGround+angleToTarget)));
     }
 }
