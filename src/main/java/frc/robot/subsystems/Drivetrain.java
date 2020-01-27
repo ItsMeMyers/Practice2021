@@ -1,14 +1,11 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj.Encoder;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.SPI;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -26,17 +23,19 @@ public class Drivetrain extends SubsystemBase {
 
     // The motors on the left side of the drive.
     private final SpeedControllerGroup leftMotors =
-    new SpeedControllerGroup(new WPI_TalonFX(DriveConstants.l1Motor),
-                            new WPI_TalonFX(DriveConstants.l2Motor),
-                            new WPI_TalonFX(DriveConstants.l3Motor));
+    new SpeedControllerGroup(
+        new WPI_TalonFX(DriveConstants.l1Motor),
+        new WPI_TalonFX(DriveConstants.l2Motor),
+        new WPI_TalonFX(DriveConstants.l3Motor));
 
     // The motors on the right side of the drive.
-    private final SpeedControllerGroup rightMotors =
-    new SpeedControllerGroup(new WPI_TalonFX(DriveConstants.r1Motor),
-                            new WPI_TalonFX(DriveConstants.r2Motor),
-                            new WPI_TalonFX(DriveConstants.r3Motor));
+    private final SpeedControllerGroup rightMotors = 
+    new SpeedControllerGroup(
+        new WPI_TalonFX(DriveConstants.r1Motor),
+        new WPI_TalonFX(DriveConstants.r2Motor),
+        new WPI_TalonFX(DriveConstants.r3Motor));
 
-    // Things
+    // motor properties
     private double rightPower = 0.0;
     private double leftPower = 0.0;
 
