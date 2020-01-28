@@ -40,6 +40,7 @@ import frc.robot.subsystems.Drivetrain;
 //import static edu.wpi.first.wpilibj.XboxController.Button;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -53,7 +54,7 @@ public class RobotContainer {
   /* Joysticks */
   Joystick rightStick = new Joystick(DriveConstants.rightStick);
   Joystick leftStick = new Joystick(DriveConstants.leftStick);
-  Joystick gamepad = new Joystick(DriveConstants.gamepad);
+  XboxController gamepad = new XboxController(DriveConstants.gamepad);
 
   /* Drive Train */ 
   public final Drivetrain drivetrain = new Drivetrain();
@@ -104,7 +105,7 @@ public class RobotContainer {
             DriveConstants.kDriveKinematics,
             10);
     // Creating a trajectory from PathWeaver
-    Trajectory pathWeaverTest = TrajectoryUtil.fromPathweaverJson(Path.get("/home/lvuser/deploy/Mid.wpilib.json"));
+    //Trajectory pathWeaverTest = TrajectoryUtil.fromPathweaverJson(Path.get("/home/lvuser/deploy/Mid.wpilib.json"));
 
     // Create config for trajectory
     TrajectoryConfig config =
