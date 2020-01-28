@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.Constants;
-
 import edu.wpi.first.wpilibj.Encoder;
 
 import edu.wpi.first.wpilibj.SPI;
@@ -17,23 +16,23 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
 
     // The motors on the left side of the drive.
     private final SpeedControllerGroup leftMotors =
     new SpeedControllerGroup(
-        new WPI_TalonFX(DriveConstants.l1Motor),
-        new WPI_TalonFX(DriveConstants.l2Motor),
-        new WPI_TalonFX(DriveConstants.l3Motor));
+        new WPI_TalonFX(Constants.l1Motor),
+        new WPI_TalonFX(Constants.l2Motor),
+        new WPI_TalonFX(Constants.l3Motor));
 
     // The motors on the right side of the drive.
     private final SpeedControllerGroup rightMotors = 
     new SpeedControllerGroup(
-        new WPI_TalonFX(DriveConstants.r1Motor),
-        new WPI_TalonFX(DriveConstants.r2Motor),
-        new WPI_TalonFX(DriveConstants.r3Motor));
+        new WPI_TalonFX(Constants.r1Motor),
+        new WPI_TalonFX(Constants.r2Motor),
+        new WPI_TalonFX(Constants.r3Motor));
 
     // motor properties
     private double rightPower = 0.0;
@@ -47,13 +46,13 @@ public class Drivetrain extends SubsystemBase {
 
     // The left-side drive encoder
     private final Encoder leftEncoder =
-    new Encoder(DriveConstants.kLeftEncoderPorts[0], DriveConstants.kLeftEncoderPorts[1],
-                DriveConstants.kLeftEncoderReversed);
+    new Encoder(Constants.kLeftEncoderPorts[0], Constants.kLeftEncoderPorts[1],
+                Constants.kLeftEncoderReversed);
 
     // The right-side drive encoder
     private final Encoder rightEncoder =
-    new Encoder(DriveConstants.kRightEncoderPorts[0], DriveConstants.kRightEncoderPorts[1],
-                DriveConstants.kRightEncoderReversed);
+    new Encoder(Constants.kRightEncoderPorts[0], Constants.kRightEncoderPorts[1],
+                Constants.kRightEncoderReversed);
 
     // The gyro sensor
     private AHRS gyro = new AHRS(SPI.Port.kMXP);
@@ -63,8 +62,8 @@ public class Drivetrain extends SubsystemBase {
 
     public Drivetrain() {
         // Sets the distance per pulse for the encoders
-        leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
-        rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
+        leftEncoder.setDistancePerPulse(Constants.kEncoderDistancePerPulse);
+        rightEncoder.setDistancePerPulse(Constants.kEncoderDistancePerPulse);
 
         resetEncoders();
         odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
@@ -116,11 +115,11 @@ public class Drivetrain extends SubsystemBase {
 
     public void drive() {
         if (invertRight) {
-            rightPower *= DriveConstants.INVERT_MOTOR;
+            rightPower *= Constants.INVERT_MOTOR;
         }
         
         if (invertLeft) {
-            leftPower *= DriveConstants.INVERT_MOTOR;
+            leftPower *= Constants.INVERT_MOTOR;
         }
         
         rightMotors.set(rightPower);
@@ -130,11 +129,11 @@ public class Drivetrain extends SubsystemBase {
     public void drive(double rightP, double leftP) {
         
         if (invertRight) {
-            rightP *= DriveConstants.INVERT_MOTOR;
+            rightP *= Constants.INVERT_MOTOR;
         }
         
         if (invertLeft) {
-            leftP *= DriveConstants.INVERT_MOTOR;
+            leftP *= Constants.INVERT_MOTOR;
         }
         
         rightMotors.set(rightP);
@@ -261,7 +260,7 @@ public class Drivetrain extends SubsystemBase {
      * @return the robot's heading in degrees, from 180 to 180
      */
     public double getHeading() {
-        return Math.IEEEremainder(gyro.getAngle(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+        return Math.IEEEremainder(gyro.getAngle(), 360) * (Constants.kGyroReversed ? -1.0 : 1.0);
     }
 
     /**
@@ -270,6 +269,6 @@ public class Drivetrain extends SubsystemBase {
      * @return The turn rate of the robot, in degrees per second
      */
     public double getTurnRate() {
-        return gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+        return gyro.getRate() * (Constants.kGyroReversed ? -1.0 : 1.0);
     }
 }

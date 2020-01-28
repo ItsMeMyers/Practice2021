@@ -10,98 +10,96 @@ package frc.robot;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants.  This class should not be used for any other purpose.  All constants should be
- * declared globally (i.e. public static).  Do not put anything functional in this class.
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean constants. This class should not be used for any other
+ * purpose. All constants should be declared globally (i.e. public static). Do
+ * not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final class DriveConstants {
-        public static final double INVERT_MOTOR = -1.0;
+  public static final double INVERT_MOTOR = -1.0;
 
-        // Drive Train motors
-        public static final int r1Motor = 0;
-        public static final int r2Motor = 1;
-        public static final int r3Motor = 2;
-        public static final int l1Motor = 3;
-        public static final int l2Motor = 4;
-        public static final int l3Motor = 5;
+  // Drive Train motors
+  public static final int r1Motor = 0;
+  public static final int r2Motor = 1;
+  public static final int r3Motor = 2;
+  public static final int l1Motor = 3;
+  public static final int l2Motor = 4;
+  public static final int l3Motor = 5;
 
-        // Shooter spinner and turret moving motors
-        public static final int shootMotor1 = 6;
-        public static final int shootMotor2 = 7;
-        public static final int turretMotor = 8;
+  // Shooter spinner and turret moving motors
+  public static final int shootMotor1 = 6;
+  public static final int shootMotor2 = 7;
+  public static final int turretMotor = 8;
 
-        // Climber motors
-        public static final int cMotor1 = 9;
-        public static final int cMotor2 = 10;
+  // Climber motors
+  public static final int cMotor1 = 9;
+  public static final int cMotor2 = 10;
 
-        // Power cell intake and feeder motors
-        public static final int intakeMotor = 11;
-        public static final int indexerMotor = 12;
-        public static final int lTowerMotor = 13;
-        public static final int feederMotor = 14;
+  // Power cell intake and feeder motors
+  public static final int intakeMotor = 11;
+  public static final int indexerMotor = 12;
+  public static final int lTowerMotor = 13;
+  public static final int feederMotor = 14;
 
-        public static int rightStick = 0;
-        public static int leftStick = 1;
-        public static int gamepad = 2;
+  public static int rightStick = 0;
+  public static int leftStick = 1;
+  public static int gamepad = 2;
 
-        // Buttons
-        public static int gamePadLeftPwrStick = 1;   // Left Thumb Stick
-        public static int gamePadRightPwrStick = 3;  // Right Thumb Stick
+  // Buttons
+  public static int gamePadLeftPwrStick = 1; // Left Thumb Stick
+  public static int gamePadRightPwrStick = 3; // Right Thumb Stick
 
-        public static int intakeIn = 6;              // Button to spin intake motor to suck in power cells 
-        public static int intakeOut = 8;             // Button to spin intake motor to eject power cells
-        public static int shooter = 5;               // Button to shoot power cells
+  public static int intakeIn = 6; // Button to spin intake motor to suck in power cells
+  public static int intakeOut = 8; // Button to spin intake motor to eject power cells
+  public static int shooter = 5; // Button to shoot power cells
 
-        /**
-         * 
-         * Need to edit all the numbers under this for 2020
-         * 
-         * **/
+  /**
+   * 
+   * Need to edit all the numbers under this for 2020
+   * 
+   **/
 
-        public static final int[] kLeftEncoderPorts = new int[]{2, 3};
-        public static final int[] kRightEncoderPorts = new int[]{0, 1};
-        public static final boolean kLeftEncoderReversed = false;
-        public static final boolean kRightEncoderReversed = false;
+  public static final int[] kLeftEncoderPorts = new int[] { 2, 3 };
+  public static final int[] kRightEncoderPorts = new int[] { 0, 1 };
+  public static final boolean kLeftEncoderReversed = false;
+  public static final boolean kRightEncoderReversed = false;
 
-        public static final double kTrackwidthMeters = 0.77;
-        public static final DifferentialDriveKinematics kDriveKinematics =
-            new DifferentialDriveKinematics(kTrackwidthMeters);
+  public static final double kTrackwidthMeters = 0.77;
+  public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
 
-        public static final int kEncoderCPR = 128;
-        public static final double kWheelDiameterMeters = 0.1;
-        public static final double kEncoderDistancePerPulse =
-            // Assumes the encoders are directly mounted on the wheel shafts
-            (kWheelDiameterMeters * Math.PI) / (double) kEncoderCPR;
+  public static final int kEncoderCPR = 128;
+  public static final double kWheelDiameterMeters = 0.1;
+  public static final double kEncoderDistancePerPulse =
+      // Assumes the encoders are directly mounted on the wheel shafts
+      (kWheelDiameterMeters * Math.PI) / (double) kEncoderCPR;
 
-        public static final boolean kGyroReversed = true;
+  public static final boolean kGyroReversed = true;
 
-        // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
-        // These characterization values MUST be determined either experimentally or theoretically
-        // for *your* robot's drive.
-        // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
-        // values for your robot.
-        public static final double ksVolts = 1.43;
-        public static final double kvVoltSecondsPerMeter = 5.15;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.384;
+  // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
+  // These characterization values MUST be determined either experimentally or
+  // theoretically
+  // for *your* robot's drive.
+  // The Robot Characterization Toolsuite provides a convenient tool for obtaining
+  // these
+  // values for your robot.
+  public static final double ksVolts = 1.43;
+  public static final double kvVoltSecondsPerMeter = 5.15;
+  public static final double kaVoltSecondsSquaredPerMeter = 0.384;
 
-        // Example value only - as above, this must be tuned for your drive!
-        public static final double kPDriveVel = -12.5;
-  }
+  // Example value only - as above, this must be tuned for your drive!
+  public static final double kPDriveVel = -12.5;
 
-  public static final class OIConstants {
-    public static final int kDriverControllerPort = 1;
-  }
+  public static final int kDriverControllerPort = 1;
 
-  public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 3;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+  public static final double kMaxSpeedMetersPerSecond = 3;
+  public static final double kMaxAccelerationMetersPerSecondSquared = 3;
 
-    // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
-    public static final double kRamseteB = 2;
-    public static final double kRamseteZeta = 0.7;
-  }
+  // Reasonable baseline values for a RAMSETE follower in units of meters and
+  // seconds
+  public static final double kRamseteB = 2;
+  public static final double kRamseteZeta = 0.7;
 }

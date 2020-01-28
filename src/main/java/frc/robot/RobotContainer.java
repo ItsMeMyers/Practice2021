@@ -32,9 +32,6 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Button;
 
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.Drivetrain;
 
 //import static edu.wpi.first.wpilibj.XboxController.Button;
@@ -52,9 +49,9 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   
   /* Joysticks */
-  Joystick rightStick = new Joystick(DriveConstants.rightStick);
-  Joystick leftStick = new Joystick(DriveConstants.leftStick);
-  XboxController gamepad = new XboxController(DriveConstants.gamepad);
+  Joystick rightStick = new Joystick(Constants.rightStick);
+  Joystick leftStick = new Joystick(Constants.leftStick);
+  XboxController gamepad = new XboxController(Constants.gamepad);
 
   /* Drive Train */ 
   public final Drivetrain drivetrain = new Drivetrain();
@@ -84,9 +81,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //Configure Each Button
-    final Button btnIn = new JoystickButton(gamepad, DriveConstants.intakeIn);
-    final Button btnOut = new JoystickButton(gamepad, DriveConstants.intakeOut);
-    final Button btnshooter = new JoystickButton(gamepad, DriveConstants.shooter);
+    final Button btnIn = new JoystickButton(gamepad, Constants.intakeIn);
+    final Button btnOut = new JoystickButton(gamepad, Constants.intakeOut);
+    final Button btnshooter = new JoystickButton(gamepad, Constants.shooter);
   }
 
 
@@ -99,20 +96,20 @@ public class RobotContainer {
     // Create a voltage constraint to ensure we don't accelerate too fast
     var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(DriveConstants.ksVolts,
-                                       DriveConstants.kvVoltSecondsPerMeter,
-                                       DriveConstants.kaVoltSecondsSquaredPerMeter),
-            DriveConstants.kDriveKinematics,
+            new SimpleMotorFeedforward(Constants.ksVolts,
+                                       Constants.kvVoltSecondsPerMeter,
+                                       Constants.kaVoltSecondsSquaredPerMeter),
+            Constants.kDriveKinematics,
             10);
     // Creating a trajectory from PathWeaver
     //Trajectory pathWeaverTest = TrajectoryUtil.fromPathweaverJson(Path.get("/home/lvuser/deploy/Mid.wpilib.json"));
 
     // Create config for trajectory
     TrajectoryConfig config =
-        new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond,
-                             AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+        new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond,
+                             Constants.kMaxAccelerationMetersPerSecondSquared)
             // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(DriveConstants.kDriveKinematics)
+            .setKinematics(Constants.kDriveKinematics)
             // Apply the voltage constraint
             .addConstraint(autoVoltageConstraint)
             //Doesn't reverse the trajectory
@@ -136,14 +133,14 @@ public class RobotContainer {
     RamseteCommand ramseteCommand = new RamseteCommand(
         exampleTrajectory, // We input our desired trajectory here
         drivetrain::getPose,
-        new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
-        new SimpleMotorFeedforward(DriveConstants.ksVolts,
-                                   DriveConstants.kvVoltSecondsPerMeter,
-                                   DriveConstants.kaVoltSecondsSquaredPerMeter),
-        DriveConstants.kDriveKinematics,
+        new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
+        new SimpleMotorFeedforward(Constants.ksVolts,
+                                   Constants.kvVoltSecondsPerMeter,
+                                   Constants.kaVoltSecondsSquaredPerMeter),
+        Constants.kDriveKinematics,
         drivetrain::getWheelSpeeds,
-        new PIDController(DriveConstants.kPDriveVel, 0, 0),
-        new PIDController(DriveConstants.kPDriveVel, 0, 0),
+        new PIDController(Constants.kPDriveVel, 0, 0),
+        new PIDController(Constants.kPDriveVel, 0, 0),
         // RamseteCommand passes volts to the callback
         drivetrain::tankDriveVolts,
         drivetrain
