@@ -59,7 +59,7 @@ public class DataRecorder extends SubsystemBase {
             pw.print(speed);
             pw.print("\", \"");
             pw.print(distance);
-            pw.print("\", \"");
+            pw.print("\",\"");
             pw.print(success);
             pw.println("\"");
             pw.close();
