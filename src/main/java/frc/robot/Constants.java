@@ -45,9 +45,13 @@ public final class Constants {
   public static final int lTowerMotor = 13;
   public static final int feederMotor = 14;
 
-  public static int rightStick = 0;
-  public static int leftStick = 1;
-  public static int gamepad = 2;
+  public static final int rightStick = 0;
+  public static final int leftStick = 1;
+  public static final int gamepad = 2;
+
+  // Turret limit switches
+  public static final int limitSwitchR = 15;
+  public static final int limitSwitchL = 16;
 
   // Buttons
   public static int gamePadLeftPwrStick = 1; // Left Thumb Stick

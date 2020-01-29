@@ -21,7 +21,11 @@ public class MoveTurret extends CommandBase {
     @Override
     public void execute() {
 
-        power = gamepad.getX(Hand.kLeft);
+        if (!(turret.getLimitR() || turret.getLimitL())) {
+            power = gamepad.getX(Hand.kLeft);
+        } else {
+            power = 0.0;
+        }
 
         if (Math.abs(power) <= .02) {
             power = 0.0;
