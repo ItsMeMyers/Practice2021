@@ -40,7 +40,7 @@ public class Turret extends SubsystemBase {
 
     }
 
-    //Calculate required rpm of turret motor for supplied distance (ft)
+    // Calculate required rpm of turret motor for supplied distance (ft)
     public static int DistanceToRPM(double distance){
         int rVal = -1;
         distance = distance / 2;
