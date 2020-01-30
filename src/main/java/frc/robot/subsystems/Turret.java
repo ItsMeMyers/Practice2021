@@ -9,6 +9,9 @@ import frc.robot.Constants;
 
 public class Turret extends SubsystemBase {
 
+    private static final double degreesOfTurret = 23;
+    private static final double diameterOfTurretWheelInches = 4; 
+
     private WPI_TalonFX shootMotor2;
     private WPI_TalonFX shootMotor1;
     private WPI_TalonFX turretMotor;
@@ -35,6 +38,17 @@ public class Turret extends SubsystemBase {
         shootMotor2.setNeutralMode(NeutralMode.Brake);
         turretMotor.setNeutralMode(NeutralMode.Brake);
 
+    }
+
+    //Calculate required rpm of turret motor for supplied distance (ft)
+    public static int DistanceToRPM(double distance){
+        int rVal = -1;
+        distance = distance / 2;
+        double val = distance * 32.6;
+        val = val / (Math.sin(2*degreesOfTurret));
+        val = Math.sqrt(val);
+        rVal = (int)(val / (Math.PI * (diameterOfTurretWheelInches / 12))) * 60;
+        return rVal;
     }
 
     public void setSpinPower(double spinPwr) {
