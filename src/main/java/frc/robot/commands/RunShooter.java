@@ -39,10 +39,6 @@ public class RunShooter extends CommandBase {
 
         power = gamepad.getTriggerAxis(Hand.kRight);
 
-        // TODO grab limelight distance data
-        // We have the LimeLight filtering out everything but the reflective target
-        // LimeLight can't properly detect the target at all distances
-        // We're going to use OpenCV to detect the shape, it's going to be a bit before we have working code.
         updateLimelightTracking();
         dist = findDistance();
 
@@ -76,7 +72,6 @@ public class RunShooter extends CommandBase {
     public double findDistance() {
 
         // d = (targetHeight - mountHeight) / (tan(angleToGround+angleToTarget))
-        // TODO implement how to get get angle from limelight 
         angleToTarget = ty;
         return ((targetHeight - mountHeight) / (double)(Math.tan(angleToGround+angleToTarget)));
     }
