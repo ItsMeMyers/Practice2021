@@ -53,14 +53,6 @@ public final class Constants {
   public static final int limitSwitchR = 15;
   public static final int limitSwitchL = 16;
 
-  // Buttons
-  public static int gamePadLeftPwrStick = 1; // Left Thumb Stick
-  public static int gamePadRightPwrStick = 3; // Right Thumb Stick
-
-  public static int intakeIn = 6; // Button to spin intake motor to suck in power cells
-  public static int intakeOut = 8; // Button to spin intake motor to eject power cells
-  public static int shooter = 5; // Button to shoot power cells
-
   /**
    * 
    * Need to edit all the numbers under this for 2020

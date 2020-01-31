@@ -27,7 +27,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Button;
 
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Limelight;
@@ -36,6 +35,7 @@ import frc.robot.subsystems.Limelight;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -82,9 +82,13 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //Configure Each Button
-    final Button btnIn = new JoystickButton(gamepad, Constants.intakeIn);
-    final Button btnOut = new JoystickButton(gamepad, Constants.intakeOut);
-    final Button btnshooter = new JoystickButton(gamepad, Constants.shooter);
+
+    final JoystickButton aButton = new JoystickButton(gamepad, Button.kA.value);
+    final JoystickButton bButton = new JoystickButton(gamepad, Button.kB.value);
+    final JoystickButton xButton = new JoystickButton(gamepad, Button.kX.value);
+
+    bButton.whenPressed(new RecordData(dataRecorder, true));
+    xButton.whenPressed(new RecordData(dataRecorder, false));
   }
 
 
