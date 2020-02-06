@@ -9,8 +9,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DataRecorder extends SubsystemBase {
 
-    File data = new File("/home/lvuser/data.csv");
-    PrintWriter pw;
+    File data1 = new File("/home/lvuser/data1.csv");
+    File data2 = new File("/home/lvuser/data2.csv");
+    PrintWriter pw1;
+    PrintWriter pw2;
     Limelight limelight;
     double speed;
     double distance;
@@ -20,15 +22,19 @@ public class DataRecorder extends SubsystemBase {
 
     public DataRecorder(Limelight ll) {
         this.limelight = ll;
-        if (!data.exists()) {
+        if (!data1.exists()) {
             try {
-                data.createNewFile();
+                data1.createNewFile();
+                data2.createNewFile();
 
-                pw = new PrintWriter(data);
+                pw1 = new PrintWriter(data1);
+                pw2 = new PrintWriter(data2);
 
-                pw.println("speed,distance,dx,dy,success");
+                pw1.println("speed,distance,dx,dy");
+                pw2.println("success");
 
-                pw.close();
+                pw1.close();
+                pw2.close();
 
             } catch (IOException e) {
                 // TODO Auto-generated catch block
@@ -64,21 +70,25 @@ public class DataRecorder extends SubsystemBase {
 
         try {
 
-            FileWriter fW = new FileWriter(data, true);
-            pw = new PrintWriter(fW);
+            FileWriter fW1 = new FileWriter(data1, true);
+            FileWriter fW2 = new FileWriter(data2, true);
+            pw1 = new PrintWriter(fW1);
+            pw2 = new PrintWriter(fW2);
 
-            pw.print("\"");
-            pw.print(speed);
-            pw.print("\", \"");
-            pw.print(distance);
-            pw.print("\",\"");
-            pw.print(dx);
-            pw.print("\", \"");
-            pw.print(dy);
-            pw.print("\", \"");
-            pw.print(success);
-            pw.println("\"");
-            pw.close();
+            pw1.print("\"");
+            pw1.print(speed);
+            pw1.print("\", \"");
+            pw1.print(distance);
+            pw1.print("\",\"");
+            pw1.print(dx);
+            pw1.print("\", \"");
+            pw1.print(dy);
+            pw1.println("\"");
+            pw1.close();
+            pw2.print("\"");
+            pw2.print(success);
+            pw2.println("\"");
+            pw2.close();
             
         } catch (IOException e) {
             e.getStackTrace();
