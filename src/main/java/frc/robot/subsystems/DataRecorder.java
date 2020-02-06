@@ -13,15 +13,13 @@ public class DataRecorder extends SubsystemBase {
     File data2 = new File("/home/lvuser/data2.csv");
     PrintWriter pw1;
     PrintWriter pw2;
-    Limelight limelight;
     double speed;
     double distance;
     int success;
     double dx;
     double dy;
 
-    public DataRecorder(Limelight ll) {
-        this.limelight = ll;
+    public DataRecorder() {
         if (!data1.exists()) {
             try {
                 data1.createNewFile();
@@ -56,13 +54,11 @@ public class DataRecorder extends SubsystemBase {
         this.success = success;
     }
 
-    public void dx() {
-        double dx = limelight.x();
+    public void setX(double dx) {
         this.dx = dx;
     }
 
-    public void dy() {
-        double dy = limelight.y();
+    public void setY(double dy) {
         this.dy = dy;
     }
 

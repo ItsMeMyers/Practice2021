@@ -52,6 +52,8 @@ public class RunShooter extends CommandBase {
         if (turret.voltageSpike()) {
             dataRecorder.setSpeed(power);
             dataRecorder.setDistance(dist);
+            dataRecorder.setX(limelight.x());
+            dataRecorder.setY(limelight.y());
         }
     }
 
