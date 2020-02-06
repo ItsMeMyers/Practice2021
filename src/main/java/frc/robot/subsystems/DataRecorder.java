@@ -11,20 +11,22 @@ public class DataRecorder extends SubsystemBase {
 
     File data = new File("/home/lvuser/data.csv");
     PrintWriter pw;
-
+    Limelight limelight;
     double speed;
     double distance;
-    boolean success;
+    int success;
+    double dx;
+    double dy;
 
-    public DataRecorder() {
-
+    public DataRecorder(Limelight ll) {
+        this.limelight = ll;
         if (!data.exists()) {
             try {
                 data.createNewFile();
 
                 pw = new PrintWriter(data);
 
-                pw.println("speed,distance,success");
+                pw.println("speed,distance,dx,dy,success");
 
                 pw.close();
 
@@ -44,8 +46,18 @@ public class DataRecorder extends SubsystemBase {
         this.distance = dist;
     }
 
-    public void setSuccess(boolean scs) {
-        this.success = scs;
+    public void setSuccess(int success) {
+        this.success = success;
+    }
+
+    public void dx() {
+        double dx = limelight.x();
+        this.dx = dx;
+    }
+
+    public void dy() {
+        double dy = limelight.y();
+        this.dy = dy;
     }
 
     public void writeData() {
@@ -60,6 +72,10 @@ public class DataRecorder extends SubsystemBase {
             pw.print("\", \"");
             pw.print(distance);
             pw.print("\",\"");
+            pw.print(dx);
+            pw.print("\", \"");
+            pw.print(dy);
+            pw.print("\", \"");
             pw.print(success);
             pw.println("\"");
             pw.close();

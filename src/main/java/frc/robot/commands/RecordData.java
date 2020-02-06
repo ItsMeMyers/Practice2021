@@ -7,11 +7,11 @@ public class RecordData extends CommandBase {
 
     DataRecorder dataRecorder;
     
-    private boolean success;
+    private int success;
 
-    public RecordData(DataRecorder dR, boolean scs) {
+    public RecordData(DataRecorder dR, int i) {
         this.dataRecorder = dR;
-        this.success = scs;
+        this.success = i;
     }
 
     @Override

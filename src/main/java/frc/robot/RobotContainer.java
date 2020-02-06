@@ -61,7 +61,7 @@ public class RobotContainer {
   public final Limelight limelight = new Limelight();
   
   /* Data Recorder */
-  public final DataRecorder dataRecorder = new DataRecorder();
+  public final DataRecorder dataRecorder = new DataRecorder(limelight);
 
   /* driveWithJoysticks */
   public final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drivetrain, rightStick, leftStick);
@@ -87,8 +87,8 @@ public class RobotContainer {
     final JoystickButton bButton = new JoystickButton(gamepad, Button.kB.value);
     final JoystickButton xButton = new JoystickButton(gamepad, Button.kX.value);
 
-    bButton.whenPressed(new RecordData(dataRecorder, true));
-    xButton.whenPressed(new RecordData(dataRecorder, false));
+    bButton.whenPressed(new RecordData(dataRecorder, 1));
+    xButton.whenPressed(new RecordData(dataRecorder, 0));
   }
 
 
