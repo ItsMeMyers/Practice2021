@@ -30,8 +30,8 @@ public class DataRecorder extends SubsystemBase {
                 pw1 = new PrintWriter(data1);
                 pw2 = new PrintWriter(data2);
 
-                pw1.println("speed,distance,dx,dy");
-                pw2.println("success");
+                pw1.println("success,distance,dx,dy");
+                pw2.println("speed");
 
                 pw1.close();
                 pw2.close();
@@ -76,7 +76,7 @@ public class DataRecorder extends SubsystemBase {
             pw2 = new PrintWriter(fW2);
 
             pw1.print("\"");
-            pw1.print(speed);
+            pw1.print(success);
             pw1.print("\", \"");
             pw1.print(distance);
             pw1.print("\",\"");
@@ -86,7 +86,7 @@ public class DataRecorder extends SubsystemBase {
             pw1.println("\"");
             pw1.close();
             pw2.print("\"");
-            pw2.print(success);
+            pw2.print(speed);
             pw2.println("\"");
             pw2.close();
             
