@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Feb  5 17:40:03 2020
-
-@author: arnav
-"""
 import numpy as np
 
 def cleanCSVdata(filename1, filename2):
