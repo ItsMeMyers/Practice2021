@@ -4,12 +4,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DataRecorder;
+import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
 public class RunShooter extends CommandBase {
 
     Shooter shooter;
+    Feeder feeder;
     XboxController gamepad;
     Limelight limelight;
     DataRecorder dataRecorder;
@@ -25,19 +27,17 @@ public class RunShooter extends CommandBase {
     private boolean hasValidTarget = false;
     private double ty;
 
-    public RunShooter(Shooter sht, XboxController gmpd, Limelight ll, DataRecorder dR) {
+    public RunShooter(Shooter sht, Feeder fd, Limelight ll, DataRecorder dR) {
         this.shooter = sht;
-        this.gamepad = gmpd;
         this.limelight = ll;
         this.dataRecorder = dR;
+        this.feeder = fd;
 
         addRequirements(shooter);
     }
 
     @Override
     public void execute() {
-
-        power = gamepad.getTriggerAxis(Hand.kRight);
 
         updateLimelightTracking();
         dist = findDistance();
@@ -47,6 +47,9 @@ public class RunShooter extends CommandBase {
         }
 
         shooter.setPower(power);
+        while (!shooter.atSpeed(shooter.getShooterRPMs())) {
+        }
+        new FeederRun(feeder);
         shooter.shoot();
 
         if (shooter.voltageSpike()) {

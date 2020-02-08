@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -16,6 +17,13 @@ public class Shooter extends SubsystemBase {
 
     private double power = 0.0;
 
+    private double[] RPMs = new double[2];
+
+    // TODO find actual RPM constant
+    private double kRPM = 50.0;
+
+    private double rpmThreshold = 0.0;
+
     // TODO Change threshold voltage to a non-placeholder value
     private final double vThreshold = 1.0;
 
@@ -25,6 +33,10 @@ public class Shooter extends SubsystemBase {
         shootMotor2 = new WPI_TalonFX(Constants.shootMotor2);
         shootMotor1.setNeutralMode(NeutralMode.Brake);
         shootMotor2.setNeutralMode(NeutralMode.Brake);
+
+        shootMotor2.follow(shootMotor1);
+        shootMotor2.setInverted(true);
+        shootMotor2.setInverted(InvertType.OpposeMaster);
     }
 
     public void setPower(double pwr) {
@@ -53,6 +65,16 @@ public class Shooter extends SubsystemBase {
         val = Math.sqrt(val);
         rVal = (int)(val / (Math.PI * (diameterOfTurretWheelInches / 12))) * 60;
         return rVal;
+    }
+
+    public double[] getShooterRPMs() {
+        RPMs[0] = shootMotor1.get() * kRPM;
+        RPMs[1] = shootMotor2.get() * kRPM;
+        return RPMs;
+    }
+
+    public boolean atSpeed(double[] rpms) {
+        return (rpms[0] >= rpmThreshold && rpms[1] >= rpmThreshold);
     }
 
     // TODO test this method functionality
