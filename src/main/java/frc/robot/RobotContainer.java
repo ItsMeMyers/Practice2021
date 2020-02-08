@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.XboxController.Button;
 
 /**
@@ -53,6 +54,12 @@ public class RobotContainer {
 
   /* Turret */
   public final Turret turret = new Turret();
+
+  // Shooter
+  public final Shooter shooter = new Shooter();
+
+  // Feeder 
+  public final Feeder feeder = new Feeder();
 
   // Intake
   public final Intake intake = new Intake();
@@ -87,11 +94,15 @@ public class RobotContainer {
     final JoystickButton yButton = new JoystickButton(gamepad, Button.kY.value);
     final JoystickButton bButton = new JoystickButton(gamepad, Button.kB.value);
     final JoystickButton xButton = new JoystickButton(gamepad, Button.kX.value);
+    final JoystickButton rTrigger = new JoystickButton(gamepad, Axis.kRightTrigger.value);
+    final JoystickButton rBumper = new JoystickButton(gamepad, Button.kBumperRight.value);
 
     bButton.whenPressed(new RecordData(dataRecorder, 1));
     xButton.whenPressed(new RecordData(dataRecorder, 0));
-    aButton.whenPressed(new IntakeUp(intake));
-    yButton.whenPressed(new IntakeDown(intake));
+    aButton.toggleWhenPressed(new IntakeToggle(intake));
+    yButton.whenPressed(new RunShooter(shooter, feeder, limelight, dataRecorder));
+    rTrigger.whenHeld(new IntakeIn(intake));
+    rBumper.whenHeld(new IntakeOut(intake));
   }
 
 
