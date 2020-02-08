@@ -57,6 +57,9 @@ public class RobotContainer {
   /* Turret */
   public final Turret turret = new Turret();
 
+  // Intake
+  public final Intake intake = new Intake();
+
   // Limelight 
   public final Limelight limelight = new Limelight();
   
@@ -84,11 +87,14 @@ public class RobotContainer {
     //Configure Each Button
 
     final JoystickButton aButton = new JoystickButton(gamepad, Button.kA.value);
+    final JoystickButton yButton = new JoystickButton(gamepad, Button.kY.value);
     final JoystickButton bButton = new JoystickButton(gamepad, Button.kB.value);
     final JoystickButton xButton = new JoystickButton(gamepad, Button.kX.value);
 
     bButton.whenPressed(new RecordData(dataRecorder, 1));
     xButton.whenPressed(new RecordData(dataRecorder, 0));
+    aButton.whenPressed(new IntakeUp(intake));
+    yButton.whenPressed(new IntakeDown(intake));
   }
 
 
