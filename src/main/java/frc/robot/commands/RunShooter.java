@@ -5,11 +5,11 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DataRecorder;
 import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Shooter;
 
 public class RunShooter extends CommandBase {
 
-    Turret turret;
+    Shooter shooter;
     XboxController gamepad;
     Limelight limelight;
     DataRecorder dataRecorder;
@@ -25,13 +25,13 @@ public class RunShooter extends CommandBase {
     private boolean hasValidTarget = false;
     private double ty;
 
-    public RunShooter(Turret trrt, XboxController gmpd, Limelight ll, DataRecorder dR) {
-        this.turret = trrt;
+    public RunShooter(Shooter sht, XboxController gmpd, Limelight ll, DataRecorder dR) {
+        this.shooter = sht;
         this.gamepad = gmpd;
         this.limelight = ll;
         this.dataRecorder = dR;
 
-        addRequirements(turret);
+        addRequirements(shooter);
     }
 
     @Override
@@ -46,10 +46,10 @@ public class RunShooter extends CommandBase {
             power = 0.0;
         }
 
-        turret.setSpinPower(power);
-        turret.shoot();
+        shooter.setPower(power);
+        shooter.shoot();
 
-        if (turret.voltageSpike()) {
+        if (shooter.voltageSpike()) {
             dataRecorder.setSpeed(power);
             dataRecorder.setDistance(dist);
             dataRecorder.setX(limelight.x());
@@ -68,7 +68,7 @@ public class RunShooter extends CommandBase {
     @Override
     public void end(boolean interrupted) {
 
-        turret.stopShooter();
+        shooter.stopShooter();
     }
 
     public double findDistance() {

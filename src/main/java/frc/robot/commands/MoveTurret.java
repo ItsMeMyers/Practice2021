@@ -31,7 +31,7 @@ public class MoveTurret extends CommandBase {
             power = 0.0;
         }
 
-        turret.setPower(power);
+        turret.setSpinPower(power);
         turret.moveTurret();
     }
 
