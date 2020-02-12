@@ -12,15 +12,14 @@ public class Shooter extends SubsystemBase {
     private static final double degreesOfTurret = 23;
     private static final double diameterOfTurretWheelInches = 4;
 
-    private WPI_TalonFX shootMotor1;
-    private WPI_TalonFX shootMotor2;
+    private WPI_TalonFX shootMotorR;
+    private WPI_TalonFX shootMotorL;
 
-    private double power = 0.0;
+    private double rightRatio = 5.0;
+    private double leftRatio = 3.0;
+    private double encoderEPR = 4096.0;
 
     private double[] RPMs = new double[2];
-
-    // TODO find actual RPM constant
-    private double kRPM = 50.0;
 
     private double rpmThreshold = 0.0;
 
@@ -29,31 +28,19 @@ public class Shooter extends SubsystemBase {
 
     public Shooter() {
 
-        shootMotor1 = new WPI_TalonFX(Constants.shootMotor1);
-        shootMotor2 = new WPI_TalonFX(Constants.shootMotor2);
-        shootMotor1.setNeutralMode(NeutralMode.Brake);
-        shootMotor2.setNeutralMode(NeutralMode.Brake);
-
-        shootMotor2.follow(shootMotor1);
-        shootMotor2.setInverted(true);
-        shootMotor2.setInverted(InvertType.OpposeMaster);
-    }
-
-    public void setPower(double pwr) {
+        shootMotorR = new WPI_TalonFX(Constants.shootMotorR);
+        shootMotorL = new WPI_TalonFX(Constants.shootMotorL);
         
-        if (pwr > 1.0) {
-            
-            pwr = 1.0;
-        } else if (pwr < -1.0) {
-            
-            pwr = -1.0;
-        }
+        shootMotorR.setNeutralMode(NeutralMode.Coast);
+        shootMotorL.setNeutralMode(NeutralMode.Coast);
 
-        this.power = pwr;
+        shootMotorL.follow(shootMotorR);
+        // shootMotorL.setInverted(true);
+        shootMotorL.setInverted(InvertType.OpposeMaster);
     }
 
     public void shoot() {
-        shootMotor1.set(power);
+        shootMotorR.set(1.0);
     }
 
     // Calculate required rpm of turret motor for supplied distance (ft)
@@ -68,8 +55,8 @@ public class Shooter extends SubsystemBase {
     }
 
     public double[] getShooterRPMs() {
-        RPMs[0] = shootMotor1.get() * kRPM;
-        RPMs[1] = shootMotor2.get() * kRPM;
+        RPMs[0] = shootMotorR.getSelectedSensorVelocity() * 600.0 / (rightRatio * encoderEPR);
+        RPMs[1] = shootMotorL.getSelectedSensorVelocity() * 600.0 / (leftRatio * encoderEPR);
         return RPMs;
     }
 
@@ -80,13 +67,12 @@ public class Shooter extends SubsystemBase {
     // TODO test this method functionality
     public boolean voltageSpike() {
         
-        return (shootMotor1.getBusVoltage() >= vThreshold) || (shootMotor2.getBusVoltage() >= vThreshold);
+        return (shootMotorR.getBusVoltage() >= vThreshold) || (shootMotorL.getBusVoltage() >= vThreshold);
     }
 
     public void stopShooter() {
-        power = 0.0;
         
-        shootMotor1.stopMotor();
-        shootMotor2.stopMotor();
+        shootMotorR.stopMotor();
+        shootMotorL.stopMotor();
     }
 }

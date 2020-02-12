@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DataRecorder;
 import frc.robot.subsystems.Feeder;
@@ -16,7 +15,6 @@ public class RunShooter extends CommandBase {
     Limelight limelight;
     DataRecorder dataRecorder;
 
-    private double power = 0.0;
     private double dist = 0.0;
 
     private final double targetHeight = 98.25;
@@ -41,23 +39,19 @@ public class RunShooter extends CommandBase {
 
         updateLimelightTracking();
         dist = findDistance();
-
-        if (Math.abs(power) <= .02) {
-            power = 0.0;
-        }
-
-        shooter.setPower(power);
+        
         while (!shooter.atSpeed(shooter.getShooterRPMs())) {
+            shooter.shoot();
         }
         new FeederRun(feeder);
         shooter.shoot();
-
+        
+        /*
         if (shooter.voltageSpike()) {
-            dataRecorder.setSpeed(power);
             dataRecorder.setDistance(dist);
             dataRecorder.setX(limelight.x());
             dataRecorder.setY(limelight.y());
-        }
+        } */
     }
 
     // Command runs until interrupted
@@ -71,7 +65,9 @@ public class RunShooter extends CommandBase {
     @Override
     public void end(boolean interrupted) {
 
-        shooter.stopShooter();
+        if (interrupted) {
+            shooter.stopShooter();
+        }
     }
 
     public double findDistance() {

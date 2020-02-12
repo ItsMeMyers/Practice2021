@@ -31,8 +31,8 @@ public final class Constants {
   public static final int l3Motor = 5;
 
   // Shooter spinner and turret moving motors
-  public static final int shootMotor1 = 6;
-  public static final int shootMotor2 = 7;
+  public static final int shootMotorR = 6;
+  public static final int shootMotorL = 7;
   public static final int turretMotor = 8;
 
   // Climber motors
