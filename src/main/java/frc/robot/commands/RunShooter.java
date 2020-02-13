@@ -24,6 +24,7 @@ public class RunShooter extends CommandBase {
 
     private boolean hasValidTarget = false;
     private double ty;
+    private double tx;
 
     public RunShooter(Shooter sht, Feeder fd, Limelight ll, DataRecorder dR) {
         this.shooter = sht;
@@ -43,8 +44,10 @@ public class RunShooter extends CommandBase {
         while (!shooter.atSpeed(shooter.getShooterRPMs())) {
             shooter.shoot();
         }
-        new FeederRun(feeder);
-        shooter.shoot();
+        while (!shooter.atSpeed(shooter.getShooterRPMs())) {
+            new FeederRun(feeder);
+        }
+        feeder.shotBall();
         
         /*
         if (shooter.voltageSpike()) {
@@ -85,6 +88,7 @@ public class RunShooter extends CommandBase {
             return;
         }
         
+        tx = limelight.x();
         ty = limelight.y();
     }
 }

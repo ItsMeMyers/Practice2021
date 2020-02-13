@@ -11,6 +11,8 @@ public class Feeder extends SubsystemBase {
     private WPI_TalonSRX feederMotor1;
     private WPI_TalonSRX feederMotor2;
 
+    private int ballCounter = 0;
+
     public Feeder() {
         feederMotor1 = new WPI_TalonSRX(Constants.feederMotor1);
         feederMotor2 = new WPI_TalonSRX(Constants.feederMotor2);
@@ -27,5 +29,17 @@ public class Feeder extends SubsystemBase {
     public void stop() {
         feederMotor1.stopMotor();
         feederMotor2.stopMotor();
+    }
+
+    public void addBall() {
+        ballCounter++;
+    }
+
+    public void shotBall() {
+        ballCounter--;
+    }
+
+    public int getCounter() {
+        return ballCounter;
     }
 }
