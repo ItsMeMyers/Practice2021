@@ -9,55 +9,32 @@ import frc.robot.Constants;
 
 public class Turret extends SubsystemBase {
 
-    private static final double degreesOfTurret = 23;
-    private static final double diameterOfTurretWheelInches = 4; 
 
-    private WPI_TalonFX shootMotor2;
-    private WPI_TalonFX shootMotor1;
+
     private WPI_TalonFX turretMotor;
 
     private double spinPower;
-    private double power;
 
     DigitalInput limitR;
     DigitalInput limitL;
 
-    // TODO Change threshold voltage to a non-placeholder value
-    private final double vThreshold = 1.0;
-
     public Turret() {
-        
-        shootMotor1 = new WPI_TalonFX(Constants.shootMotor1);
-        shootMotor2 = new WPI_TalonFX(Constants.shootMotor2);
         turretMotor = new WPI_TalonFX(Constants.turretMotor);
 
         limitR = new DigitalInput(Constants.limitSwitchR);
         limitL = new DigitalInput(Constants.limitSwitchL);
 
-        shootMotor1.setNeutralMode(NeutralMode.Brake);
-        shootMotor2.setNeutralMode(NeutralMode.Brake);
         turretMotor.setNeutralMode(NeutralMode.Brake);
 
-    }
-
-    // Calculate required rpm of turret motor for supplied distance (ft)
-    public static int DistanceToRPM(double distance){
-        int rVal = -1;
-        distance = distance / 2;
-        double val = distance * 32.6;
-        val = val / (Math.sin(2*degreesOfTurret));
-        val = Math.sqrt(val);
-        rVal = (int)(val / (Math.PI * (diameterOfTurretWheelInches / 12))) * 60;
-        return rVal;
     }
 
     public void setSpinPower(double spinPwr) {
 
         if (spinPwr > 1.0) {
-            
+
             spinPwr = 1.0;
         } else if (spinPwr < -1.0) {
-            
+
             spinPwr = -1.0;
         }
 
@@ -66,22 +43,6 @@ public class Turret extends SubsystemBase {
 
     public void moveTurret() {
         turretMotor.set(spinPower);
-    }
-
-    public void setPower(double pwr) {
-        
-        this.power = pwr;
-    }
-
-    public void shoot() {
-        shootMotor1.set(power);
-        shootMotor2.set(power);
-    }
-
-    // TODO test this method functionality
-    public boolean voltageSpike() {
-        
-        return (shootMotor1.getBusVoltage() >= vThreshold) || (shootMotor2.getBusVoltage() >= vThreshold);
     }
 
     public boolean getLimitR() {
@@ -93,18 +54,10 @@ public class Turret extends SubsystemBase {
     }
 
     public void stopTurret() {
-        
-        power = 0.0;
-        
+
+        spinPower = 0.0;
+
         turretMotor.stopMotor();
     }
 
-    public void stopShooter() {
-        
-        spinPower = 0.0;
-        
-        shootMotor1.stopMotor();
-        shootMotor2.stopMotor();
-    }
-    
 }

@@ -112,16 +112,8 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void drive() {
-        if (invertRight) {
-            rightPower *= Constants.INVERT_MOTOR;
-        }
         
-        if (invertLeft) {
-            leftPower *= Constants.INVERT_MOTOR;
-        }
-        
-        rightMotors.set(rightPower);
-        leftMotors.set(leftPower);
+        drive(rightPower, leftPower);
     }
     
     public void drive(double rightP, double leftP) {

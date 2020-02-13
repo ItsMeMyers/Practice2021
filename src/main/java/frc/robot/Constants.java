@@ -65,11 +65,15 @@ public final class Constants {
   public static final int intakeMotor = 11;
   public static final int indexerMotor = 12;
   public static final int lTowerMotor = 13;
-  public static final int feederMotor = 14;
+  public static final int feederMotor1 = 14;
+  public static final int feederMotor2 = 15;
 
   public static final int rightStick = 0;
   public static final int leftStick = 1;
   public static final int gamepad = 2;
+
+  // Solenoids
+  public static final int panelSolenoid = 0;
 
   // Turret limit switches
   public static final int limitSwitchR = 15;
