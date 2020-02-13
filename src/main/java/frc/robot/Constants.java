@@ -7,7 +7,14 @@
 
 package frc.robot;
 
+import java.util.List;
+
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -21,6 +28,21 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants {
   public static final double INVERT_MOTOR = -1.0;
+
+  // An example trajectory to follow.  All units in meters.
+  static Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+    // Start at the origin facing the +X direction
+    new Pose2d(0, 0, new Rotation2d(0)),
+    // Pass through these waypoints
+    List.of(
+        new Translation2d(2, 0),
+        new Translation2d(5, 0)
+    ),
+    // End at this location
+    new Pose2d(5, 0, new Rotation2d(0)),
+    // Pass config
+    RobotContainer.config
+    );
 
   // Drive Train motors
   public static final int r1Motor = 0;

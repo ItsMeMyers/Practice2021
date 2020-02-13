@@ -51,6 +51,8 @@ public class RobotContainer {
   Joystick leftStick = new Joystick(Constants.leftStick);
   XboxController gamepad = new XboxController(Constants.gamepad);
 
+  public static TrajectoryConfig config;
+
   /* Drivetrain */ 
   public final Drivetrain drivetrain = new Drivetrain();
 
@@ -66,6 +68,21 @@ public class RobotContainer {
   /* driveWithJoysticks */
   public final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drivetrain, rightStick, leftStick);
 
+  // An example trajectory to follow.  All units in meters.
+  Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+    // Start at the origin facing the +X direction
+    new Pose2d(0, 0, new Rotation2d(0)),
+    // Pass through these waypoints
+    List.of(
+        new Translation2d(2, 0),
+        new Translation2d(5, 0)
+    ),
+    // End at this location
+    new Pose2d(5, 0, new Rotation2d(0)),
+    // Pass config
+    RobotContainer.config
+  );
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -73,6 +90,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
   }
+
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -97,9 +115,9 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  public Command getAutonomousCommand(Trajectory trajectory) {
     // Create a voltage constraint to ensure we don't accelerate too fast
-    var autoVoltageConstraint =
+     var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
             new SimpleMotorFeedforward(Constants.ksVolts,
                                        Constants.kvVoltSecondsPerMeter,
@@ -110,7 +128,7 @@ public class RobotContainer {
     //Trajectory pathWeaverTest = TrajectoryUtil.fromPathweaverJson(Path.get("/home/lvuser/deploy/Mid.wpilib.json"));
 
     // Create config for trajectory
-    TrajectoryConfig config =
+     config =
         new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond,
                              Constants.kMaxAccelerationMetersPerSecondSquared)
             // Add kinematics to ensure max speed is actually obeyed
@@ -121,7 +139,7 @@ public class RobotContainer {
             .setReversed(false);
 
     // An example trajectory to follow.  All units in meters.
-    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+    /* Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these waypoints
@@ -133,10 +151,10 @@ public class RobotContainer {
         new Pose2d(5, 0, new Rotation2d(0)),
         // Pass config
         config
-    );
+    ); */
 
     RamseteCommand ramseteCommand = new RamseteCommand(
-        exampleTrajectory, // We input our desired trajectory here
+        trajectory, // We input our desired trajectory here
         drivetrain::getPose,
         new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
         new SimpleMotorFeedforward(Constants.ksVolts,
