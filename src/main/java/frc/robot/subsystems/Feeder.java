@@ -13,6 +13,10 @@ public class Feeder extends SubsystemBase {
 
     private int ballCounter = 0;
 
+    /**
+     * This is the subsystem that sends the balls to the shooter.
+     * It also stores the balls that come in from the Intake.
+     */
     public Feeder() {
         feederMotor1 = new WPI_TalonSRX(Constants.feederMotor1);
         feederMotor2 = new WPI_TalonSRX(Constants.feederMotor2);
@@ -21,6 +25,9 @@ public class Feeder extends SubsystemBase {
         feederMotor2.setNeutralMode(NeutralMode.Coast);
     }
 
+    /**
+     * Runs the motors. This feeds the balls to the shooter.
+     */
     public void run() {
         feederMotor1.set(1.0);
         feederMotor2.set(1.0 * Constants.INVERT_MOTOR);

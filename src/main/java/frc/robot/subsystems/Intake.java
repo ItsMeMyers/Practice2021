@@ -9,7 +9,7 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
     
-    private Solenoid panelSolenoid;
+    private Solenoid intakeSolenoid;
     private WPI_TalonSRX intakeMotor;
 
     private double in = -1.0;
@@ -17,18 +17,28 @@ public class Intake extends SubsystemBase {
 
     private boolean state = false;
 
+    /**
+     * The intake pulls the balls from the ground into the robot.
+     * The balls are then stored in the feeder to wait to be shot.
+     */
     public Intake() {
         intakeMotor = new WPI_TalonSRX(Constants.intakeMotor);
-        panelSolenoid = new Solenoid(Constants.panelSolenoid);
+        intakeSolenoid = new Solenoid(Constants.intakeSolenoid);
 
         intakeMotor.setNeutralMode(NeutralMode.Brake);
-        panelSolenoid.set(true);
+        intakeSolenoid.set(true);
     }
 
+    /**
+     * Takes a ball in from the ground.
+     */
     public void runIn() {
         intakeMotor.set(in);
     }
 
+    /**
+     * Pushes out a ball out from the feeder.
+     */
     public void runOut() {
         intakeMotor.set(out);
     }
@@ -37,7 +47,11 @@ public class Intake extends SubsystemBase {
         intakeMotor.set(0.0);
     }
 
+    /**
+     * Brings the intake system in and out.
+     * It can be stowed away or out.
+     */
     public void toggle() {
-        panelSolenoid.set(!state);
+        intakeSolenoid.set(!state);
     }
 }

@@ -75,7 +75,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    //This uses the new trajectorygen system. Kashyap might have messed something up.
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     /*
@@ -85,9 +84,9 @@ public class Robot extends TimedRobot {
      * autonomousCommand = new ExampleCommand(); break; }
      */
 
-    m_robotContainer.drivetrain.resetEncoders();
-    m_robotContainer.drivetrain.zeroHeading();
-    m_robotContainer.drivetrain.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
+    RobotContainer.drivetrain.resetEncoders();
+    RobotContainer.drivetrain.zeroHeading();
+    RobotContainer.drivetrain.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
