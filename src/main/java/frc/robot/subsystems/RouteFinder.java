@@ -16,7 +16,12 @@ public class RouteFinder extends SubsystemBase {
     public RouteFinder(int pointx, int pointy, int rotation) {
         // An example trajectory to follow.  All units in meters.
         //Also, I might add a list parameter instead.
-        Trajectory trajectory = Constants.trajectorygen(pointx, pointy, rotation,List.of(new Translation2d(2,0)));
+        Trajectory trajectory = Constants.trajectorygen(
+            pointx, 
+            pointy, 
+            rotation,
+            List.of(new Translation2d(2,0))
+            );
         pathCommand = Robot.m_robotContainer.getAutonomousCommand(trajectory);
     }
 
