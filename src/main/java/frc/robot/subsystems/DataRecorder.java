@@ -80,7 +80,6 @@ public class DataRecorder extends SubsystemBase {
             pw.print(fw);
             pw.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
