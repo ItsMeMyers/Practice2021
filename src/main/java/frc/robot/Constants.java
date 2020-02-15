@@ -7,14 +7,7 @@
 
 package frc.robot;
 
-import java.util.List;
-
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -36,11 +29,7 @@ public final class Constants {
   y = 0
 
   */
-  /** Creates a trajectory using the three values(pointx, pointy, rotation)
-   * Let me explain:
-   *    pointx and pointy are the x and y coordinates that you want to end at.
-   *    rotation is the rotation that you want to end at.
-   *  and also a list of points to pass through(List<Translation2d list). */
+
 
   // Drive Train motors
   public static final int r1Motor = 0;
