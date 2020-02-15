@@ -36,7 +36,7 @@ public final class Constants {
   y = 0
 
   */
-  /** Creates a trajectory using the three values9pointx, pointy, rotation)
+  /** Creates a trajectory using the three values(pointx, pointy, rotation)
    *  and also a list of points to pass through(List<Translation2d list). */
   public static Trajectory trajectorygen(int pointx, int pointy, int rotation, List<Translation2d> list){
     return TrajectoryGenerator.generateTrajectory(
