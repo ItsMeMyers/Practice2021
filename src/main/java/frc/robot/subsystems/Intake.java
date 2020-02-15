@@ -9,7 +9,7 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
     
-    private Solenoid panelSolenoid;
+    private Solenoid intakeSolenoid;
     private WPI_TalonSRX intakeMotor;
 
     private double in = -1.0;
@@ -23,10 +23,10 @@ public class Intake extends SubsystemBase {
      */
     public Intake() {
         intakeMotor = new WPI_TalonSRX(Constants.intakeMotor);
-        panelSolenoid = new Solenoid(Constants.panelSolenoid);
+        intakeSolenoid = new Solenoid(Constants.intakeSolenoid);
 
         intakeMotor.setNeutralMode(NeutralMode.Brake);
-        panelSolenoid.set(true);
+        intakeSolenoid.set(true);
     }
 
     /**
@@ -48,6 +48,6 @@ public class Intake extends SubsystemBase {
     }
 
     public void toggle() {
-        panelSolenoid.set(!state);
+        intakeSolenoid.set(!state);
     }
 }
