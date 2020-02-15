@@ -6,24 +6,24 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Limelight extends SubsystemBase {
-    private NetworkTableEntry tTarget;
-    private NetworkTableEntry tx;
-    private NetworkTableEntry ty;
-    private NetworkTableEntry ta;
-    private NetworkTableEntry ta0;
-    private NetworkTableEntry ta1;
+    private boolean tTarget;
+    private double tx;
+    private double ty;
+    private double ta;
+    private double ta0;
+    private double ta1;
     private NetworkTable limelight;
 
     public Limelight() {
         limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
         try {
-            tTarget = limelight.getEntry("tv");
-            tx = limelight.getEntry("tx");
-            ty = limelight.getEntry("ty");
-            ta = limelight.getEntry("ta");
-            ta0 = limelight.getEntry("ta0");
-            ta1 = limelight.getEntry("ta1");
+            tTarget = getDouble("tv") == 1.0;
+            tx = getDouble("tx");
+            ty = getDouble("ty");
+            ta = getDouble("ta");
+            ta0 = getDouble("ta0");
+            ta1 = getDouble("ta1");
         } catch (Exception e) {
             System.out.println(String.format("Error initializing limelight. Error message: %s", e));
         }
@@ -81,7 +81,7 @@ public class Limelight extends SubsystemBase {
     }
 
     public void lightLED(LimelightLED state) {
-        getEntry("ledMode").setNumber(state.ordinal());
+        setNumber("ledMode", state.ordinal());
         System.out.println("Setting LimeLight LEDs to " + state.ordinal());
     }
 
@@ -91,13 +91,17 @@ public class Limelight extends SubsystemBase {
     }
 
     public void lightCam(LimelightCAM state) {
-        getEntry("camMode").setNumber(state.ordinal());
+        setNumber("camMode", state.ordinal());
         System.out.println("Setting LimeLight CAMs to " + state.ordinal());
     }
 
     public LimelightCAM getCAM() {
         List<LimelightCAM> modes = [LimelightCAM.PIPELINE, LimelightCAM.OFF, LimelightCAM.BLINK, LimelightCAM.ON];
         return modes[getEntry("ledMode")];
+    }
+
+    public void setNumber(String entry, int state) {
+        getEntry(entry).setNumber(state);
     }
 
     public NetworkTableEntry getEntry(String table) {
