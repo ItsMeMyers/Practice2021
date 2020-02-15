@@ -42,8 +42,6 @@ import edu.wpi.first.wpilibj.XboxController.Button;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  
   /* Joysticks */
   Joystick rightStick = new Joystick(Constants.rightStick);
   Joystick leftStick = new Joystick(Constants.leftStick);
@@ -52,7 +50,7 @@ public class RobotContainer {
   public static TrajectoryConfig config;
 
   /* Drivetrain */ 
-  public final Drivetrain drivetrain = new Drivetrain();
+  public final static Drivetrain drivetrain = new Drivetrain();
 
   /* Turret */
   public final static Turret turret = new Turret();
@@ -74,21 +72,6 @@ public class RobotContainer {
 
   /* driveWithJoysticks */
   public final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drivetrain, rightStick, leftStick);
-
-  // An example trajectory to follow.  All units in meters.
-  Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-    // Start at the origin facing the +X direction
-    new Pose2d(0, 0, new Rotation2d(0)),
-    // Pass through these waypoints
-    List.of(
-        new Translation2d(2, 0),
-        new Translation2d(5, 0)
-    ),
-    // End at this location
-    new Pose2d(5, 0, new Rotation2d(0)),
-    // Pass config
-    RobotContainer.config
-  );
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -153,7 +136,7 @@ public class RobotContainer {
             .setReversed(false);
 
     // An example trajectory to follow.  All units in meters.
-    /* Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+      Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these waypoints
@@ -165,7 +148,7 @@ public class RobotContainer {
         new Pose2d(5, 0, new Rotation2d(0)),
         // Pass config
         config
-    ); */
+    );
 
     RamseteCommand ramseteCommand = new RamseteCommand(
         trajectory, // We input our desired trajectory here
