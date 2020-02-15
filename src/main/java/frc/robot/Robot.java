@@ -26,7 +26,6 @@ public class Robot extends TimedRobot {
 
   public static RobotContainer m_robotContainer;
 
-  private CommandScheduler scheduler;
   private TargetEntity targetEntity;
 
 
@@ -39,9 +38,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-
-    scheduler = CommandScheduler.getInstance();
-    
   }
 
   /**
@@ -57,7 +53,7 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-    scheduler.run();
+    CommandScheduler.getInstance().run();
   }
 
   /**
@@ -111,8 +107,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-
-    targetEntity.schedule();
   }
 
   /**

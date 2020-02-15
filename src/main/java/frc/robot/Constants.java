@@ -69,7 +69,6 @@ public final class Constants {
   // TODO: Add a free button mapping for running the on-the-go pathfinder command
   
   // Gamepad POV values
-  public static final int pov = 0;
   public static final int povUp = 0;
   public static final int povDown = 180;
 
