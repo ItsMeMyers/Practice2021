@@ -31,6 +31,13 @@ public final class Constants {
   */
 
 
+  // On-the-go route finding waypoint variables
+  public static final int pointx = 0;
+  public static final int pointy = 0;
+  public static final int rotation = 0;
+  public static final int waypointx = 0;
+  public static final int waypointy = 0;
+
   // Drive Train motors
   public static final int r1Motor = 0;
   public static final int r2Motor = 1;
