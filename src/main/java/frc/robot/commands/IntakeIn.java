@@ -10,6 +10,7 @@ public class IntakeIn extends CommandBase {
     /**
      * This takes in a ball from the ground.
      * Balls from the intake are then stored in the feeder.
+     * This changes the intake direction, not whether it is stowed in or not.
      */
     public IntakeIn(Intake itk) {
         this.intake = itk;

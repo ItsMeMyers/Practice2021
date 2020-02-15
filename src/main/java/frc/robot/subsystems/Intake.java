@@ -47,6 +47,10 @@ public class Intake extends SubsystemBase {
         intakeMotor.set(0.0);
     }
 
+    /**
+     * Brings the intake system in and out.
+     * It can be stowed away or out.
+     */
     public void toggle() {
         intakeSolenoid.set(!state);
     }
