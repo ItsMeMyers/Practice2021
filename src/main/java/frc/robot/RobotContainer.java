@@ -129,7 +129,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand(Trajectory trajectory) {
+  public Command getAutonomousCommand() {
     // Create a voltage constraint to ensure we don't accelerate too fast
      var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(

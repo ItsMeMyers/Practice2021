@@ -44,7 +44,6 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     scheduler = CommandScheduler.getInstance();
-    targetEntity = new TargetEntity();
     
   }
 
@@ -81,7 +80,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     //This uses the new trajectorygen system. Kashyap might have messed something up.
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand(Constants.trajectorygen(5, 0, 0, List.of(new Translation2d(2,0),new Translation2d(5,0))));
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",

@@ -38,18 +38,7 @@ public final class Constants {
   */
   /** Creates a trajectory using the three values9pointx, pointy, rotation)
    *  and also a list of points to pass through(List<Translation2d list). */
-  public static Trajectory trajectorygen(int pointx, int pointy, int rotation, List<Translation2d> list){
-    return TrajectoryGenerator.generateTrajectory(
-    // Start at the origin facing the +X direction
-    new Pose2d(0, 0, new Rotation2d(rotation)),
-    // Pass through these waypoints
-    list,
-    // End at this location
-    new Pose2d(pointx, pointy, new Rotation2d(rotation)),
-    // Pass config
-    RobotContainer.config
-    );
-  }
+  
 
   // Drive Train motors
   public static final int r1Motor = 0;
