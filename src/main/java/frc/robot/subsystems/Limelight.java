@@ -66,10 +66,16 @@ public class Limelight extends SubsystemBase {
         lightLED(LimelightLED.OFF);
     }
 
+    /**
+     * Sets the Limelight camera to VISION mode. (with green filter)
+     */
     public void turnOnCam() {
         lightCam(LimelightCAM.VISION);
     }
 
+    /**
+     * Sets the Limelight camera to DRIVER mode. (no filter)
+     */
     public void turnOffCam() {
         lightCam(LimelightCAM.DRIVER);
     }

@@ -16,6 +16,14 @@ public class DriveWithJoysticks extends CommandBase {
     /**
      * This command drives the robot. It receives inputs from the 
      * left and right joysticks and sets the speed of the motors.
+     * Pushing the left stick forward makes the left wheels go forward.
+     * Pushing the right stick forward makes the right wheels go forward.
+     * First, if the values of the joysticks are too low, then it sets the speed to 0.
+     * Then, it sets the power of the right motors, then the left motors.
+     * It takes the value from the sticks and makes sure they are within the interval [-1, 1].
+     * Then, it scales the power value by taking the square root of the value.
+     * Finally, it drives the robot.
+     * This command only stops when it is interrupted.
      */
     public DriveWithJoysticks(Drivetrain drivetrain, Joystick rightStick, Joystick leftStick) {
         this.drivetrain = drivetrain;
@@ -30,7 +38,7 @@ public class DriveWithJoysticks extends CommandBase {
         right = rightStick.getRawAxis(Joystick.AxisType.kY.value);
         left = leftStick.getRawAxis(Joystick.AxisType.kY.value);
 
-        // If the value of the joystics are too low just set it to zero
+        // If the value of the joysticks are too low just set it to zero
         if (Math.abs(right) <= .08) {
             right = 0.0;
         }

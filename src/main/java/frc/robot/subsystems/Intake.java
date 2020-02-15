@@ -17,6 +17,10 @@ public class Intake extends SubsystemBase {
 
     private boolean state = false;
 
+    /**
+     * The intake pulls the balls from the ground into the robot.
+     * The balls are then stored in the feeder to wait to be shot.
+     */
     public Intake() {
         intakeMotor = new WPI_TalonSRX(Constants.intakeMotor);
         panelSolenoid = new Solenoid(Constants.panelSolenoid);
@@ -25,10 +29,16 @@ public class Intake extends SubsystemBase {
         panelSolenoid.set(true);
     }
 
+    /**
+     * Takes a ball in from the ground.
+     */
     public void runIn() {
         intakeMotor.set(in);
     }
 
+    /**
+     * Pushes out a ball out from the feeder.
+     */
     public void runOut() {
         intakeMotor.set(out);
     }

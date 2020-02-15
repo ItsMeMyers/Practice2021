@@ -104,12 +104,17 @@ public class Drivetrain extends SubsystemBase {
         }
     }
 
+    /**
+     * Drive with default values from the joysticks
+     */
     public void drive() {
         drive(rightPower, leftPower);
     }
     
+    /**
+     * Drive with custom values
+     */
     public void drive(double rightP, double leftP) {
-        
         if (invertRight) {
             rightP *= Constants.INVERT_MOTOR;
         }
