@@ -75,44 +75,36 @@ public class Drivetrain extends SubsystemBase {
         return rightPower;
     }
 
-    public void setRightPower(double rightPwr) {
-        
-        if (rightPwr > 1.0) {
-            rightPwr = 1.0;
-        } else if (rightPwr < -1.0) {
-            rightPwr = -1.0;
+    /**
+     * First, it determines if the power is greater than 1 or less than 1.
+     * If the power is, then it changes the power so it is within [-1, 1].
+     * Then, it takes the square root of the power.
+     * Then it sets the appropiate power value in the class to the new power value.
+     * @param pwr the power to set it to
+     * @param isRight if this is the right motor power or not
+     */
+    public void setPower(double pwr, boolean isRight) {
+        if (pwr > 1.0) {
+            pwr = 1.0;
+        } else if (pwr < -1.0) {
+            pwr = -1.0;
         }
 
         // Sqrt power scalar
-        if (rightPwr < 0) {
-            rightPwr = -1.0 * (Math.sqrt(-1.0 * rightPwr));
+        if (pwr < 0) {
+            pwr = -1.0 * (Math.sqrt(-1.0 * pwr));
         } else {
-            rightPwr = Math.sqrt(rightPwr);
+            pwr = Math.sqrt(pwr);
         }
 
-        this.rightPower = rightPwr;
-    }
-
-    public void setLeftPower(double leftPwr) {
-        
-        if (leftPwr > 1.0) {
-            leftPwr = 1.0;
-        } else if (leftPwr < -1.0) {
-            leftPwr = -1.0;
-        }
-
-        // Sqrt power scalar
-        if (leftPwr < 0) {
-            leftPwr = -1.0 * (Math.sqrt(-1.0 * leftPwr));
+        if (isRight) {
+            this.rightPower = pwr;
         } else {
-            leftPwr = Math.sqrt(leftPwr);
+            this.leftPower = pwr;
         }
-
-        this.leftPower = leftPwr;
     }
 
     public void drive() {
-        
         drive(rightPower, leftPower);
     }
     
@@ -129,13 +121,13 @@ public class Drivetrain extends SubsystemBase {
         rightMotors.set(rightP);
         leftMotors.set(leftP);
     }
+
     public void stop() {
         rightPower = 0.0;
         leftPower = 0.0;
         leftMotors.stopMotor();
         rightMotors.stopMotor();
     }
-
 
     @Override
     public void periodic() {
