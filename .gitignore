@@ -157,6 +157,8 @@ gradle-app.setting
 bin/
 imgui.ini
 
+# Ignore repl.it file
+.replit
 
 # End of https://www.gitignore.io/api/c++,java,linux,macos,gradle,windows,visualstudiocode
 2020-InfiniteRecharge.iml
