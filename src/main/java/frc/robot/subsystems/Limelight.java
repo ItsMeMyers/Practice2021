@@ -102,4 +102,7 @@ public class Limelight extends SubsystemBase {
         return limelight.getEntry(table);
     }
 
+    public double getDouble(String entry) {
+        return getEntry(entry).getDouble(0.0);
+    }
 }
