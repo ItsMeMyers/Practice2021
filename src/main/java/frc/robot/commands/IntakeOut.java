@@ -7,6 +7,9 @@ public class IntakeOut extends CommandBase {
 
     Intake intake;
 
+    /**
+     * Pushes a ball out onto the ground.
+     */
     public IntakeOut(Intake itk) {
         this.intake = itk;
         addRequirements(intake);
