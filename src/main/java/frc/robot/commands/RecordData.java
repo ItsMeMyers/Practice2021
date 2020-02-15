@@ -18,7 +18,7 @@ public class RecordData extends CommandBase {
     public void execute() {
         
         dataRecorder.setSuccess(success);
-        dataRecorder.writeData();
+        dataRecorder.writeTemp();
     }
 
 }
