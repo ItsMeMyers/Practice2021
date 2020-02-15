@@ -36,7 +36,7 @@ public class MoveTurret extends CommandBase {
         turret.moveTurret();
     }
 
-    // Runs when isFinished returns true
+    // Runs when command is interrupted
     @Override
     public void end(boolean interrupted) {
         turret.stopTurret();
