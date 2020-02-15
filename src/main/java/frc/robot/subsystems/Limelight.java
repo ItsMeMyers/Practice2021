@@ -31,8 +31,6 @@ public class Limelight extends SubsystemBase {
             ta1 = table.getEntry("ta1");
 
         } catch (Exception e) {
-            //TODO: handle exception
-            // RioLogger.errorLog();
             System.out.println(String.format("Error initializing limelight. Error message: %s", e));
         }
         initialized = true;
@@ -98,11 +96,26 @@ public class Limelight extends SubsystemBase {
         lightLED(LimelightLED.OFF);
     }
 
+    public void turnOnCam() {
+        lightCam(LimelightCAM.VISION);
+    }
+
+    public void turnOffCam() {
+        lightCam(LimelightCAM.DRIVER);
+    }
+
     public void lightLED(LimelightLED state) {
 
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         table.getEntry("ledMode").setNumber(state.ordinal());
         System.out.println("Setting LimeLight LEDs to " + state.ordinal());
+    }
+
+    public void lightCam(LimelightCAM state) {
+
+        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+        table.getEntry("camMode").setNumber(state.ordinal());
+        System.out.println("Setting LimeLight CAMs to " + state.ordinal());
     }
     
 }

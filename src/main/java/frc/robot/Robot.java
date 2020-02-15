@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.Constants;
+import frc.robot.commands.TargetEntity;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -25,6 +26,9 @@ public class Robot extends TimedRobot {
 
   public static RobotContainer m_robotContainer;
 
+  private CommandScheduler scheduler;
+  private TargetEntity targetEntity;
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -35,6 +39,9 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
+    scheduler = CommandScheduler.getInstance();
+    targetEntity = new TargetEntity();
     
   }
 
@@ -51,7 +58,7 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-    CommandScheduler.getInstance().run();
+    scheduler.run();
   }
 
   /**
@@ -105,6 +112,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    targetEntity.schedule();
   }
 
   /**

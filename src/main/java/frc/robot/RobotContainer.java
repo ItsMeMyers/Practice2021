@@ -47,7 +47,7 @@ public class RobotContainer {
   /* Joysticks */
   Joystick rightStick = new Joystick(Constants.rightStick);
   Joystick leftStick = new Joystick(Constants.leftStick);
-  XboxController gamepad = new XboxController(Constants.gamepad);
+  public static XboxController gamepad = new XboxController(Constants.gamepad);
 
   public static TrajectoryConfig config;
 
@@ -55,7 +55,7 @@ public class RobotContainer {
   public final Drivetrain drivetrain = new Drivetrain();
 
   /* Turret */
-  public final Turret turret = new Turret();
+  public final static Turret turret = new Turret();
 
   // Shooter
   public final Shooter shooter = new Shooter();
@@ -67,7 +67,7 @@ public class RobotContainer {
   public final Intake intake = new Intake();
 
   // Limelight 
-  public final Limelight limelight = new Limelight();
+  public final static Limelight limelight = new Limelight();
   
   /* Data Recorder */
   public final DataRecorder dataRecorder = new DataRecorder();
