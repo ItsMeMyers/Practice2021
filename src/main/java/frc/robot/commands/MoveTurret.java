@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Turret;
 
 public class MoveTurret extends CommandBase {
-
     private double power = 0.0;
 
     Turret turret;
@@ -20,13 +19,15 @@ public class MoveTurret extends CommandBase {
 
     @Override
     public void execute() {
-
+        // If the limit switch is not activated then set the power
+        // to the left joystick on the gamepad
         if (!(turret.getLimitR() || turret.getLimitL())) {
             power = gamepad.getX(Hand.kLeft);
         } else {
             power = 0.0;
         }
 
+        // If the power is minimal just set it to 0
         if (Math.abs(power) <= .02) {
             power = 0.0;
         }
@@ -38,7 +39,6 @@ public class MoveTurret extends CommandBase {
     // Command runs until interrupted
     @Override
     public boolean isFinished() {
-
         return false;
     }
 
