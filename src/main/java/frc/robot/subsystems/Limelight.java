@@ -30,32 +30,32 @@ public class Limelight extends SubsystemBase {
     }
 
     public boolean hasTargets() {
-        tTarget = getEntry("tv");
+        tTarget = getDouble("tv");
         return tTarget;
     }
 
     public double x() {
-        tx = getEntry("tx");
+        tx = getDouble("tx");
         return tx;
     }
 
     public double y() {
-        ty = getEntry("ty");
+        ty = getDouble("ty");
         return ty;
     }
 
     public double targetArea() {
-        ta = getEntry("ta");
+        ta = getDouble("ta");
         return ta;
     }
 
     public double rightTarget() {
-        ta0 = getEntry("ta0");
+        ta0 = getDouble("ta0");
         return ta0;
     }
 
     public double leftTarget() {
-        ta1 = getEntry("ta1")
+        ta1 = getDouble("ta1")
     }
 
     public void turnOnLED() {

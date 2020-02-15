@@ -60,7 +60,7 @@ public final class Constants {
   public static final int gamepad = 2;
 
   // Solenoids
-  public static final int panelSolenoid = 0;
+  public static final int intakeSolenoid = 0;
 
   // Turret limit switches
   public static final int limitSwitchR = 15;
