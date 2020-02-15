@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Limelight extends SubsystemBase {
 
     private boolean initialized = false;
+    private NetworkTable table;
     private NetworkTableEntry tTarget = null;
     private NetworkTableEntry tx = null;
     private NetworkTableEntry ty = null;
@@ -16,8 +17,7 @@ public class Limelight extends SubsystemBase {
     private NetworkTableEntry ta1 = null;
 
     public Limelight() {
-
-        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+        table = NetworkTableInstance.getDefault().getTable("limelight");
 
         try {
             tTarget = table.getEntry("tv");
@@ -26,7 +26,6 @@ public class Limelight extends SubsystemBase {
             ta = table.getEntry("ta");
             ta0 = table.getEntry("ta0");
             ta1 = table.getEntry("ta1");
-
         } catch (Exception e) {
             System.out.println(String.format("Error initializing limelight. Error message: %s", e));
         }
@@ -93,26 +92,27 @@ public class Limelight extends SubsystemBase {
         lightLED(LimelightLED.OFF);
     }
 
+    /**
+     * Sets the Limelight camera to VISION mode. (with green filter)
+     */
     public void turnOnCam() {
         lightCam(LimelightCAM.VISION);
     }
 
+    /**
+     * Sets the Limelight camera to DRIVER mode. (no filter)
+     */
     public void turnOffCam() {
         lightCam(LimelightCAM.DRIVER);
     }
 
-    public void lightLED(LimelightLED state) {
-
-        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    private void lightLED(LimelightLED state) {
         table.getEntry("ledMode").setNumber(state.ordinal());
         System.out.println("Setting LimeLight LEDs to " + state.ordinal());
     }
 
-    public void lightCam(LimelightCAM state) {
-
-        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    private void lightCam(LimelightCAM state) {
         table.getEntry("camMode").setNumber(state.ordinal());
         System.out.println("Setting LimeLight CAMs to " + state.ordinal());
     }
-
 }
