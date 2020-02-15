@@ -38,7 +38,7 @@ public class Shooter extends SubsystemBase {
         shootMotorL.setInverted(InvertType.OpposeMaster);
     }
 
-    public void shoot() {
+    public void geToSpeed() {
         shootMotorR.set(1.0);
     }
 

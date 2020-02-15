@@ -13,6 +13,8 @@ public class Feeder extends SubsystemBase {
 
     private int ballCounter = 0;
 
+    private double speedLimiter = .7;
+
     /**
      * This is the subsystem that sends the balls to the shooter.
      * It also stores the balls that come in from the Intake.
@@ -29,8 +31,8 @@ public class Feeder extends SubsystemBase {
      * Runs the motors. This feeds the balls to the shooter.
      */
     public void run() {
-        feederMotor1.set(1.0);
-        feederMotor2.set(1.0 * Constants.INVERT_MOTOR);
+        feederMotor1.set(speedLimiter);
+        feederMotor2.set(speedLimiter * Constants.INVERT_MOTOR);
     }
 
     public void stop() {

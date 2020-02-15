@@ -42,9 +42,9 @@ public class RunShooter extends CommandBase {
         dist = findDistance();
         
         while (!shooter.atSpeed(shooter.getShooterRPMs())) {
-            shooter.shoot();
+            shooter.geToSpeed();
         }
-        while (!shooter.atSpeed(shooter.getShooterRPMs())) {
+        while (shooter.atSpeed(shooter.getShooterRPMs())) {
             new FeederRun(feeder);
         }
         feeder.shotBall();
