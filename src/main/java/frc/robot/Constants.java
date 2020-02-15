@@ -131,4 +131,8 @@ public final class Constants {
   // seconds
   public static final double kRamseteB = 2;
   public static final double kRamseteZeta = 0.7;
+
+  public static final int pov = 0;
+  public static final int povUp = 0;
+  public static final int povDown = 180;
 }
