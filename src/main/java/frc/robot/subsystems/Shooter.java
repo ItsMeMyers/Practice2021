@@ -43,6 +43,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public void shoot() {
+        // This also sets the left motor to -1.0
         shootMotorR.set(1.0);
     }
 

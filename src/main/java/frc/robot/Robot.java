@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.commands.TargetEntity;
+import frc.robot.subsystems.RouteFinder;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -119,6 +120,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    final Command ballCommand = RouteFinder.getPathCommand(Constants.pointx, Constants.pointy, Constants.rotation, Constants.waypointx, Constants.waypointy);
   }
 
   @Override

@@ -31,6 +31,13 @@ public final class Constants {
   */
 
 
+  // On-the-go route finding waypoint variables
+  public static final int pointx = 0;
+  public static final int pointy = 0;
+  public static final int rotation = 0;
+  public static final int waypointx = 0;
+  public static final int waypointy = 0;
+
   // Drive Train motors
   public static final int r1Motor = 0;
   public static final int r2Motor = 1;
@@ -58,6 +65,11 @@ public final class Constants {
   public static final int rightStick = 0;
   public static final int leftStick = 1;
   public static final int gamepad = 2;
+  
+  // Gamepad POV values
+  public static final int pov = 0;
+  public static final int povUp = 0;
+  public static final int povDown = 180;
 
   // Solenoids
   public static final int intakeSolenoid = 0;
@@ -66,10 +78,7 @@ public final class Constants {
   public static final int limitSwitchR = 15;
   public static final int limitSwitchL = 16;
 
-  /*
-   * Need to edit all the numbers under this for 2020
-   */
-
+  // Need to edit all the numbers under this for 2020
   public static final int[] kLeftEncoderPorts = new int[] { 2, 3 };
   public static final int[] kRightEncoderPorts = new int[] { 0, 1 };
   public static final boolean kLeftEncoderReversed = false;
@@ -88,11 +97,9 @@ public final class Constants {
 
   // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
   // These characterization values MUST be determined either experimentally or
-  // theoretically
-  // for *your* robot's drive.
+  // theoretically for *your* robot's drive.
   // The Robot Characterization Toolsuite provides a convenient tool for obtaining
-  // these
-  // values for your robot.
+  // these values for your robot.
   public static final double ksVolts = 1.43;
   public static final double kvVoltSecondsPerMeter = 5.15;
   public static final double kaVoltSecondsSquaredPerMeter = 0.384;
@@ -105,12 +112,7 @@ public final class Constants {
   public static final double kMaxSpeedMetersPerSecond = 3;
   public static final double kMaxAccelerationMetersPerSecondSquared = 3;
 
-  // Reasonable baseline values for a RAMSETE follower in units of meters and
-  // seconds
+  // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
   public static final double kRamseteB = 2;
   public static final double kRamseteZeta = 0.7;
-
-  public static final int pov = 0;
-  public static final int povUp = 0;
-  public static final int povDown = 180;
 }
