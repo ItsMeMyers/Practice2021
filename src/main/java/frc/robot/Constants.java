@@ -30,19 +30,26 @@ public final class Constants {
   public static final double INVERT_MOTOR = -1.0;
 
   // An example trajectory to follow.  All units in meters.
-  public static Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+  /*
+  * rotation = 0
+  * x = 5
+  y = 0
+
+  */
+  /** Creates a trajectory using the three values9pointx, pointy, rotation)
+   *  and also a list of points to pass through(List<Translation2d list). */
+  public static Trajectory trajectorygen(int pointx, int pointy, int rotation, List<Translation2d> list){
+    return TrajectoryGenerator.generateTrajectory(
     // Start at the origin facing the +X direction
-    new Pose2d(0, 0, new Rotation2d(0)),
+    new Pose2d(0, 0, new Rotation2d(rotation)),
     // Pass through these waypoints
-    List.of(
-        new Translation2d(2, 0),
-        new Translation2d(5, 0)
-    ),
+    list,
     // End at this location
-    new Pose2d(5, 0, new Rotation2d(0)),
+    new Pose2d(pointx, pointy, new Rotation2d(rotation)),
     // Pass config
     RobotContainer.config
     );
+  }
 
   // Drive Train motors
   public static final int r1Motor = 0;
