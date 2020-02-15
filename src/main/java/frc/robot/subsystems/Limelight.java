@@ -6,18 +6,16 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Limelight extends SubsystemBase {
-
-    private boolean initialized = false;
-    private NetworkTableEntry tTarget = null;
-    private NetworkTableEntry tx = null;
-    private NetworkTableEntry ty = null;
-    private NetworkTableEntry ta = null;
-    private NetworkTableEntry ta0 = null;
-    private NetworkTableEntry ta1 = null;
+    private NetworkTableEntry tTarget;
+    private NetworkTableEntry tx;
+    private NetworkTableEntry ty;
+    private NetworkTableEntry ta;
+    private NetworkTableEntry ta0;
+    private NetworkTableEntry ta1;
+    private NetworkTable limelight;
 
     public Limelight() {
-
-        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+        limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
         try {
             tTarget = table.getEntry("tv");
@@ -26,63 +24,38 @@ public class Limelight extends SubsystemBase {
             ta = table.getEntry("ta");
             ta0 = table.getEntry("ta0");
             ta1 = table.getEntry("ta1");
-
         } catch (Exception e) {
             System.out.println(String.format("Error initializing limelight. Error message: %s", e));
         }
-        initialized = true;
-    }
-
-    public boolean isInitialized() {
-        return initialized;
     }
 
     public boolean hasTargets() {
-        boolean hits = false;
-        if (isInitialized()) {
-            hits = (tTarget.getDouble(0.0) == 1.0);
-        }
-        return hits;
+        tTarget = table.getEntry("tv");
+        return tTarget;
     }
 
     public double x() {
-        double dx = 0;
-        if (isInitialized()) {
-            dx = tx.getDouble(0.0);
-        }
-        return dx;
+        tx = getEntry("tx");
+        return tx;
     }
 
     public double y() {
-        double dy = 0;
-        if (isInitialized()) {
-            dy = ty.getDouble(0.0);
-        }
-        return dy;
+        ty = getEntry("ty");
+        return ty;
     }
 
     public double targetArea() {
-        double dArea = 0;
-        if (isInitialized()) {
-            dArea = ta.getDouble(0.0);
-        }
-        return dArea;
+        ta = getEntry("ta");
+        return ta;
     }
 
     public double rightTarget() {
-        double dArea = 0;
-        if (isInitialized()) {
-            dArea = ta0.getDouble(0.0);
-        }
-        return dArea;
+        ta0 = getEntry("ta0");
+        return ta0;
     }
 
     public double leftTarget() {
-        double dArea = 0;
-        if (isInitialized()) {
-            dArea = ta1.getDouble(0.0);
-        }
-        return dArea;
+        ta1 = getEntry("ta1")
     }
 
     public void turnOnLED() {
@@ -102,17 +75,27 @@ public class Limelight extends SubsystemBase {
     }
 
     public void lightLED(LimelightLED state) {
-
-        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-        table.getEntry("ledMode").setNumber(state.ordinal());
+        getEntry("ledMode").setNumber(state.ordinal());
         System.out.println("Setting LimeLight LEDs to " + state.ordinal());
     }
 
-    public void lightCam(LimelightCAM state) {
+    public LimelightLED getLED() {
+        List<LimelightLED> modes = [LimelightLED.PIPELINE, LimelightLED.OFF, LimelightLED.BLINK, LimelightLED.ON];
+        return modes[getEntry("ledMode")];
+    }
 
-        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-        table.getEntry("camMode").setNumber(state.ordinal());
+    public void lightCam(LimelightCAM state) {
+        getEntry("camMode").setNumber(state.ordinal());
         System.out.println("Setting LimeLight CAMs to " + state.ordinal());
+    }
+
+    public LimelightCAM getCAM() {
+        List<LimelightCAM> modes = [LimelightCAM.PIPELINE, LimelightCAM.OFF, LimelightCAM.BLINK, LimelightCAM.ON];
+        return modes[getEntry("ledMode")];
+    }
+
+    public NetworkTableEntry getEntry(String table) {
+        return limelight.getEntry(table);
     }
 
 }
