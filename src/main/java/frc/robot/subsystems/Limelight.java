@@ -18,19 +18,19 @@ public class Limelight extends SubsystemBase {
         limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
         try {
-            tTarget = table.getEntry("tv");
-            tx = table.getEntry("tx");
-            ty = table.getEntry("ty");
-            ta = table.getEntry("ta");
-            ta0 = table.getEntry("ta0");
-            ta1 = table.getEntry("ta1");
+            tTarget = limelight.getEntry("tv");
+            tx = limelight.getEntry("tx");
+            ty = limelight.getEntry("ty");
+            ta = limelight.getEntry("ta");
+            ta0 = limelight.getEntry("ta0");
+            ta1 = limelight.getEntry("ta1");
         } catch (Exception e) {
             System.out.println(String.format("Error initializing limelight. Error message: %s", e));
         }
     }
 
     public boolean hasTargets() {
-        tTarget = table.getEntry("tv");
+        tTarget = getEntry("tv");
         return tTarget;
     }
 
