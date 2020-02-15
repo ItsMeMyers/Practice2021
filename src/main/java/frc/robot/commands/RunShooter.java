@@ -57,17 +57,9 @@ public class RunShooter extends CommandBase {
         } */
     }
 
-    // Command runs until interrupted
-    @Override
-    public boolean isFinished() {
-
-        return false;
-    }
-
     // Command stops when interrupted
     @Override
     public void end(boolean interrupted) {
-
         if (interrupted) {
             shooter.stopShooter();
         }

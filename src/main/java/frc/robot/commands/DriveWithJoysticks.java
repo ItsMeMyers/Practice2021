@@ -52,12 +52,6 @@ public class DriveWithJoysticks extends CommandBase {
         drivetrain.drive();
     }
 
-    // Command will run until interrupted
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
-
     // Runs when isFinished returns true
     @Override
     public void end(boolean interrupted) {
