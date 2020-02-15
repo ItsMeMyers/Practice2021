@@ -13,7 +13,7 @@ public class DataRecorder extends SubsystemBase {
     PrintWriter pw;
     double speed;
     double distance;
-    int success;
+    boolean success;
     double dx;
     double dy;
     String tempStore = "success,distance,dx,dy,speed";
@@ -44,7 +44,7 @@ public class DataRecorder extends SubsystemBase {
         this.distance = dist;
     }
 
-    public void setSuccess(int success) {
+    public void setSuccess(boolean success) {
         this.success = success;
     }
 
@@ -60,7 +60,7 @@ public class DataRecorder extends SubsystemBase {
 
         tempStore.concat(
             "\"" 
-            + Integer.toString(success) 
+            + success
             + midSep
             + Double.toString(distance) 
             + midSep
@@ -80,10 +80,7 @@ public class DataRecorder extends SubsystemBase {
             pw.print(fw);
             pw.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
-
 }

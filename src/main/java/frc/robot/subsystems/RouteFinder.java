@@ -16,21 +16,24 @@ import frc.robot.RobotContainer;
 // import frc.robot.Robot;
 public class RouteFinder extends SubsystemBase {
 
-    private Command pathCommand;
+    public static Command pathCommand;
 
-    /** Grants access to the pathCommand in RouteFinder */
-    public Command getPathCommand(int pointx, int pointy, int rotation, int waypointx, int waypointy) {
-        Trajectory foundTrajectory = trajectorygen(pointx, pointy, rotation,
-                List.of(new Translation2d(waypointx, waypointy)));
-        RamseteCommand ramseteCommand = new RamseteCommand(foundTrajectory, // We input our desired trajectory here
-                RobotContainer.drivetrain::getPose, new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
-                new SimpleMotorFeedforward(Constants.ksVolts, Constants.kvVoltSecondsPerMeter,
-                        Constants.kaVoltSecondsSquaredPerMeter),
-                Constants.kDriveKinematics, RobotContainer.drivetrain::getWheelSpeeds, new PIDController(Constants.kPDriveVel, 0, 0),
-                new PIDController(Constants.kPDriveVel, 0, 0),
-                // RamseteCommand passes volts to the callback
-                RobotContainer.drivetrain::tankDriveVolts, RobotContainer.drivetrain);
-        pathCommand = ramseteCommand.andThen(() -> RobotContainer.drivetrain.tankDriveVolts(0, 0));
+        /** Grants access to the pathCommand in RouteFinder */
+        public static Command getPathCommand(int pointx, int pointy, int rotation, int waypointx, int waypointy) {
+                Trajectory foundTrajectory = trajectorygen(pointx, pointy, rotation,
+                                List.of(new Translation2d(waypointx, waypointy)));
+                RamseteCommand ramseteCommand = new RamseteCommand(foundTrajectory, // We input our desired trajectory
+                                                                                    // here
+                                RobotContainer.drivetrain::getPose,
+                                new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
+                                new SimpleMotorFeedforward(Constants.ksVolts, Constants.kvVoltSecondsPerMeter,
+                                                Constants.kaVoltSecondsSquaredPerMeter),
+                                Constants.kDriveKinematics, RobotContainer.drivetrain::getWheelSpeeds,
+                                new PIDController(Constants.kPDriveVel, 0, 0),
+                                new PIDController(Constants.kPDriveVel, 0, 0),
+                                // RamseteCommand passes volts to the callback
+                                RobotContainer.drivetrain::tankDriveVolts, RobotContainer.drivetrain);
+                pathCommand = ramseteCommand.andThen(() -> RobotContainer.drivetrain.tankDriveVolts(0, 0));
         return pathCommand;
     }
 

@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 //import static edu.wpi.first.wpilibj.XboxController.Button;
 
@@ -42,36 +43,45 @@ import edu.wpi.first.wpilibj.XboxController.Button;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  /* Joysticks */
-  Joystick rightStick = new Joystick(Constants.rightStick);
-  Joystick leftStick = new Joystick(Constants.leftStick);
-  public static XboxController gamepad = new XboxController(Constants.gamepad);
+  // Joysticks
+  public final static Joystick rightStick = new Joystick(Constants.rightStick);
+  public final static Joystick leftStick = new Joystick(Constants.leftStick);
+
+  // Xbox Controller
+  public final static XboxController gamepad = new XboxController(Constants.gamepad);
 
   public static TrajectoryConfig config;
 
-  /* Drivetrain */ 
+  // Drivetrain
   public final static Drivetrain drivetrain = new Drivetrain();
 
-  /* Turret */
+  // Turret
   public final static Turret turret = new Turret();
 
   // Shooter
-  public final Shooter shooter = new Shooter();
+  public final static Shooter shooter = new Shooter();
 
   // Feeder 
-  public final Feeder feeder = new Feeder();
+  public final static Feeder feeder = new Feeder();
 
   // Intake
-  public final Intake intake = new Intake();
+  public final static Intake intake = new Intake();
 
   // Limelight 
   public final static Limelight limelight = new Limelight();
   
-  /* Data Recorder */
-  public final DataRecorder dataRecorder = new DataRecorder();
+  // Data Recorder
+  public final static DataRecorder dataRecorder = new DataRecorder();
 
-  /* driveWithJoysticks */
-  public final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drivetrain, rightStick, leftStick);
+  // driveWithJoysticks
+  public final static DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drivetrain, rightStick, leftStick);
+
+  // recordData
+  public final static RecordData recordDataSuccessful = new RecordData(dataRecorder, true);
+  public final static RecordData recordDataUnsuccessful = new RecordData(dataRecorder, false);
+
+  // targetEntity
+  public final static TargetEntity targetEntity = new TargetEntity(limelight, turret);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -81,7 +91,6 @@ public class RobotContainer {
     configureButtonBindings();
   }
 
-
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -90,22 +99,24 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //Configure Each Button
-
     final JoystickButton aButton = new JoystickButton(gamepad, Button.kA.value);
     final JoystickButton yButton = new JoystickButton(gamepad, Button.kY.value);
     final JoystickButton bButton = new JoystickButton(gamepad, Button.kB.value);
     final JoystickButton xButton = new JoystickButton(gamepad, Button.kX.value);
     final JoystickButton rTrigger = new JoystickButton(gamepad, Axis.kRightTrigger.value);
     final JoystickButton rBumper = new JoystickButton(gamepad, Button.kBumperRight.value);
+    final POVButton upButton = new POVButton(gamepad, Constants.povUp);
+    final POVButton downButton = new POVButton(gamepad, Constants.povDown);
 
-    bButton.whenPressed(new RecordData(dataRecorder, 1));
-    xButton.whenPressed(new RecordData(dataRecorder, 0));
-    aButton.toggleWhenPressed(new IntakeToggle(intake));
+    bButton.whenPressed(recordDataSuccessful);
+    xButton.whenPressed(recordDataUnsuccessful);
+    aButton.whenPressed(new IntakeToggle(intake));
     yButton.whenPressed(new RunShooter(shooter, feeder, limelight, dataRecorder));
     rTrigger.whenHeld(new IntakeIn(intake));
     rBumper.whenHeld(new IntakeOut(intake));
+    upButton.whenPressed(targetEntity);
+    downButton.cancelWhenPressed(targetEntity);
   }
-
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -114,7 +125,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // Create a voltage constraint to ensure we don't accelerate too fast
-     var autoVoltageConstraint =
+    var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
             new SimpleMotorFeedforward(Constants.ksVolts,
                                        Constants.kvVoltSecondsPerMeter,

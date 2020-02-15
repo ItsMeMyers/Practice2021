@@ -20,6 +20,8 @@ public class Intake extends SubsystemBase {
     /**
      * The intake pulls the balls from the ground into the robot.
      * The balls are then stored in the feeder to wait to be shot.
+     * The intake can be stowed in or stowed out.
+     * The direction of the intake can also be switched.
      */
     public Intake() {
         intakeMotor = new WPI_TalonSRX(Constants.intakeMotor);

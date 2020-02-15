@@ -25,6 +25,9 @@ public class Shooter extends SubsystemBase {
 
     private final double vThreshold = 1.0;
 
+    /**
+     * Shoots the balls into the targets.
+     */
     public Shooter() {
 
         shootMotorR = new WPI_TalonFX(Constants.shootMotorR);
@@ -33,6 +36,7 @@ public class Shooter extends SubsystemBase {
         shootMotorR.setNeutralMode(NeutralMode.Coast);
         shootMotorL.setNeutralMode(NeutralMode.Coast);
 
+        // This means the left motor will be equal to the right motor
         shootMotorL.follow(shootMotorR);
         // shootMotorL.setInverted(true);
         shootMotorL.setInverted(InvertType.OpposeMaster);
@@ -44,13 +48,11 @@ public class Shooter extends SubsystemBase {
 
     // Calculate required rpm of turret motor for supplied distance (ft)
     public static int DistanceToRPM(double distance){
-        int rVal = -1;
         distance = distance / 2;
         double val = distance * 32.6;
-        val = val / (Math.sin(2*degreesOfTurret));
+        val = val / (Math.sin(2 * degreesOfTurret));
         val = Math.sqrt(val);
-        rVal = (int)(val / (Math.PI * (diameterOfTurretWheelInches / 12))) * 60;
-        return rVal;
+        return (int)(val / (Math.PI * (diameterOfTurretWheelInches / 12))) * 60;
     }
 
     public double[] getShooterRPMs() {
@@ -59,18 +61,22 @@ public class Shooter extends SubsystemBase {
         return RPMs;
     }
 
+    /**
+     * Checks if both of the rpms are greater than the rpm threshold
+     */
     public boolean atSpeed(double[] rpms) {
-        return (rpms[0] >= rpmThreshold && rpms[1] >= rpmThreshold);
+        return ((rpms[0] >= rpmThreshold) && (rpms[1] >= rpmThreshold));
     }
 
     // TODO test this method functionality
+    /**
+     * Checks if the motor voltages are greater than the acceptable voltage threshold
+     */
     public boolean voltageSpike() {
-        
-        return (shootMotorR.getBusVoltage() >= vThreshold) || (shootMotorL.getBusVoltage() >= vThreshold);
+        return ((shootMotorR.getBusVoltage() >= vThreshold) || (shootMotorL.getBusVoltage() >= vThreshold));
     }
 
     public void stopShooter() {
-        
         shootMotorR.stopMotor();
         shootMotorL.stopMotor();
     }

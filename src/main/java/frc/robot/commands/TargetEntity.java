@@ -1,13 +1,11 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
-import frc.robot.Constants;
 
 public class TargetEntity extends CommandBase {
 	
@@ -23,16 +21,10 @@ public class TargetEntity extends CommandBase {
 	private double additionalPower; // Updated by the right Joystick on the gamepad
 	private double turretPower; // Updated by the LimeLight camera; equal to power + additionalPower
 
-	private boolean enabled; // Updated by the game pad
-
-	/**
-	 * Initialize the TargetEntity command
-	 */
 	public TargetEntity(Limelight ll, Turret trrt) {
 		
 		this.turret = trrt;
 		this.limelight = ll;
-		enabled = false;
 		hasValidTarget = false;
 		power = 0;
 		additionalPower = 0;
@@ -63,110 +55,72 @@ public class TargetEntity extends CommandBase {
 	*/
 
 	/**
-	 * Updates if the command is enabled or not from the gamepad
-	 *
-	 * <p>Note: Ending the command not the same as disabling the command. When the command
-	 * is disabled, it can be enabled by pressing the up arrow on the POV.
-	 * When it is finished, it has to be re-scheduled with the CommandScheduler.
-	 */
-	private void checkIfEnabled() {
-		// Press the Up arrow on the POV to enable the TargetEntity Command
-		if (RobotContainer.gamepad.getPOV(Constants.pov) == Constants.povUp) {
-			enabled = true;
-		// Press the Down arrow on the POV to disable it
-		} else if (RobotContainer.gamepad.getPOV(Constants.pov) == Constants.povDown) {
-			enabled = false;
-		}
-		SmartDashboard.putBoolean("Target.Enabled", enabled);
-	}
-
-	/**
 	 * Execute one iteration of the TargetEntity command (For multiple iterations, call multiple times)
 	 * Only executes if it is enabled by the game pad
 	 */
 	@Override
 	public void execute() {
-		checkIfEnabled();
-		if (enabled) {
-			RobotContainer.limelight.turnOnLED(); // Turn on the LED's if they haven't been turned on before
-			RobotContainer.limelight.turnOnCam(); // Turn on vision mode if it wasn't turned on before
+		RobotContainer.limelight.turnOnLED(); // Turn on the LED's if they haven't been turned on before
+		RobotContainer.limelight.turnOnCam(); // Turn on vision mode if it wasn't turned on before
 
-			// Whether Limelight detects a target
-			hasValidTarget = RobotContainer.limelight.hasTargets();
-			if (hasValidTarget) {
-				// The number of degrees the target is off center horizontally
-				double x = RobotContainer.limelight.x();
-				// The number of degrees Limelight needs to shift by to be centered
-				double degreesToCenter = -x;
+		// Whether Limelight detects a target
+		hasValidTarget = RobotContainer.limelight.hasTargets();
+		if (hasValidTarget) {
+			// The number of degrees the target is off center horizontally
+			double x = RobotContainer.limelight.x();
+			// The number of degrees Limelight needs to shift by to be centered
+			double degreesToCenter = -x;
 
-				// Instead of waiting for the target to go off the screen, center the target
-				// This value will be negative if it needs to go right and positive if it needs to go left
-				// We multiply by a constant because the motor doesn't need that much power so
-				// it doesn't go way too fast
-				power = powerConstant * degreesToCenter;
-				// If the power is too small and tx is within the threshold,
-				// increase it to +/- 0.05 so the turret actually moves
-				if (x > threshold && power > -minimumPower) {
-					power = -minimumPower;
-				} else if (x < -threshold && power < minimumPower) {
-					power = minimumPower;
-				} else if (x < threshold && x > -threshold) {
-					// If the target is not off center by that much, we don't need to change the position
-					power = 0.0;
-				}
-
-				// To increase the speed of the turret, you can push the Right Joystick on
-				// the gamepad to add additional power
-				additionalPower = Math.abs(RobotContainer.gamepad.getY(Hand.kLeft)) * Math.signum(power);
-				// Total power of the turret
-				turretPower = power + additionalPower;
-				// Makes sure the power does not get higher than 1 or less than -1
-				if (turretPower > 1) {
-					turretPower = 1;
-				} else if (turretPower < -1) {
-					turretPower = -1;
-				}
-			} else {
-				// If Limelight does not detect a target then it sets the turret power to 0.
+			// Instead of waiting for the target to go off the screen, center the target
+			// This value will be negative if it needs to go right and positive if it needs to go left
+			// We multiply by a constant because the motor doesn't need that much power so
+			// it doesn't go way too fast
+			power = powerConstant * degreesToCenter;
+			// If the power is too small and tx is within the threshold,
+			// increase it to +/- 0.05 so the turret actually moves
+			if (x > threshold && power > -minimumPower) {
+				power = -minimumPower;
+			} else if (x < -threshold && power < minimumPower) {
+				power = minimumPower;
+			} else if (x < threshold && x > -threshold) {
+				// If the target is not off center by that much, we don't need to change the position
 				power = 0.0;
-				additionalPower = 0.0;
-				turretPower = 0.0;
 			}
 
-			RobotContainer.turret.setSpinPower(turretPower);
-			// Puts values on the Smart Dashboard
-			SmartDashboard.putBoolean("Target.TargetIdentified", hasValidTarget);
-			SmartDashboard.putNumber("Target.Power", power);
-			SmartDashboard.putNumber("Target.AddPower", additionalPower);
-			SmartDashboard.putNumber("Target.TurretPower", turretPower);
-			SmartDashboard.putNumber("GamePad.POV", RobotContainer.gamepad.getPOV(Constants.pov));
+			// To increase the speed of the turret, you can push the Right Joystick on
+			// the gamepad to add additional power
+			additionalPower = Math.abs(RobotContainer.gamepad.getY(Hand.kLeft)) * Math.signum(power);
+			// Total power of the turret
+			turretPower = power + additionalPower;
+			// Makes sure the power does not get higher than 1 or less than -1
+			if (turretPower > 1) {
+				turretPower = 1;
+			} else if (turretPower < -1) {
+				turretPower = -1;
+			}
 		} else {
-			// Turns off the LEDs so people don't get blinded.
-			RobotContainer.limelight.turnOffLED();
+			// If Limelight does not detect a target then it sets the turret power to 0.
+			power = 0.0;
+			additionalPower = 0.0;
+			turretPower = 0.0;
 		}
+
+		RobotContainer.turret.setSpinPower(turretPower);
+		// Puts values on the Smart Dashboard
+		SmartDashboard.putBoolean("Target.TargetIdentified", hasValidTarget);
+		SmartDashboard.putNumber("Target.Power", power);
+		SmartDashboard.putNumber("Target.AddPower", additionalPower);
+		SmartDashboard.putNumber("Target.TurretPower", turretPower);
+		SmartDashboard.putNumber("GamePad.POV", RobotContainer.gamepad.getPOV());
 	}
 
 	/**
-	 * If the robot switches out of teleoperated mode, the command is done.
-	 * <p>Note: This is not the same as disabling the command. When the command
-	 * is disabled, it can be enabled by pressing the up arrow on the POV.
-	 * When it is finished, it has to be re-scheduled with the CommandScheduler.
+	 * If the the down arrow on the POV is pressed, the command is done.
+	 * Stops targeting and turns off the LEDs so people don't get blinded. 
+	 * @param interrupted Whether the command was interrupted/canceled
 	 */
 	@Override
-	public boolean isFinished() {
-		if (!RobotState.isOperatorControl()) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Stops having the ability to target and turns off the LEDs so people don't get blinded. 
-	 * Prints whether the command was interrupted or not.
-	 * @param failed Whether the command was interrupted/canceled
-	 */
-	@Override
-	public void end(boolean failed) {
+	public void end(boolean interrupted) {
 		RobotContainer.limelight.turnOffLED();
 	}
 }

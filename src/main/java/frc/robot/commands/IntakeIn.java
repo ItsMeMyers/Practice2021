@@ -23,10 +23,6 @@ public class IntakeIn extends CommandBase {
     }
 
     @Override
-    public void execute() {
-    }
-
-    @Override
     public void end(boolean interrupted) {
         if (interrupted) {
             intake.stopMotor();

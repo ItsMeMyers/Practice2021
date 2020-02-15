@@ -57,31 +57,19 @@ public class RunShooter extends CommandBase {
         } */
     }
 
-    // Command runs until interrupted
-    @Override
-    public boolean isFinished() {
-
-        return false;
-    }
-
     // Command stops when interrupted
     @Override
     public void end(boolean interrupted) {
-
-        if (interrupted) {
-            shooter.stopShooter();
-        }
+        shooter.stopShooter();
     }
 
     public double findDistance() {
-
         // d = (targetHeight - mountHeight) / (tan(angleToGround+angleToTarget))
         angleToTarget = ty;
         return ((targetHeight - mountHeight) / (double)(Math.tan(angleToGround+angleToTarget)));
     }
 
     public void updateLimelightTracking() {
-
         hasValidTarget = limelight.hasTargets();
         if (!hasValidTarget) {
             dist = 0.0;
