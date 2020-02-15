@@ -30,32 +30,32 @@ public class Limelight extends SubsystemBase {
     }
 
     public boolean hasTargets() {
-        tTarget = getEntry("tv");
+        tTarget = getDouble("tv") == 1.0;
         return tTarget;
     }
 
     public double x() {
-        tx = getEntry("tx");
+        tx = getDouble("tx");
         return tx;
     }
 
     public double y() {
-        ty = getEntry("ty");
+        ty = getDouble("ty");
         return ty;
     }
 
     public double targetArea() {
-        ta = getEntry("ta");
+        ta = getDouble("ta");
         return ta;
     }
 
     public double rightTarget() {
-        ta0 = getEntry("ta0");
+        ta0 = getDouble("ta0");
         return ta0;
     }
 
     public double leftTarget() {
-        ta1 = getEntry("ta1")
+        ta1 = getDouble("ta1");
     }
 
     public void turnOnLED() {
@@ -94,8 +94,12 @@ public class Limelight extends SubsystemBase {
         return modes[getEntry("ledMode")];
     }
 
-    public NetworkTableEntry getEntry(String table) {
+    public NetworkTableEntry getEntry(String entry) {
         return limelight.getEntry(table);
+    }
+
+    public double getDouble(String entry) {
+        return getEntry(entry).getDouble(0.0);
     }
 
 }
