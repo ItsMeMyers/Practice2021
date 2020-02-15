@@ -62,9 +62,11 @@ public final class Constants {
   public static final int feederMotor1 = 14;
   public static final int feederMotor2 = 15;
 
+  // Sticks
   public static final int rightStick = 0;
   public static final int leftStick = 1;
   public static final int gamepad = 2;
+  // TODO: Add a free button mapping for running the on-the-go pathfinder command
   
   // Gamepad POV values
   public static final int pov = 0;
