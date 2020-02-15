@@ -9,6 +9,7 @@ public class IntakeOut extends CommandBase {
 
     /**
      * Pushes a ball out onto the ground.
+     * This changes the intake direction, not whether it is stowed out or not.
      */
     public IntakeOut(Intake itk) {
         this.intake = itk;
