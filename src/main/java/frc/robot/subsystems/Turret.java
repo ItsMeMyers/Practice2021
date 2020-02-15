@@ -8,9 +8,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Turret extends SubsystemBase {
-
-
-
     private WPI_TalonFX turretMotor;
 
     private double spinPower;
@@ -25,19 +22,18 @@ public class Turret extends SubsystemBase {
         limitL = new DigitalInput(Constants.limitSwitchL);
 
         turretMotor.setNeutralMode(NeutralMode.Brake);
-
     }
 
+    /**
+     * Sets the spin power of the turret. This makes sure that it is
+     * not less than -1 or greater than 1.
+     */
     public void setSpinPower(double spinPwr) {
-
         if (spinPwr > 1.0) {
-
             spinPwr = 1.0;
         } else if (spinPwr < -1.0) {
-
             spinPwr = -1.0;
         }
-
         this.spinPower = spinPwr;
     }
 
@@ -54,10 +50,7 @@ public class Turret extends SubsystemBase {
     }
 
     public void stopTurret() {
-
         spinPower = 0.0;
-
         turretMotor.stopMotor();
     }
-
 }
