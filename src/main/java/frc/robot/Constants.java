@@ -36,9 +36,11 @@ public final class Constants {
   y = 0
 
   */
-  /** Creates a trajectory using the three values9pointx, pointy, rotation)
+  /** Creates a trajectory using the three values(pointx, pointy, rotation)
+   * Let me explain:
+   *    pointx and pointy are the x and y coordinates that you want to end at.
+   *    rotation is the rotation that you want to end at.
    *  and also a list of points to pass through(List<Translation2d list). */
-  
 
   // Drive Train motors
   public static final int r1Motor = 0;
