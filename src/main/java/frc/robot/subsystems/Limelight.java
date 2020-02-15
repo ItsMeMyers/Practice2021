@@ -87,7 +87,7 @@ public class Limelight extends SubsystemBase {
 
     public LimelightLED getLED() {
         List<LimelightLED> modes = [LimelightLED.PIPELINE, LimelightLED.OFF, LimelightLED.BLINK, LimelightLED.ON];
-        return modes[getEntry("ledMode")];
+        return modes[getDouble("ledMode")];
     }
 
     public void lightCam(LimelightCAM state) {
@@ -96,7 +96,7 @@ public class Limelight extends SubsystemBase {
     }
 
     public LimelightCAM getCAM() {
-        List<LimelightCAM> modes = [LimelightCAM.PIPELINE, LimelightCAM.OFF, LimelightCAM.BLINK, LimelightCAM.ON];
+        List<LimelightCAM> modes = [LimelightCAM.VISION, LimelightCAM.DRIVER];
         return modes[getEntry("ledMode")];
     }
 
