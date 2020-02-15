@@ -5,6 +5,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 public class DriveWithJoysticks extends CommandBase {
+    // Threshold within which the motor won't bother moving
+    private final double driveThreshold = 0.08;
+
     // Represents the position of the right and left joysticks
     private double right = 0.0;
     private double left = 0.0;
@@ -39,11 +42,11 @@ public class DriveWithJoysticks extends CommandBase {
         left = leftStick.getRawAxis(Joystick.AxisType.kY.value);
 
         // If the value of the joysticks are too low just set it to zero
-        if (Math.abs(right) <= .08) {
+        if (Math.abs(right) <= driveThreshold) {
             right = 0.0;
         }
 
-        if (Math.abs(left) <= .08) {
+        if (Math.abs(left) <= driveThreshold) {
             left = 0.0;
         }
 
@@ -52,13 +55,7 @@ public class DriveWithJoysticks extends CommandBase {
         drivetrain.drive();
     }
 
-    // Command will run until interrupted
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    // Runs when isFinished returns true
+    // Runs when command is interrupted
     @Override
     public void end(boolean interrupted) {
         drivetrain.stop();

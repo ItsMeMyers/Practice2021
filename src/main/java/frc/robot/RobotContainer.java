@@ -67,10 +67,10 @@ public class RobotContainer {
   // Limelight 
   public final static Limelight limelight = new Limelight();
   
-  /* Data Recorder */
+  // Data Recorder
   public final DataRecorder dataRecorder = new DataRecorder();
 
-  /* driveWithJoysticks */
+  // driveWithJoysticks
   public final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drivetrain, rightStick, leftStick);
 
   /**

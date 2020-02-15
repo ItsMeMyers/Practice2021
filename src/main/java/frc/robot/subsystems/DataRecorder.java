@@ -10,30 +10,25 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class DataRecorder extends SubsystemBase {
 
     File data1 = new File("/home/lvuser/data1.csv");
-    File data2 = new File("/home/lvuser/data2.csv");
-    PrintWriter pw1;
-    PrintWriter pw2;
+    PrintWriter pw;
     double speed;
     double distance;
     int success;
     double dx;
     double dy;
+    String tempStore = "success,distance,dx,dy,speed";
+    String midSep = "\",\"";
 
     public DataRecorder() {
         if (!data1.exists()) {
             try {
                 data1.createNewFile();
-                data2.createNewFile();
 
-                pw1 = new PrintWriter(data1);
-                pw2 = new PrintWriter(data2);
+                pw = new PrintWriter(data1);
 
-                pw1.println("success,distance,dx,dy");
-                pw2.println("speed");
+                pw.println("success,distance,dx,dy,speed");
 
-                pw1.close();
-                pw2.close();
-
+                pw.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -61,33 +56,34 @@ public class DataRecorder extends SubsystemBase {
         this.dy = dy;
     }
 
-    public void writeData() {
+    public void writeTemp() {
 
+        tempStore.concat(
+            "\"" 
+            + Integer.toString(success) 
+            + midSep
+            + Double.toString(distance) 
+            + midSep
+            + Double.toString(dx) 
+            + midSep
+            + Double.toString(dy) 
+            + midSep
+            + Double.toString(speed) 
+            + "\"\n");
+    }
+
+    public void finalWrite() {
+        FileWriter fw;
         try {
+            fw = new FileWriter(data1, true);
 
-            FileWriter fW1 = new FileWriter(data1, true);
-            FileWriter fW2 = new FileWriter(data2, true);
-            pw1 = new PrintWriter(fW1);
-            pw2 = new PrintWriter(fW2);
-
-            pw1.print("\"");
-            pw1.print(success);
-            pw1.print("\", \"");
-            pw1.print(distance);
-            pw1.print("\",\"");
-            pw1.print(dx);
-            pw1.print("\", \"");
-            pw1.print(dy);
-            pw1.println("\"");
-            pw1.close();
-            pw2.print("\"");
-            pw2.print(speed);
-            pw2.println("\"");
-            pw2.close();
-            
+            pw.print(fw);
+            pw.close();
         } catch (IOException e) {
-            e.getStackTrace();
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+
     }
 
 }

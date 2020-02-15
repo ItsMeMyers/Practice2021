@@ -16,9 +16,7 @@ public class RecordData extends CommandBase {
 
     @Override
     public void execute() {
-        
         dataRecorder.setSuccess(success);
-        dataRecorder.writeData();
+        dataRecorder.writeTemp();
     }
-
 }

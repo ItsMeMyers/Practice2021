@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Turret;
 
 public class MoveTurret extends CommandBase {
+    // Threshold within which the turret won't bother moving
+    private final double powerThreshold = 0.02;
     private double power = 0.0;
 
     Turret turret;
@@ -28,7 +30,7 @@ public class MoveTurret extends CommandBase {
         }
 
         // If the power is minimal just set it to 0
-        if (Math.abs(power) <= .02) {
+        if (Math.abs(power) <= powerThreshold) {
             power = 0.0;
         }
 
@@ -36,13 +38,7 @@ public class MoveTurret extends CommandBase {
         turret.moveTurret();
     }
 
-    // Command runs until interrupted
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    // Runs when isFinished returns true
+    // Runs when command is interrupted
     @Override
     public void end(boolean interrupted) {
         turret.stopTurret();
