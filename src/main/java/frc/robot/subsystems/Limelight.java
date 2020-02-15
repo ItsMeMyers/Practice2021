@@ -1,5 +1,4 @@
 package frc.robot.subsystems;
-import java.util.List;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -30,7 +29,7 @@ public class Limelight extends SubsystemBase {
     }
 
     public boolean hasTargets() {
-        tTarget = getDouble("tv");
+        tTarget = getDouble("tv") == 1.0;
         return tTarget;
     }
 
@@ -55,7 +54,8 @@ public class Limelight extends SubsystemBase {
     }
 
     public double leftTarget() {
-        ta1 = getDouble("ta1")
+        ta1 = getDouble("ta1");
+        return ta1;
     }
 
     public void turnOnLED() {
@@ -86,8 +86,8 @@ public class Limelight extends SubsystemBase {
     }
 
     public LimelightLED getLED() {
-        List<LimelightLED> modes = [LimelightLED.PIPELINE, LimelightLED.OFF, LimelightLED.BLINK, LimelightLED.ON];
-        return modes[getDouble("ledMode")];
+        LimelightLED[] modes = {LimelightLED.PIPELINE, LimelightLED.OFF, LimelightLED.BLINK, LimelightLED.ON};
+        return modes[(int) getDouble("ledMode")];
     }
 
     public void lightCam(LimelightCAM state) {
@@ -96,8 +96,8 @@ public class Limelight extends SubsystemBase {
     }
 
     public LimelightCAM getCAM() {
-        List<LimelightCAM> modes = [LimelightCAM.VISION, LimelightCAM.DRIVER];
-        return modes[getEntry("ledMode")];
+        LimelightCAM[] modes = {LimelightCAM.VISION, LimelightCAM.DRIVER};
+        return modes[(int) getDouble("ledMode")];
     }
 
     public void setNumber(String entry, int state) {
