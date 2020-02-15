@@ -16,9 +16,6 @@ public class Limelight extends SubsystemBase {
     private NetworkTableEntry ta1 = null;
 
     public Limelight() {
-    }
-
-    public void initializeLimelight() {
 
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 
@@ -117,5 +114,5 @@ public class Limelight extends SubsystemBase {
         table.getEntry("camMode").setNumber(state.ordinal());
         System.out.println("Setting LimeLight CAMs to " + state.ordinal());
     }
-    
+
 }
