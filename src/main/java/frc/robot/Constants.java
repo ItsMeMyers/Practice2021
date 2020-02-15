@@ -66,11 +66,9 @@ public final class Constants {
   public static final int limitSwitchR = 15;
   public static final int limitSwitchL = 16;
 
-  /**
-   * 
+  /*
    * Need to edit all the numbers under this for 2020
-   * 
-   **/
+   */
 
   public static final int[] kLeftEncoderPorts = new int[] { 2, 3 };
   public static final int[] kRightEncoderPorts = new int[] { 0, 1 };
