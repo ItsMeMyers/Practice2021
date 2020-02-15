@@ -23,7 +23,6 @@ public class Shooter extends SubsystemBase {
 
     private double rpmThreshold = 0.0;
 
-    // TODO Change threshold voltage to a non-placeholder value
     private final double vThreshold = 1.0;
 
     public Shooter() {
