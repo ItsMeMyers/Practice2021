@@ -33,4 +33,10 @@ public class RouteFinder extends SubsystemBase {
 
         pathCommand = Robot.m_robotContainer.getAutonomousCommand(trajectory);
     }
+
+    /** Grants access to the pathCommand in RouteFinder */
+    public Command getPathCommand()
+    {
+        return pathCommand;
+    }
 }
