@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 public class DriveWithJoysticks extends CommandBase {
+    
     // If the speed of a motor is less than this threshold, we'll just set it to zero
     private final double driveThreshold = 0.08;
 

@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -30,6 +29,7 @@ public class Limelight extends SubsystemBase {
      * Initialize the Limelight file
      */
     public Limelight() {
+
         limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
         try {
@@ -88,14 +88,14 @@ public class Limelight extends SubsystemBase {
     }
 
     /**
-     * Turn on Limelight's leds
+     * Turn on Limelight's LEDs
      */
     public void turnOnLED() {
         lightLED(LED.ON);
     }
 
     /**
-     * Turn of Limelight's leds
+     * Turn of Limelight's LEDs
      */
     public void turnOffLED() {
         lightLED(LED.OFF);
@@ -116,27 +116,28 @@ public class Limelight extends SubsystemBase {
     }
 
     /**
-     * Set the state of the led
+     * Set the state of the LEDs
      */
     private void lightLED(LED state) {
-        setNumber("ledMode", state.ordinal());
+        // Goes into the Limelight network tables and changes the LED mode value
+        limelight.getEntry("ledMode").setNumber(state.ordinal());
         System.out.println("Setting LimeLight LEDs to " + state.ordinal());
     }
 
     /**
-     * Get the state of the led's
+     * Get the state of the LEDs
      * TODO: This method isn't actually used anywhere
      */
     public LED getLED() {
-        LED[] modes = {LED.PIPELINE, LED.OFF, LED.BLINK, LED.ON};
-        return modes[(int) getDouble("ledMode")];
+        return LED.values()[(int) getDouble("ledMode")];
     }
 
     /**
      * Set the state of the camera
      */
     public void lightCam(CAM state) {
-        setNumber("camMode", state.ordinal());
+        // Goes into the Limelight network tables and changes the cam mode value
+        limelight.getEntry("camMode").setNumber(state.ordinal());
         System.out.println("Setting LimeLight CAMs to " + state.ordinal());
     }
 
@@ -145,28 +146,13 @@ public class Limelight extends SubsystemBase {
      * TODO: This method isn't actually used anywhere
      */
     public CAM getCAM() {
-        CAM[] modes = {CAM.VISION, CAM.DRIVER};
-        return modes[(int) getDouble("ledMode")];
-    }
-
-    /**
-     * Set the number of an entry on the Limelight table some double
-     */
-    public void setNumber(String entry, double state) {
-        getEntry(entry).setNumber(state);
-    }
-
-    /**
-     * Get the network table entry
-     */
-    private NetworkTableEntry getEntry(String table) {
-        return limelight.getEntry(table);
+        return CAM.values()[(int) getDouble("ledMode")];
     }
 
     /**
      * Get the double stored in a network table entry
      */
     private double getDouble(String entry) {
-        return getEntry(entry).getDouble(0.0);
+        return limelight.getEntry(entry).getDouble(0.0);
     }
 }

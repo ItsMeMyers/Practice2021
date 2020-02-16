@@ -127,6 +127,9 @@ public class Drivetrain extends SubsystemBase {
         leftMotors.set(leftP);
     }
 
+    /**
+     * Stops the drive train.
+     */
     public void stop() {
         rightPower = 0.0;
         leftPower = 0.0;
@@ -134,9 +137,12 @@ public class Drivetrain extends SubsystemBase {
         rightMotors.stopMotor();
     }
 
+    /**
+     * Called periodically by the CommmandScheduler.
+     */
     @Override
     public void periodic() {
-        // Update the odometry in the periodic block
+        // Update the odometry in the periodic block (gets location on field)
         odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getDistance(),
                         rightEncoder.getDistance());
     }
@@ -144,7 +150,7 @@ public class Drivetrain extends SubsystemBase {
     /**
      * Returns the currently-estimated pose of the robot.
      *
-     * @return The pose.
+     * @return The pose. (position on the field)
      */
     public Pose2d getPose() {
         return odometry.getPoseMeters();
@@ -170,7 +176,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Drives the robot using arcade controls.
+     * Drives the robot using arcade controls. TODO: Unused method
      *
      * @param fwd the commanded forward movement
      * @param rot the commanded rotation
@@ -182,7 +188,7 @@ public class Drivetrain extends SubsystemBase {
     /**
      * Controls the left and right sides of the drive directly with voltages.
      *
-     * @param leftVolts  the commanded left output
+     * @param leftVolts the commanded left output
      * @param rightVolts the commanded right output
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {

@@ -12,10 +12,8 @@ public class Intake extends SubsystemBase {
     private Solenoid intakeSolenoid;
     private WPI_TalonSRX intakeMotor;
 
-    private double in = -1.0;
-    private double out = 1.0;
-
-    private boolean state = false;
+    private double inSpeed = -1.0;
+    private double outSpeed = 1.0;
 
     /**
      * The intake pulls the balls from the ground into the robot.
@@ -38,14 +36,7 @@ public class Intake extends SubsystemBase {
     * 4. This changes the intake direction, not whether it is stowed in or not.
     */
     public void runIn() {
-        intakeMotor.set(in);
-    }
-
-    /**
-     * Pushes out a ball out from the feeder.
-     */
-    public void runOut() {
-        intakeMotor.set(out);
+        intakeMotor.set(inSpeed);
     }
 
     /**
@@ -54,17 +45,25 @@ public class Intake extends SubsystemBase {
     * 3. Balls can be pushed out onto the ground. <br>
     * 4. This changes the intake direction, not whether it is stowed out or not.
     */
+    public void runOut() {
+        intakeMotor.set(outSpeed);
+    }
+
+    /**
+    * Stops the intake motor.
+    */
     public void stopMotor() {
         intakeMotor.set(0.0);
     }
 
     /**
     * 1. This command stows in the intake system and puts it out.
-    * 2. Press the A button to toggle it.
-    * 3. It will toggle it from stowed in to out or vice versa.
-    * 4. This is different from turning the intake direction from in and out.
+    * 2. Press the A button to toggle this command.
+    * 3. This works by turning the intake solenoid on and off.
+    * 4. It will toggle it from stowed in to out or vice versa.
+    * 5. This is different from turning the intake direction from in and out.
     */
     public void toggle() {
-        intakeSolenoid.set(!state);
+        intakeSolenoid.set(!intakeSolenoid.get());
     }
 }

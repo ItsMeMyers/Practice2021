@@ -27,9 +27,7 @@ public final class Constants {
   * rotation = 0
   * x = 5
   y = 0
-
   */
-
 
   // On-the-go route finding waypoint variables
   public static final int pointx = 0;

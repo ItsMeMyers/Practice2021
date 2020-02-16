@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Turret;
 
 public class MoveTurret extends CommandBase {
+    
     // Threshold within which the turret won't bother moving
     private final double powerThreshold = 0.02;
     private double power = 0.0;

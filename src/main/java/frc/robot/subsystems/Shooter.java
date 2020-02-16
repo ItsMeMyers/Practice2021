@@ -34,12 +34,13 @@ public class Shooter extends SubsystemBase {
         shootMotorR = new WPI_TalonFX(Constants.shootMotorR);
         shootMotorL = new WPI_TalonFX(Constants.shootMotorL);
         
+        // When the motors are in neutral mode the motors will keep moving easily (coast)
         shootMotorR.setNeutralMode(NeutralMode.Coast);
         shootMotorL.setNeutralMode(NeutralMode.Coast);
 
-        // This means the left motor will be equal to the right motor
+        // This means the left motor speed will be equal to the right motor speed
         shootMotorL.follow(shootMotorR);
-        // shootMotorL.setInverted(true);
+        // The left motor needs to spin the opposite direction of the right motor
         shootMotorL.setInverted(InvertType.OpposeMaster);
     }
 

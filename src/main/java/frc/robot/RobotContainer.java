@@ -7,12 +7,13 @@
 
 package frc.robot;
 
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
-
 import java.util.List;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Axis;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -23,20 +24,11 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.PerpetualCommand;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-
-//import static edu.wpi.first.wpilibj.XboxController.Button;
-
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Axis;
-import edu.wpi.first.wpilibj.XboxController.Button;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -75,9 +67,6 @@ public class RobotContainer {
   // Data Recorder
   public final static DataRecorder dataRecorder = new DataRecorder();
 
-  // driveWithJoysticks TODO: When is this scheduled/used? It's not called anywhere
-  public final static DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drivetrain, rightStick, leftStick);
-
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -93,7 +82,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //Configure Each Button
+    // Defines the button mappings
     final JoystickButton aButton = new JoystickButton(gamepad, Button.kA.value);
     final JoystickButton yButton = new JoystickButton(gamepad, Button.kY.value);
     final JoystickButton bButton = new JoystickButton(gamepad, Button.kB.value);
@@ -103,15 +92,25 @@ public class RobotContainer {
     final POVButton upButton = new POVButton(gamepad, Constants.povUp);
     final POVButton downButton = new POVButton(gamepad, Constants.povDown);
 
+    // Attaches a commmand to each button
+    // Records data with success
     bButton.whenPressed(new RecordData(dataRecorder, 1));
+    // Records data without success
     xButton.whenPressed(new RecordData(dataRecorder, 0));
+    // Stows in or puts out the intake system
     aButton.whenPressed(new InstantCommand(intake::toggle, intake));
+    // Starts the shooter motors
     yButton.whenPressed(new RunShooter(shooter, feeder, limelight, dataRecorder));
+    // Takes in balls from the ground
     rTrigger.whenHeld(new StartEndCommand(intake::runIn, intake::stopMotor, intake));
+    // Pushes out balls onto the ground
     rBumper.whenHeld(new StartEndCommand(intake::runOut, intake::stopMotor, intake));
+    // Starts targeting
     upButton.whenPressed(new TargetEntity(limelight, turret, gamepad));
+    // Ends targeting
     downButton.cancelWhenPressed(new TargetEntity(limelight, turret, gamepad));
 
+    // TODO: Might need to change this? This enables driving forever, but it wasn't implemented anywhere before
     (new PerpetualCommand(new DriveWithJoysticks(drivetrain, rightStick, leftStick))).schedule();
   }
 

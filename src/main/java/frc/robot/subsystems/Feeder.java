@@ -13,7 +13,7 @@ public class Feeder extends SubsystemBase {
 
     private int ballCounter = 0;
 
-    private double speedLimiter = .7;
+    private double speedLimiter = 0.7;
 
     /**
      * This is the subsystem that sends the balls to the shooter.
