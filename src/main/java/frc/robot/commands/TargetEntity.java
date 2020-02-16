@@ -4,8 +4,14 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Turret;
 
 public class TargetEntity extends CommandBase {
+	
+	private Limelight limelight;
+	private Turret turret;
+	
 	private static final double powerConstant = 0.025; // Proportional control constant to determine the power
 	private static final double minimumPower = 0.05; // If the power is any less than this minimumPower the turret may not actually move
 	private static final double threshold = 0.15; // The threshold in which the turret actually needs to move
@@ -35,13 +41,16 @@ public class TargetEntity extends CommandBase {
 	15. Pass the power to the motor. <br>
 	16. Print the values to SmartDashboard. <br>
 	*/
-	public TargetEntity() {
+	public TargetEntity(Limelight ll, Turret trrt) {
+		
+		this.turret = trrt;
+		this.limelight = ll;
 		hasValidTarget = false;
 		power = 0;
 		additionalPower = 0;
 		turretPower = 0;
-		addRequirements(RobotContainer.turret);
-		addRequirements(RobotContainer.limelight);
+		addRequirements(turret);
+		addRequirements(limelight);
 	}
 
 	/**
