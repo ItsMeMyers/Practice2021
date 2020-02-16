@@ -1,9 +1,9 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
 
@@ -11,6 +11,7 @@ public class TargetEntity extends CommandBase {
 	
 	private Limelight limelight;
 	private Turret turret;
+	private XboxController gamepad;
 	
 	private static final double powerConstant = 0.025; // Proportional control constant to determine the power
 	private static final double minimumPower = 0.05; // If the power is any less than this minimumPower the turret may not actually move
@@ -41,10 +42,11 @@ public class TargetEntity extends CommandBase {
 	15. Pass the power to the motor. <br>
 	16. Print the values to SmartDashboard. <br>
 	*/
-	public TargetEntity(Limelight ll, Turret trrt) {
+	public TargetEntity(Limelight ll, Turret trrt, XboxController gmpd) {
 		
 		this.turret = trrt;
 		this.limelight = ll;
+		this.gamepad = gmpd;
 		hasValidTarget = false;
 		power = 0;
 		additionalPower = 0;
@@ -59,14 +61,14 @@ public class TargetEntity extends CommandBase {
 	 */
 	@Override
 	public void execute() {
-		RobotContainer.limelight.turnOnLED(); // Turn on the LED's if they haven't been turned on before
-		RobotContainer.limelight.turnOnCam(); // Turn on vision mode if it wasn't turned on before
+		limelight.turnOnLED(); // Turn on the LED's if they haven't been turned on before
+		limelight.turnOnCam(); // Turn on vision mode if it wasn't turned on before
 
 		// Whether Limelight detects a target
-		hasValidTarget = RobotContainer.limelight.hasTargets();
+		hasValidTarget = limelight.hasTargets();
 		if (hasValidTarget) {
 			// The number of degrees the target is off center horizontally
-			double x = RobotContainer.limelight.x();
+			double x = limelight.x();
 			// The number of degrees Limelight needs to shift by to be centered
 			double degreesToCenter = -x;
 
@@ -88,7 +90,7 @@ public class TargetEntity extends CommandBase {
 
 			// To increase the speed of the turret, you can push the Right Joystick on
 			// the gamepad to add additional power
-			additionalPower = Math.abs(RobotContainer.gamepad.getY(Hand.kLeft)) * Math.signum(power);
+			additionalPower = Math.abs(gamepad.getY(Hand.kRight)) * Math.signum(power);
 			// Total power of the turret
 			turretPower = power + additionalPower;
 			// Makes sure the power does not get higher than 1 or less than -1
@@ -104,13 +106,13 @@ public class TargetEntity extends CommandBase {
 			turretPower = 0.0;
 		}
 
-		RobotContainer.turret.setSpinPower(turretPower);
+		turret.setSpinPower(turretPower);
 		// Puts values on the Smart Dashboard
 		SmartDashboard.putBoolean("Target.TargetIdentified", hasValidTarget);
 		SmartDashboard.putNumber("Target.Power", power);
 		SmartDashboard.putNumber("Target.AddPower", additionalPower);
 		SmartDashboard.putNumber("Target.TurretPower", turretPower);
-		SmartDashboard.putNumber("GamePad.POV", RobotContainer.gamepad.getPOV());
+		SmartDashboard.putNumber("GamePad.POV", gamepad.getPOV());
 	}
 
 	/**
@@ -120,6 +122,6 @@ public class TargetEntity extends CommandBase {
 	 */
 	@Override
 	public void end(boolean interrupted) {
-		RobotContainer.limelight.turnOffLED();
+		limelight.turnOffLED();
 	}
 }
