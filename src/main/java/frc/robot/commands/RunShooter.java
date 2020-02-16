@@ -39,10 +39,10 @@ public class RunShooter extends CommandBase {
         updateLimelightTracking();
         dist = findDistance();
         
-        while (!shooter.atSpeed(shooter.getShooterRPMs())) {
-            shooter.geToSpeed();
+        while (!shooter.atSpeed()) {
+            shooter.getToSpeed();
         }
-        while (shooter.atSpeed(shooter.getShooterRPMs())) {
+        while (shooter.atSpeed()) {
             new FeederRun(feeder);
         }
         feeder.shotBall();

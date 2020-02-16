@@ -43,11 +43,18 @@ public class Shooter extends SubsystemBase {
         shootMotorL.setInverted(InvertType.OpposeMaster);
     }
 
-    public void geToSpeed() {
+    /**
+     * Starts the shooter motors
+     */
+    public void getToSpeed() {
         shootMotorR.set(1.0);
     }
 
-    // Calculate required rpm of turret motor for supplied distance (ft)
+    /**
+     * @param distance in ft
+     * @return Required rpm of turret motor to shoot that far
+     */
+    // TODO: Explain this
     public static int DistanceToRPM(double distance){
         distance = distance / 2;
         double val = distance * 32.6;
