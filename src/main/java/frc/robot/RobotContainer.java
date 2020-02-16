@@ -73,9 +73,6 @@ public class RobotContainer {
   // Data Recorder
   public final static DataRecorder dataRecorder = new DataRecorder();
 
-  // driveWithJoysticks TODO: When is this scheduled/used? It's not called anywhere
-  public final static DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drivetrain, rightStick, leftStick);
-
   // recordData
   public final static RecordData recordDataSuccessful = new RecordData(dataRecorder, 1);
   public final static RecordData recordDataUnsuccessful = new RecordData(dataRecorder, 0);
