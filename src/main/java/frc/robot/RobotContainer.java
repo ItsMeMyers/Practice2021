@@ -81,7 +81,7 @@ public class RobotContainer {
   public final static RecordData recordDataUnsuccessful = new RecordData(dataRecorder, 0);
 
   // targetEntity
-  public final static TargetEntity targetEntity = new TargetEntity(limelight, turret);
+  public final static TargetEntity targetEntity = new TargetEntity();
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
