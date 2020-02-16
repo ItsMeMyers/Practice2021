@@ -43,6 +43,7 @@ public class RunShooter extends CommandBase {
             shooter.getToSpeed();
         }
         while (shooter.atSpeed()) {
+            // TODO: What does this even do it doesn't schedule it or anything it just initializes it
             new FeederRun(feeder);
         }
         feeder.shotBall();

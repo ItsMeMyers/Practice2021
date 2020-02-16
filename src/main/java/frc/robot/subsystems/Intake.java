@@ -59,10 +59,11 @@ public class Intake extends SubsystemBase {
     }
 
     /**
-     * Brings the intake system in and out.
-     * It can be stowed away or out.
-     * Note: Does not change direction of intake system
-     */
+    * 1. This command stows in the intake system and puts it out.
+    * 2. Press the A button to toggle it.
+    * 3. It will toggle it from stowed in to out or vice versa.
+    * 4. This is different from turning the intake direction from in and out.
+    */
     public void toggle() {
         intakeSolenoid.set(!state);
     }

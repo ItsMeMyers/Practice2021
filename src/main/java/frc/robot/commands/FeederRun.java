@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
 
 public class FeederRun extends CommandBase {
-    // TODO: This doesn't seem to ever be scheduled or called anywhere
+    // TODO: This can be replaced with some sort of RunCommand type and an inline definition probably
     private Feeder feeder;
 
     /**
