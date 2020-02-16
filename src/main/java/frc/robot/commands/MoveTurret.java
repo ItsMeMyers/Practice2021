@@ -10,8 +10,8 @@ public class MoveTurret extends CommandBase {
     private final double powerThreshold = 0.02;
     private double power = 0.0;
 
-    Turret turret;
-    XboxController gamepad;
+    private Turret turret;
+    private XboxController gamepad;
 
     public MoveTurret(Turret trrt, XboxController gmpd) {
         this.turret = trrt;

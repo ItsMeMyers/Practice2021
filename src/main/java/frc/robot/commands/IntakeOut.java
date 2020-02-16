@@ -5,10 +5,10 @@ import frc.robot.subsystems.Intake;
 
 public class IntakeOut extends CommandBase {
 
-    Intake intake;
+    private Intake intake;
 
     /**
-     * Pushes a ball out onto the ground.
+     * Hold down the right button on the gamepad to push a ball out onto the ground.
      * This changes the intake direction, not whether it is stowed out or not.
      */
     public IntakeOut(Intake itk) {

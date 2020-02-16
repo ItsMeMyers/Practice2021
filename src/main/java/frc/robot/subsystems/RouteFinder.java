@@ -19,6 +19,7 @@ public class RouteFinder extends SubsystemBase {
     public static Command pathCommand;
 
         /** Grants access to the pathCommand in RouteFinder */
+        // TODO: Arnav what the fuck is this please change it or put in some explanations
         public static Command getPathCommand(int pointx, int pointy, int rotation, int waypointx, int waypointy) {
                 Trajectory foundTrajectory = trajectorygen(pointx, pointy, rotation,
                                 List.of(new Translation2d(waypointx, waypointy)));

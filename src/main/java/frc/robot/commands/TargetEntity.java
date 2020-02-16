@@ -21,6 +21,26 @@ public class TargetEntity extends CommandBase {
 	private double additionalPower; // Updated by the right Joystick on the gamepad
 	private double turretPower; // Updated by the LimeLight camera; equal to power + additionalPower
 
+	/**
+	1. Turns on LimeLight's LEDs and starts its targeting <br>
+	2. Use the Up arrow on the POV to enable this command <br>
+	3. Use the Down arrow to disable it <br>
+	4. If LimeLight doesn't have a target, then set power, additionalPower, and turretPower to 0.0 <br>
+	5. If LimeLight does have a target, then: <br>
+	6. Get the tx value from NetworkTables. <br>
+	7. Turn the value into a speed by: <br>
+	8. Inverting the X value (because if it's negative, then get a positive value
+		which will make the turret turn right towards the center) <br>
+	9. Multiplying it by the proportional control constant <br>
+	10. If the x value is not within the threshold and the power is less than the minimum power, 
+		set the power to the minimum power <br>
+	11. If the x value is within the threshold, set the power to 0 <br>
+	12. Get the additional power from the game pad's left joystick's Y value <br>
+	13. If the total power is greater than 1, set it to 1 <br>
+	14. If the total power is less than -1, set it to -1 <br>
+	15. Pass the power to the motor <br>
+	16. Print the values to SmartDashboard <br>
+	*/
 	public TargetEntity(Limelight ll, Turret trrt) {
 		
 		this.turret = trrt;
@@ -33,26 +53,7 @@ public class TargetEntity extends CommandBase {
 		addRequirements(limelight);
 	}
 
-	/*
-	1. Turns on LimeLight's LEDs and starts its targeting
-		1. Use the Up arrow on the POV to enable this command
-		2. Use the Down arrow to disable it
-	2. If LimeLight doesn't have a target, then set power, additionalPower, and turretPower to 0.0
-	3. If LimeLight does have a target, then:
-		1. Get the tx value from NetworkTables.
-		2. Turn the value into a speed by:
-			a. Inverting the X value (because if it's negative, then get a positive value 
-			which will make the turret turn right towards the center)
-			b. Multiplying it by the proportional control constant
-		3. If the x value is not within the threshold and the power is less than the minimum power, 
-		set the power to the minimum power
-		4. If the x value is within the threshold, set the power to 0
-		5. Get the additional power from the game pad's left joystick's Y value
-	 	6. If the total power is greater than 1, set it to 1
-	 	7. If the total power is less than -1, set it to -1
-	4. Pass the power to the motor
-	5. Print the values to SmartDashboard
-	*/
+
 
 	/**
 	 * Execute one iteration of the TargetEntity command (For multiple iterations, call multiple times)

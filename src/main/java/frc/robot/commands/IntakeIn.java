@@ -5,10 +5,10 @@ import frc.robot.subsystems.Intake;
 
 public class IntakeIn extends CommandBase {
 
-    Intake intake;
+    private Intake intake;
 
     /**
-     * This takes in a ball from the ground.
+     * Hold the right trigger on the gamepad to take in a ball from the ground.
      * Balls from the intake are then stored in the feeder.
      * This changes the intake direction, not whether it is stowed in or not.
      */

@@ -5,7 +5,7 @@ import frc.robot.subsystems.Intake;
 
 public class IntakeToggle extends CommandBase {
 
-    Intake intake;
+    private Intake intake;
 
     /**
      * This command changes the mode of the intake system.
@@ -17,6 +17,9 @@ public class IntakeToggle extends CommandBase {
         addRequirements(intake);
     }
 
+    /**
+     * When the command is called it toggles the state of the intake system
+     */
     @Override
     public void initialize() {
         intake.toggle();

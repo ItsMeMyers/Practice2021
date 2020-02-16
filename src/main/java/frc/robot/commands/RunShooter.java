@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DataRecorder;
 import frc.robot.subsystems.Feeder;
@@ -9,11 +8,10 @@ import frc.robot.subsystems.Shooter;
 
 public class RunShooter extends CommandBase {
 
-    Shooter shooter;
-    Feeder feeder;
-    XboxController gamepad;
-    Limelight limelight;
-    DataRecorder dataRecorder;
+    private Shooter shooter;
+    private Feeder feeder;
+    private Limelight limelight;
+    private DataRecorder dataRecorder;
 
     private double dist = 0.0;
 
@@ -28,9 +26,9 @@ public class RunShooter extends CommandBase {
 
     public RunShooter(Shooter sht, Feeder fd, Limelight ll, DataRecorder dR) {
         this.shooter = sht;
+        this.feeder = fd;
         this.limelight = ll;
         this.dataRecorder = dR;
-        this.feeder = fd;
 
         addRequirements(shooter);
     }

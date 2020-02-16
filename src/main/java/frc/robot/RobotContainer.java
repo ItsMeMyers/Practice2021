@@ -76,10 +76,6 @@ public class RobotContainer {
   // driveWithJoysticks
   public final static DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drivetrain, rightStick, leftStick);
 
-  // recordData
-  public final static RecordData recordDataSuccessful = new RecordData(dataRecorder, true);
-  public final static RecordData recordDataUnsuccessful = new RecordData(dataRecorder, false);
-
   // targetEntity
   public final static TargetEntity targetEntity = new TargetEntity(limelight, turret);
 
@@ -108,8 +104,8 @@ public class RobotContainer {
     final POVButton upButton = new POVButton(gamepad, Constants.povUp);
     final POVButton downButton = new POVButton(gamepad, Constants.povDown);
 
-    bButton.whenPressed(recordDataSuccessful);
-    xButton.whenPressed(recordDataUnsuccessful);
+    bButton.whenPressed(new RecordData(dataRecorder, true));
+    xButton.whenPressed(new RecordData(dataRecorder, false));
     aButton.whenPressed(new IntakeToggle(intake));
     yButton.whenPressed(new RunShooter(shooter, feeder, limelight, dataRecorder));
     rTrigger.whenHeld(new IntakeIn(intake));
