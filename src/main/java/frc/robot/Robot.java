@@ -111,6 +111,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     final Command ballCommand = RouteFinder.getPathCommand(Constants.pointx, Constants.pointy, Constants.rotation, Constants.waypointx, Constants.waypointy);
+    
   }
 
   @Override
