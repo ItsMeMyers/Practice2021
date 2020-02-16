@@ -214,7 +214,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Gets the left drive encoder.
+     * Gets the left drive encoder. TODO: unused method
      *
      * @return the left drive encoder
      */
@@ -223,7 +223,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Gets the right drive encoder.
+     * Gets the right drive encoder. TODO: unused method
      *
      * @return the right drive encoder
      */

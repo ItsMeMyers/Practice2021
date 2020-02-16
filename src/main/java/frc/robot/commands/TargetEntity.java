@@ -51,8 +51,7 @@ public class TargetEntity extends CommandBase {
 		power = 0;
 		additionalPower = 0;
 		turretPower = 0;
-		addRequirements(turret);
-		addRequirements(limelight);
+		addRequirements(limelight, turret);
 	}
 
 	/**

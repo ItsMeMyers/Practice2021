@@ -15,8 +15,11 @@ public class RunShooter extends CommandBase {
 
     private double dist = 0.0;
 
+    // How high the outer port is above the ground (inches)
     private final double targetHeight = 98.25;
+    // How high the shooter is above the ground (inches)
     private final double mountHeight = 36.0;
+    // in radians, equivalent to 30 degrees
     private final double angleToGround = (Math.PI / 6.0);
     private double angleToTarget = 0.0;
 
@@ -29,8 +32,7 @@ public class RunShooter extends CommandBase {
         this.feeder = fd;
         this.limelight = ll;
         this.dataRecorder = dR;
-
-        addRequirements(shooter);
+        addRequirements(shooter, feeder);
     }
 
     @Override
@@ -56,18 +58,26 @@ public class RunShooter extends CommandBase {
         } */
     }
 
-    // Command stops when interrupted
+    /**
+     * Command stops when interrupted
+     * */
     @Override
     public void end(boolean interrupted) {
         shooter.stopShooter();
     }
 
+    /**
+     * @return the distance to the target
+     */
     public double findDistance() {
-        // d = (targetHeight - mountHeight) / (tan(angleToGround+angleToTarget))
-        angleToTarget = ty;
-        return ((targetHeight - mountHeight) / (double)(Math.tan(angleToGround+angleToTarget)));
+        angleToTarget = ty; // Get from limelight
+        return ((targetHeight - mountHeight) / (double) (Math.tan(angleToGround + angleToTarget)));
     }
 
+    /**
+     * Checks if the limelight has a target.
+     * If it does, update the tx and ty values.
+     */
     public void updateLimelightTracking() {
         hasValidTarget = limelight.hasTargets();
         if (!hasValidTarget) {

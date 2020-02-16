@@ -21,6 +21,7 @@ public class Turret extends SubsystemBase {
         limitR = new DigitalInput(Constants.limitSwitchR);
         limitL = new DigitalInput(Constants.limitSwitchL);
 
+        // When the motor is in neutral mode the motor will keep moving easily (coast)
         turretMotor.setNeutralMode(NeutralMode.Brake);
     }
 
@@ -35,9 +36,6 @@ public class Turret extends SubsystemBase {
             spinPwr = -1.0;
         }
         this.spinPower = spinPwr;
-    }
-
-    public void moveTurret() {
         turretMotor.set(spinPower);
     }
 
@@ -49,6 +47,9 @@ public class Turret extends SubsystemBase {
         return limitL.get();
     }
 
+    /**
+     * Stops the turret motor.
+     */
     public void stopTurret() {
         spinPower = 0.0;
         turretMotor.stopMotor();

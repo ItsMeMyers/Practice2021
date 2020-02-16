@@ -91,34 +91,34 @@ public class Limelight extends SubsystemBase {
      * Turn on Limelight's LEDs
      */
     public void turnOnLED() {
-        lightLED(LED.ON);
+        setLEDMode(LED.ON);
     }
 
     /**
      * Turn of Limelight's LEDs
      */
     public void turnOffLED() {
-        lightLED(LED.OFF);
+        setLEDMode(LED.OFF);
     }
 
     /**
-     * Set the Limelight camera to tracking mode
+     * Set the Limelight camera to tracking (vision) mode
      */
     public void turnOnCam() {
-        lightCam(CAM.VISION);
+        setCameraMode(CAM.VISION);
     }
 
     /**
-     * Set the Limelight camera to driver mode
+     * Set the Limelight camera to driver mode (no filter)
      */
     public void turnOffCam() {
-        lightCam(CAM.DRIVER);
+        setCameraMode(CAM.DRIVER);
     }
 
     /**
-     * Set the state of the LEDs
+     * @param state what to set the limelight LED mode to
      */
-    private void lightLED(LED state) {
+    private void setLEDMode(LED state) {
         // Goes into the Limelight network tables and changes the LED mode value
         limelight.getEntry("ledMode").setNumber(state.ordinal());
         System.out.println("Setting LimeLight LEDs to " + state.ordinal());
@@ -133,16 +133,16 @@ public class Limelight extends SubsystemBase {
     }
 
     /**
-     * Set the state of the camera
+     * @param state what to set the limelight camera mode to
      */
-    public void lightCam(CAM state) {
+    private void setCameraMode(CAM state) {
         // Goes into the Limelight network tables and changes the cam mode value
         limelight.getEntry("camMode").setNumber(state.ordinal());
         System.out.println("Setting LimeLight CAMs to " + state.ordinal());
     }
 
     /**
-     * Get the state of the camera
+     * @return the state of the Limelight camera
      * TODO: This method isn't actually used anywhere
      */
     public CAM getCAM() {
@@ -150,7 +150,9 @@ public class Limelight extends SubsystemBase {
     }
 
     /**
-     * Get the double stored in a network table entry
+     * @param entry what to check the Limelight network tables for
+     * @return The value stored in the network table entry.
+     * If it doesn't exist, return 0.0
      */
     private double getDouble(String entry) {
         return limelight.getEntry(entry).getDouble(0.0);

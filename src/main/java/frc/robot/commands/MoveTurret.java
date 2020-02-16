@@ -7,7 +7,7 @@ import frc.robot.subsystems.Turret;
 
 public class MoveTurret extends CommandBase {
     
-    // Threshold within which the turret won't bother moving
+    // If the speed of the motor is less than this threshold, we'll just set it to zero
     private final double powerThreshold = 0.02;
     private double power = 0.0;
 
@@ -37,7 +37,6 @@ public class MoveTurret extends CommandBase {
         }
 
         turret.setSpinPower(power);
-        turret.moveTurret();
     }
 
     // Runs when command is interrupted

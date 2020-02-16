@@ -12,6 +12,7 @@ public class RecordData extends CommandBase {
     public RecordData(DataRecorder dR, int s) {
         this.dataRecorder = dR;
         this.success = s;
+        addRequirements(dataRecorder);
     }
 
     @Override

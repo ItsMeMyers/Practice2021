@@ -23,6 +23,7 @@ public class Feeder extends SubsystemBase {
         feederMotor1 = new WPI_TalonSRX(Constants.feederMotor1);
         feederMotor2 = new WPI_TalonSRX(Constants.feederMotor2);
 
+        // When the motors are in neutral mode the motors will keep moving easily (coast)
         feederMotor1.setNeutralMode(NeutralMode.Coast);
         feederMotor2.setNeutralMode(NeutralMode.Coast);
     }

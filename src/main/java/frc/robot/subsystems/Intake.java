@@ -25,6 +25,7 @@ public class Intake extends SubsystemBase {
         intakeMotor = new WPI_TalonSRX(Constants.intakeMotor);
         intakeSolenoid = new Solenoid(Constants.intakeSolenoid);
 
+        // When the motor is in neutral mode the motor will keep moving easily (coast)
         intakeMotor.setNeutralMode(NeutralMode.Brake);
         intakeSolenoid.set(true);
     }

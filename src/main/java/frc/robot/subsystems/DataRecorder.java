@@ -35,6 +35,7 @@ public class DataRecorder extends SubsystemBase {
         }
     }
 
+    // TODO: a lot of these methods are unused
     public void setSpeed(double spd) {
         this.speed = spd;
     }
