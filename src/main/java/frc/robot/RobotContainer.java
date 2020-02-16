@@ -77,8 +77,8 @@ public class RobotContainer {
   public final static DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(drivetrain, rightStick, leftStick);
 
   // recordData
-  public final static RecordData recordDataSuccessful = new RecordData(dataRecorder, true);
-  public final static RecordData recordDataUnsuccessful = new RecordData(dataRecorder, false);
+  public final static RecordData recordDataSuccessful = new RecordData(dataRecorder, 1);
+  public final static RecordData recordDataUnsuccessful = new RecordData(dataRecorder, 0);
 
   // targetEntity
   public final static TargetEntity targetEntity = new TargetEntity(limelight, turret);

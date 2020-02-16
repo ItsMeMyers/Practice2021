@@ -7,9 +7,9 @@ public class RecordData extends CommandBase {
 
     DataRecorder dataRecorder;
     
-    private boolean success;
+    private int success;
 
-    public RecordData(DataRecorder dR, boolean s) {
+    public RecordData(DataRecorder dR, int s) {
         this.dataRecorder = dR;
         this.success = s;
     }
