@@ -19,7 +19,8 @@ public class Shooter extends SubsystemBase {
     private double leftRatio = 3.0;
     private double encoderEPR = 4096.0;
 
-    private double[] RPMs = new double[2];
+    private double rightRPM;
+    private double leftRPM;
 
     private double rpmThreshold = 0.0;
 
@@ -55,17 +56,27 @@ public class Shooter extends SubsystemBase {
         return (int)(val / (Math.PI * (diameterOfTurretWheelInches / 12))) * 60;
     }
 
-    public double[] getShooterRPMs() {
-        RPMs[0] = shootMotorR.getSelectedSensorVelocity() * 600.0 / (rightRatio * encoderEPR);
-        RPMs[1] = shootMotorL.getSelectedSensorVelocity() * 600.0 / (leftRatio * encoderEPR);
-        return RPMs;
+    /**
+     * @return Updates the RPM value of the right shooter motor
+     */
+    public double getRightRPM() {
+        rightRPM = shootMotorR.getSelectedSensorVelocity() * 600.0 / (rightRatio * encoderEPR);
+        return rightRPM;
+    }
+
+    /**
+     * @return Updates the RPM value of the left shooter motor
+     */
+    public double getLeftRPM() {
+        leftRPM = shootMotorL.getSelectedSensorVelocity() * 600.0 / (leftRatio * encoderEPR);
+        return leftRPM;
     }
 
     /**
      * Checks if both of the rpms are greater than the rpm threshold
      */
-    public boolean atSpeed(double[] rpms) {
-        return ((rpms[0] >= rpmThreshold) && (rpms[1] >= rpmThreshold));
+    public boolean atSpeed() {
+        return ((getRightRPM() >= rpmThreshold) && (getLeftRPM() >= rpmThreshold));
     }
 
     // TODO test this method functionality
@@ -76,6 +87,9 @@ public class Shooter extends SubsystemBase {
         return ((shootMotorR.getBusVoltage() >= vThreshold) || (shootMotorL.getBusVoltage() >= vThreshold));
     }
 
+    /**
+     * Stops the shooter
+     */
     public void stopShooter() {
         shootMotorR.stopMotor();
         shootMotorL.stopMotor();

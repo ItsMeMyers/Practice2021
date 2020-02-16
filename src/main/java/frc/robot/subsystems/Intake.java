@@ -45,6 +45,9 @@ public class Intake extends SubsystemBase {
         intakeMotor.set(out);
     }
 
+    /**
+     * Stops the intake.
+     */
     public void stopMotor() {
         intakeMotor.set(0.0);
     }
@@ -52,6 +55,7 @@ public class Intake extends SubsystemBase {
     /**
      * Brings the intake system in and out.
      * It can be stowed away or out.
+     * Note: Does not change direction of intake system
      */
     public void toggle() {
         intakeSolenoid.set(!state);

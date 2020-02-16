@@ -28,22 +28,32 @@ public class Feeder extends SubsystemBase {
     }
 
     /**
-     * Runs the motors. This feeds the balls to the shooter.
+     * Runs the feeder. This feeds the balls to the shooter.
      */
     public void run() {
         feederMotor1.set(speedLimiter);
         feederMotor2.set(speedLimiter * Constants.INVERT_MOTOR);
     }
 
+    /**
+     * Stops the feeder.
+     */
     public void stop() {
         feederMotor1.stopMotor();
         feederMotor2.stopMotor();
     }
 
+    // TODO: These addBall and shotBall methods should probably be implemented somewhere
+    /**
+     * Increments the ball count by 1.
+     */
     public void addBall() {
         ballCounter++;
     }
 
+    /**
+     * Decrements the ball count by 1.
+     */
     public void shotBall() {
         ballCounter--;
     }

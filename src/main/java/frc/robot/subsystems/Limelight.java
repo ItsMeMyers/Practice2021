@@ -5,6 +5,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Limelight extends SubsystemBase {
+
     /**
      * Limelight's camera states
      */
@@ -44,28 +45,28 @@ public class Limelight extends SubsystemBase {
     }
 
     /**
-     * Get if the Limelight has a target
+     * @return Whether the limelight has any valid targets
      */
     public boolean hasTargets() {
         return getDouble("tv") == 1.0;
     }
 
     /**
-     * Get the tx double from Limelight
+     * @return Horizontal Offset From Crosshair To Target (-29.8 to 29.8 degrees)
      */
     public double x() {
         return getDouble("tx");
     }
 
     /**
-     * Get the ty double from Limelight
+     * @return Vertical Offset From Crosshair To Target (-24.85 to 24.85 degrees)
      */
     public double y() {
         return getDouble("ty");
     }
 
     /**
-     * Get the target area of the object
+     * @return Target Area (0% of image to 100% of image)
      */
     public double targetArea() {
         return getDouble("ta");
@@ -77,7 +78,8 @@ public class Limelight extends SubsystemBase {
     public double rightTarget() {
         return getDouble("ta0");
     }
-
+    // TODO: Are you sure this is what ta0 and ta1 means? Also they aren't even used anywhere
+    // https://docs.limelightvision.io/en/latest/networktables_api.html#advanced-usage-with-raw-contours
     /**
      * Get the target area on the left
      */
@@ -116,13 +118,14 @@ public class Limelight extends SubsystemBase {
     /**
      * Set the state of the led
      */
-    public void lightLED(LED state) {
+    private void lightLED(LED state) {
         setNumber("ledMode", state.ordinal());
         System.out.println("Setting LimeLight LEDs to " + state.ordinal());
     }
 
     /**
      * Get the state of the led's
+     * TODO: This method isn't actually used anywhere
      */
     public LED getLED() {
         LED[] modes = {LED.PIPELINE, LED.OFF, LED.BLINK, LED.ON};
@@ -139,6 +142,7 @@ public class Limelight extends SubsystemBase {
 
     /**
      * Get the state of the camera
+     * TODO: This method isn't actually used anywhere
      */
     public CAM getCAM() {
         CAM[] modes = {CAM.VISION, CAM.DRIVER};
@@ -155,14 +159,14 @@ public class Limelight extends SubsystemBase {
     /**
      * Get the network table entry
      */
-    public NetworkTableEntry getEntry(String table) {
+    private NetworkTableEntry getEntry(String table) {
         return limelight.getEntry(table);
     }
 
     /**
      * Get the double stored in a network table entry
      */
-    public double getDouble(String entry) {
+    private double getDouble(String entry) {
         return getEntry(entry).getDouble(0.0);
     }
 }

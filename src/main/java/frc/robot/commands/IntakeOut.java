@@ -8,8 +8,10 @@ public class IntakeOut extends CommandBase {
     private Intake intake;
 
     /**
-     * Hold down the right button on the gamepad to push a ball out onto the ground.
-     * This changes the intake direction, not whether it is stowed out or not.
+     * 1. Changes the intake direction to take in balls from the ground. <br>
+     * 2. Hold the right button to activate the command. <br>
+     * 3. Balls can be pushed out onto the ground. <br>
+     * 4. This changes the intake direction, not whether it is stowed out or not.
      */
     public IntakeOut(Intake itk) {
         this.intake = itk;

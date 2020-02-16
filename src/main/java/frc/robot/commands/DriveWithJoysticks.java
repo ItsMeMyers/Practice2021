@@ -38,6 +38,9 @@ public class DriveWithJoysticks extends CommandBase {
         addRequirements(drivetrain);
     }
 
+    /**
+     * Sets the motor speed values to the values from the right and left joysticks
+     */
     @Override
     public void execute() {
         // Gets the values of the right and left joystick positions

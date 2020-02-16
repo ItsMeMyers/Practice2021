@@ -33,7 +33,6 @@ public class DataRecorder extends SubsystemBase {
                 e.printStackTrace();
             }
         }
-
     }
 
     public void setSpeed(double spd) {

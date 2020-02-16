@@ -8,9 +8,10 @@ public class IntakeToggle extends CommandBase {
     private Intake intake;
 
     /**
-     * This command changes the mode of the intake system.
-     * It changes it from stowed away to out or vice versa.
-     * This is different from turning the intake direction from in and out.
+     * 1. This command stows in the intake system and puts it out.
+     * 2. Press the A button to toggle it.
+     * 3. It will toggle it from stowed in to out or vice versa.
+     * 4. This is different from turning the intake direction from in and out.
      */
     public IntakeToggle(Intake itk) {
         this.intake = itk;
