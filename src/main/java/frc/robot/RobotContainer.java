@@ -24,8 +24,9 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
-
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
@@ -105,10 +106,12 @@ public class RobotContainer {
     xButton.whenPressed(new RecordData(dataRecorder, 0));
     aButton.whenPressed(new IntakeToggle(intake));
     yButton.whenPressed(new RunShooter(shooter, feeder, limelight, dataRecorder));
-    rTrigger.whenHeld(new IntakeIn(intake));
-    rBumper.whenHeld(new IntakeOut(intake));
+    rTrigger.whenHeld(new StartEndCommand(intake::runIn, intake::stopMotor, intake));
+    rBumper.whenHeld(new StartEndCommand(intake::runOut, intake::stopMotor, intake));
     upButton.whenPressed(new TargetEntity(limelight, turret, gamepad));
     downButton.cancelWhenPressed(new TargetEntity(limelight, turret, gamepad));
+
+    (new PerpetualCommand(new DriveWithJoysticks(drivetrain, rightStick, leftStick))).schedule();
   }
 
   /**

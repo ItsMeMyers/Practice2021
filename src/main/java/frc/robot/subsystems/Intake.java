@@ -32,8 +32,11 @@ public class Intake extends SubsystemBase {
     }
 
     /**
-     * Takes a ball in from the ground.
-     */
+    * 1. Changes the intake direction to take in balls from the ground. <br>
+    * 2. Hold the right trigger to activate the command. <br>
+    * 3. Balls from the intake are then stored in the feeder. <br>
+    * 4. This changes the intake direction, not whether it is stowed in or not.
+    */
     public void runIn() {
         intakeMotor.set(in);
     }
@@ -46,8 +49,11 @@ public class Intake extends SubsystemBase {
     }
 
     /**
-     * Stops the intake.
-     */
+    * 1. Changes the intake direction to take in balls from the ground. <br>
+    * 2. Hold the right button to activate the command. <br>
+    * 3. Balls can be pushed out onto the ground. <br>
+    * 4. This changes the intake direction, not whether it is stowed out or not.
+    */
     public void stopMotor() {
         intakeMotor.set(0.0);
     }
