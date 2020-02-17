@@ -82,36 +82,34 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // Defines the button mappings
-    final JoystickButton aButton = new JoystickButton(gamepad, Button.kA.value);
-    final JoystickButton yButton = new JoystickButton(gamepad, Button.kY.value);
-    final JoystickButton bButton = new JoystickButton(gamepad, Button.kB.value);
-    final JoystickButton xButton = new JoystickButton(gamepad, Button.kX.value);
-    final JoystickButton rTrigger = new JoystickButton(gamepad, Axis.kRightTrigger.value);
-    final JoystickButton rBumper = new JoystickButton(gamepad, Button.kBumperRight.value);
-    final POVButton upButton = new POVButton(gamepad, Constants.povUp);
-    final POVButton downButton = new POVButton(gamepad, Constants.povDown);
-
     // Attaches a commmand to each button
-    // Records data with success
-    bButton.whenPressed(new RecordData(dataRecorder, 1));
-    // Records data without success
-    xButton.whenPressed(new RecordData(dataRecorder, 0));
-    // Stows in or puts out the intake system
-    aButton.whenPressed(new InstantCommand(intake::toggle, intake));
-    // Starts the shooter motors
-    yButton.whenPressed(new RunShooter(shooter, feeder, limelight, dataRecorder));
-    // Takes in balls from the ground
-    rTrigger.whenHeld(new StartEndCommand(intake::runIn, intake::stopMotor, intake));
-    // Pushes out balls onto the ground
-    rBumper.whenHeld(new StartEndCommand(intake::runOut, intake::stopMotor, intake));
-    // Starts targeting
-    upButton.whenPressed(new TargetEntity(limelight, turret, gamepad));
-    // Ends targeting
-    downButton.cancelWhenPressed(new TargetEntity(limelight, turret, gamepad));
+    // Stows in or puts out the intake system when the A button is pressed
+    new JoystickButton(gamepad, Button.kA.value)
+      .whenPressed(new InstantCommand(intake::toggle, intake));
+    // Records data with success when the B button is pressed
+    new JoystickButton(gamepad, Button.kB.value)
+      .whenPressed(new RecordData(dataRecorder, 1));
+    // Records data without success when the X button is pressed
+    new JoystickButton(gamepad, Button.kX.value)
+      .whenPressed(new RecordData(dataRecorder, 0));
+    // Starts the shooter motors when the Y button is pressed
+    new JoystickButton(gamepad, Button.kY.value)
+      .whenPressed(new RunShooter(shooter, feeder, limelight, dataRecorder));
+    // Takes in balls from the ground when the right trigger is held
+    new JoystickButton(gamepad, Axis.kRightTrigger.value)
+      .whenHeld(new StartEndCommand(intake::runIn, intake::stopMotor, intake));
+    // Pushes out balls onto the ground when the right bumper is held
+    new JoystickButton(gamepad, Button.kBumperRight.value)
+      .whenHeld(new StartEndCommand(intake::runOut, intake::stopMotor, intake));
+    // Starts targeting when the up arrow on the D-pad is pressed
+    new POVButton(gamepad, Constants.povUp)
+      .whenPressed(new TargetEntity(limelight, turret, gamepad));
+    // Ends targeting when the down arrow on the D-pad is pressed
+    new POVButton(gamepad, Constants.povDown)
+      .cancelWhenPressed(new TargetEntity(limelight, turret, gamepad));
 
     // TODO: Might need to change this? This enables driving forever, but it wasn't implemented anywhere before
-    (new PerpetualCommand(new DriveWithJoysticks(drivetrain, rightStick, leftStick))).schedule();
+    new PerpetualCommand(new DriveWithJoysticks(drivetrain, rightStick, leftStick)).schedule();
   }
 
   /**
