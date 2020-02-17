@@ -1,11 +1,12 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.*;
+
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
     
@@ -31,8 +32,8 @@ public class Shooter extends SubsystemBase {
      */
     public Shooter() {
 
-        shootMotorR = new WPI_TalonFX(Constants.shootMotorR);
-        shootMotorL = new WPI_TalonFX(Constants.shootMotorL);
+        shootMotorR = new WPI_TalonFX(kShooterMotorRPort);
+        shootMotorL = new WPI_TalonFX(kShooterMotorLPort);
         
         // When the motors are in neutral mode the motors will keep moving easily (coast)
         shootMotorR.setNeutralMode(NeutralMode.Coast);

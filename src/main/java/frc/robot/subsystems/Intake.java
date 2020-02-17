@@ -1,11 +1,12 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.*;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
     
@@ -22,8 +23,8 @@ public class Intake extends SubsystemBase {
      * The direction of the intake can also be switched.
      */
     public Intake() {
-        intakeMotor = new WPI_TalonSRX(Constants.intakeMotor);
-        intakeSolenoid = new Solenoid(Constants.intakeSolenoid);
+        intakeMotor = new WPI_TalonSRX(kIntakeMotorPort);
+        intakeSolenoid = new Solenoid(kIntakeSolenoidPort);
 
         // When the motor is in neutral mode the motor will keep moving easily (coast)
         intakeMotor.setNeutralMode(NeutralMode.Brake);
