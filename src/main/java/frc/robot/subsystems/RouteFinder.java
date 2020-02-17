@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.RouteFinderConstants.*;
+
 import java.util.List;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -10,12 +12,9 @@ import edu.wpi.first.wpilibj.trajectory.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class RouteFinder extends SubsystemBase {
-
-    public static Command pathCommand;
 
     /** Grants access to the pathCommand in RouteFinder */
     // TODO: Arnav what the fuck is this please change it or put in some explanations
@@ -24,15 +23,14 @@ public class RouteFinder extends SubsystemBase {
                 List.of(new Translation2d(waypointx, waypointy)));
         RamseteCommand ramseteCommand = new RamseteCommand(foundTrajectory, // We input our desired trajectory
                                                                             // here
-                RobotContainer.drivetrain::getPose, new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
-                new SimpleMotorFeedforward(Constants.ksVolts, Constants.kvVoltSecondsPerMeter,
-                        Constants.kaVoltSecondsSquaredPerMeter),
-                Constants.kDriveKinematics, RobotContainer.drivetrain::getWheelSpeeds,
-                new PIDController(Constants.kPDriveVel, 0, 0), new PIDController(Constants.kPDriveVel, 0, 0),
+                RobotContainer.drivetrain::getPose, new RamseteController(kRamseteB, kRamseteZeta),
+                new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter,
+                        kaVoltSecondsSquaredPerMeter),
+                kDriveKinematics, RobotContainer.drivetrain::getWheelSpeeds,
+                new PIDController(kPDriveVel, 0, 0), new PIDController(kPDriveVel, 0, 0),
                 // RamseteCommand passes volts to the callback
                 RobotContainer.drivetrain::tankDriveVolts, RobotContainer.drivetrain);
-        pathCommand = ramseteCommand.andThen(() -> RobotContainer.drivetrain.tankDriveVolts(0, 0));
-        return pathCommand;
+        return ramseteCommand.andThen(() -> RobotContainer.drivetrain.tankDriveVolts(0, 0));
     }
 
     /**

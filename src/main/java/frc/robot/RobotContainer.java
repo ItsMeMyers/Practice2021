@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.RobotContainerConstants.*;
+import static frc.robot.Constants.RouteFinderConstants.*;
+
 import java.util.List;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -38,11 +41,11 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
   // Joysticks
-  public final static Joystick rightStick = new Joystick(Constants.rightStick);
-  public final static Joystick leftStick = new Joystick(Constants.leftStick);
+  public final static Joystick rightStick = new Joystick(kRightStickPort);
+  public final static Joystick leftStick = new Joystick(kLeftStickPort);
 
   // Xbox Controller
-  public final static XboxController gamepad = new XboxController(Constants.gamepad);
+  public final static XboxController gamepad = new XboxController(kGamepadPort);
 
   public static TrajectoryConfig config;
 
@@ -102,10 +105,10 @@ public class RobotContainer {
     new JoystickButton(gamepad, Button.kBumperRight.value)
       .whenHeld(new StartEndCommand(intake::runOut, intake::stopMotor, intake));
     // Starts targeting when the up arrow on the D-pad is pressed
-    new POVButton(gamepad, Constants.povUp)
+    new POVButton(gamepad, kPovUp)
       .whenPressed(new TargetEntity(limelight, turret, gamepad));
     // Ends targeting when the down arrow on the D-pad is pressed
-    new POVButton(gamepad, Constants.povDown)
+    new POVButton(gamepad, kPovDown)
       .cancelWhenPressed(new TargetEntity(limelight, turret, gamepad));
 
     // TODO: Might need to change this? This enables driving forever, but it wasn't implemented anywhere before
@@ -121,20 +124,20 @@ public class RobotContainer {
     // Create a voltage constraint to ensure we don't accelerate too fast
     var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(Constants.ksVolts,
-                                       Constants.kvVoltSecondsPerMeter,
-                                       Constants.kaVoltSecondsSquaredPerMeter),
-            Constants.kDriveKinematics,
+            new SimpleMotorFeedforward(ksVolts,
+                                       kvVoltSecondsPerMeter,
+                                       kaVoltSecondsSquaredPerMeter),
+            kDriveKinematics,
             10);
     // Creating a trajectory from PathWeaver
     //Trajectory pathWeaverTest = TrajectoryUtil.fromPathweaverJson(Path.get("/home/lvuser/deploy/Mid.wpilib.json"));
 
     // Create config for trajectory
      config =
-        new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond,
-                             Constants.kMaxAccelerationMetersPerSecondSquared)
+        new TrajectoryConfig(kMaxSpeedMetersPerSecond,
+                             kMaxAccelerationMetersPerSecondSquared)
             // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(Constants.kDriveKinematics)
+            .setKinematics(kDriveKinematics)
             // Apply the voltage constraint
             .addConstraint(autoVoltageConstraint)
             //Doesn't reverse the trajectory
@@ -158,14 +161,14 @@ public class RobotContainer {
     RamseteCommand ramseteCommand = new RamseteCommand(
         trajectory, // We input our desired trajectory here
         drivetrain::getPose,
-        new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
-        new SimpleMotorFeedforward(Constants.ksVolts,
-                                   Constants.kvVoltSecondsPerMeter,
-                                   Constants.kaVoltSecondsSquaredPerMeter),
-        Constants.kDriveKinematics,
+        new RamseteController(kRamseteB, kRamseteZeta),
+        new SimpleMotorFeedforward(ksVolts,
+                                   kvVoltSecondsPerMeter,
+                                   kaVoltSecondsSquaredPerMeter),
+        kDriveKinematics,
         drivetrain::getWheelSpeeds,
-        new PIDController(Constants.kPDriveVel, 0, 0),
-        new PIDController(Constants.kPDriveVel, 0, 0),
+        new PIDController(kPDriveVel, 0, 0),
+        new PIDController(kPDriveVel, 0, 0),
         // RamseteCommand passes volts to the callback
         drivetrain::tankDriveVolts,
         drivetrain
