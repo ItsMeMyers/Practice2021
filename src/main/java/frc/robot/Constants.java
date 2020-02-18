@@ -13,11 +13,21 @@ package frc.robot;
  * purpose. All constants should be declared globally (i.e. public static). Do
  * not put anything functional in this class.
  *
- * <p>
- * It is advised to statically import this class (or one of its inner classes)
+ * <p>It is advised to statically import this class (or one of its inner classes)
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+  /* CONSTANTS INFO
+   * From the official wpilib docs:
+   * "It is recommended that users separate these constants 
+   * into individual inner classes corresponding to subsystems or robot modes,
+   * to keep variable names shorter."
+   * "In Java, all constants should be declared public static final
+   * so that they are globally accessible and cannot be changed."
+   * "In Java, it is recommended that the constants be used from other classes
+   * by statically importing the necessary inner class."
+   */
 
   public static final class DrivetrainConstants {
 
@@ -49,15 +59,15 @@ public final class Constants {
     public static final double kInvertMotor = -1.0;
 
     // Power cell feeder motors
-    public static final int kFeederMotor1Port = 14;
-    public static final int kFeederMotor2Port = 15;
+    public static final int kMotor1Port = 14;
+    public static final int kMotor2Port = 15;
   }
 
   public static final class IntakeConstants {
-    // Power cell intake and feeder motors
-    public static final int kIntakeMotorPort = 11;
+    // Power cell intake motor
+    public static final int kMotorPort = 11;
     // Solenoids
-    public static final int kIntakeSolenoidPort = 0;
+    public static final int kSolenoidPort = 0;
   }
 
   public static final class RobotContainerConstants {

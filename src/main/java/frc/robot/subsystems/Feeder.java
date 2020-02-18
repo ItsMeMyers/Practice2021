@@ -21,8 +21,8 @@ public class Feeder extends SubsystemBase {
      * It also stores the balls that come in from the Intake.
      */
     public Feeder() {
-        feederMotor1 = new WPI_TalonSRX(kFeederMotor1Port);
-        feederMotor2 = new WPI_TalonSRX(kFeederMotor2Port);
+        feederMotor1 = new WPI_TalonSRX(kMotor1Port);
+        feederMotor2 = new WPI_TalonSRX(kMotor2Port);
 
         // When the motors are in neutral mode the motors will keep moving easily (coast)
         feederMotor1.setNeutralMode(NeutralMode.Coast);

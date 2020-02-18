@@ -51,6 +51,29 @@ public class RobotContainer {
   // Xbox Controller
   private final XboxController gamepad = new XboxController(kGamepadPort);
 
+  /* SUBSYSTEMS INFO
+   * Why the subsystems are private, according to the official wpilib docs:
+   * "It is much more-aligned with agreed-upon object-oriented best-practices.
+   * If subsystems are declared as global variables, 
+   * it allows the user to access them from anywhere in the code.
+   * While this can make certain things easier 
+   * (for example, there would be no need to pass subsystems
+   * to commands in order for those commands to access them),
+   * it makes the control flow of the program much harder to keep track of
+   * as it is not immediately obvious which parts of the code
+   * can change or be changed by which other parts of the code.
+   * This also circumvents the ability of the resource-management system to do its job, 
+   * as ease-of-access makes it easy for users to accidentally make conflicting calls 
+   * to subsystem methods outside of the resource-managed commands...
+   * Since subsystems are declared as private members, 
+   * they must be explicitly passed to commands 
+   * (a pattern called “dependency injection”)
+   * in order for those commands to call methods on them."
+   * 
+   * TLDR: subsystems should be private here and have to be passed to commands
+   * because it is better coding practice.
+   */
+
   // Data Recorder
   private final DataRecorder dataRecorder = new DataRecorder();
 
@@ -87,6 +110,24 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    /** COMMAND INFO
+     * From the official wpilib docs:
+     * "While users are able to create commands by explicitly writing command classes
+     * (either by subclassing CommandBase or implementing Command), 
+     * for many commands (such as those that simply call a single subsystem method) 
+     * this involves a lot of wasteful boilerplate code. 
+     * To help alleviate this, many of the prewritten commands 
+     * included in the command-based library may be inlined - 
+     * that is, the command body can be defined in a single line of code at command construction."
+     * 
+     * TLDR: You shouldn't create a whole new file for a command that only calls one method.
+     * 
+     * (I didn't know what these did so here is an explanation if anyone is confused)
+     * Also method references and lambda expressions let you pass subroutines as parameters
+     * Method reference: subsystem::method
+     * Lambda expression: () -> subsystem.method()
+     * They essentially do the same thing
+     */
     // Attaches a commmand to each button
     // Stows in or puts out the intake system when the A button is pressed
     new JoystickButton(gamepad, Button.kA.value)

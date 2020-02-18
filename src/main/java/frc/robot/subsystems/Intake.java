@@ -23,8 +23,8 @@ public class Intake extends SubsystemBase {
      * The direction of the intake can also be switched.
      */
     public Intake() {
-        intakeMotor = new WPI_TalonSRX(kIntakeMotorPort);
-        intakeSolenoid = new Solenoid(kIntakeSolenoidPort);
+        intakeMotor = new WPI_TalonSRX(kMotorPort);
+        intakeSolenoid = new Solenoid(kSolenoidPort);
 
         // When the motor is in neutral mode the motor will keep moving easily (coast)
         intakeMotor.setNeutralMode(NeutralMode.Brake);
