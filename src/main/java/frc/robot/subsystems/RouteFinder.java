@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 
 public class RouteFinder extends SubsystemBase {
 
@@ -60,26 +61,6 @@ public class RouteFinder extends SubsystemBase {
      * points to pass through(List<Translation2d list).
      */
     public static Trajectory trajectorygen(int pointx, int pointy, int rotation, List<Translation2d> list) {
-        var kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
-        // Create a voltage constraint to ensure we don't accelerate too fast
-        var autoVoltageConstraint =
-            new DifferentialDriveVoltageConstraint(
-                new SimpleMotorFeedforward(ksVolts,
-                                           kvVoltSecondsPerMeter,
-                                           kaVoltSecondsSquaredPerMeter),
-                kDriveKinematics,
-                10);
-            // Create config for trajectory
-    TrajectoryConfig config =
-    new TrajectoryConfig(kMaxSpeedMetersPerSecond,
-                         kMaxAccelerationMetersPerSecondSquared)
-        // Add kinematics to ensure max speed is actually obeyed
-        .setKinematics(kDriveKinematics)
-        // Apply the voltage constraint
-        .addConstraint(autoVoltageConstraint)
-        //Doesn't reverse the trajectory
-        .setReversed(false);
-
         return TrajectoryGenerator.generateTrajectory(
                 // Start at the origin facing the +X direction
                 new Pose2d(0, 0, new Rotation2d(rotation)),
@@ -88,6 +69,6 @@ public class RouteFinder extends SubsystemBase {
                 // End at this location
                 new Pose2d(pointx, pointy, new Rotation2d(rotation)),
                 // Pass config
-                config);
+                RobotContainer.getConfig());
     }
 }

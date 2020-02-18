@@ -117,15 +117,10 @@ public class RobotContainer {
     new PerpetualCommand(new DriveWithJoysticks(drivetrain, rightStick, leftStick)).schedule();
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
+  public static TrajectoryConfig getConfig() {
     var kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
-    // Create a voltage constraint to ensure we don't accelerate too fast
-    var autoVoltageConstraint =
+        // Create a voltage constraint to ensure we don't accelerate too fast
+        var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
             new SimpleMotorFeedforward(ksVolts,
                                        kvVoltSecondsPerMeter,
@@ -134,8 +129,7 @@ public class RobotContainer {
             10);
 
     // Create config for trajectory
-    TrajectoryConfig config =
-        new TrajectoryConfig(kMaxSpeedMetersPerSecond,
+    return new TrajectoryConfig(kMaxSpeedMetersPerSecond,
                              kMaxAccelerationMetersPerSecondSquared)
             // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(kDriveKinematics)
@@ -143,6 +137,14 @@ public class RobotContainer {
             .addConstraint(autoVoltageConstraint)
             //Doesn't reverse the trajectory
             .setReversed(false);
+  }
+  /**
+   * Use this to pass the autonomous command to the main {@link Robot} class.
+   *
+   * @return the command to run in autonomous
+   */
+  public Command getAutonomousCommand() {
+    var kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
 
     // An example trajectory to follow.  All units in meters.
       Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
@@ -156,7 +158,7 @@ public class RobotContainer {
         // End at this location
         new Pose2d(5, 0, new Rotation2d(0)),
         // Pass config
-        config
+        getConfig()
     );
 
     /**
