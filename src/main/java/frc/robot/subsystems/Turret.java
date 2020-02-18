@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Turret extends SubsystemBase {
-    private WPI_TalonFX turretMotor;
+    private final WPI_TalonFX turretMotor;
 
     private double spinPower;
 
-    DigitalInput limitR;
-    DigitalInput limitL;
+    private final DigitalInput limitR;
+    private final DigitalInput limitL;
 
     public Turret() {
         turretMotor = new WPI_TalonFX(kTurretMotorPort);

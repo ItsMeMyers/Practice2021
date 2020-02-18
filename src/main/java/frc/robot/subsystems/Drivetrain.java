@@ -52,7 +52,7 @@ public class Drivetrain extends SubsystemBase {
                 kRightEncoderReversed);
 
     // The gyro sensor
-    private AHRS gyro = new AHRS(SPI.Port.kMXP);
+    private final AHRS gyro = new AHRS(SPI.Port.kMXP);
 
     // Odometry class for tracking robot pose
     private final DifferentialDriveOdometry odometry;
@@ -218,24 +218,6 @@ public class Drivetrain extends SubsystemBase {
      */
     public double getAverageEncoderDistance() {
         return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2.0;
-    }
-
-    /**
-     * Gets the left drive encoder. TODO: unused method
-     *
-     * @return the left drive encoder
-     */
-    public Encoder getLeftEncoder() {
-        return leftEncoder;
-    }
-
-    /**
-     * Gets the right drive encoder. TODO: unused method
-     *
-     * @return the right drive encoder
-     */
-    public Encoder getRightEncoder() {
-        return rightEncoder;
     }
 
     /**

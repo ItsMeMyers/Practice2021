@@ -28,7 +28,10 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PerpetualCommand;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
@@ -99,10 +102,10 @@ public class RobotContainer {
       .whenPressed(new RunShooter(shooter, feeder, limelight, dataRecorder));
     // Takes in balls from the ground when the right trigger is held
     new JoystickButton(gamepad, Axis.kRightTrigger.value)
-      .whenHeld(new StartEndCommand(intake::runIn, intake::stopMotor, intake));
+      .whenHeld(new InstantCommand(intake::runIn, intake).andThen(intake::stopMotor));
     // Pushes out balls onto the ground when the right bumper is held
     new JoystickButton(gamepad, Button.kBumperRight.value)
-      .whenHeld(new StartEndCommand(intake::runOut, intake::stopMotor, intake));
+      .whenHeld(new InstantCommand(intake::runOut, intake).andThen(intake::stopMotor));
     // Starts targeting when the up arrow on the D-pad is pressed
     new POVButton(gamepad, kPovUp)
       .whenPressed(new TargetEntity(limelight, turret, gamepad));
@@ -156,6 +159,48 @@ public class RobotContainer {
         config
     );
 
+    /**
+     * This declaration is fairly substantial, so we’ll go through it
+     * argument-by-argument:
+     * 
+     * The trajectory: This is the trajectory to be followed; accordingly, we pass
+     * the command the trajectory we just constructed in our earlier steps.
+     * 
+     * The pose supplier: This is a method reference (or lambda) to the drive
+     * subsystem method that returns the pose. The RAMSETE controller needs the
+     * current pose measurement to determine the required wheel outputs.
+     * 
+     * The RAMSETE controller: This is the RamseteController object (Java, C++) that
+     * will perform the path-following computation that translates the current
+     * measured pose and trajectory state into a chassis speed setpoint.
+     * 
+     * The drive feedforward: This is a SimpleMotorFeedforward object (Java, C++)
+     * that will automatically perform the correct feedforward calculation with the
+     * feedforward gains (kS, kV, and kA) that we obtained from the drive
+     * characterization tool.
+     * 
+     * The drive kinematics: This is the DifferentialDriveKinematics object (Java,
+     * C++) that we constructed earlier in our constants file, and will be used to
+     * convert chassis speeds to wheel speeds.
+     * 
+     * The wheel speed supplier: This is a method reference (or lambda) to the drive
+     * subsystem method that returns the wheel speeds
+     * 
+     * The left-side PIDController: This is the PIDController object (Java, C++)
+     * that will track the left-side wheel speed setpoint, using the P gain that we
+     * obtained from the drive characterization tool.
+     * 
+     * The right-side PIDController: This is the PIDController object (Java, C++)
+     * that will track the right-side wheel speed setpoint, using the P gain that we
+     * obtained from the drive characterization tool.
+     * 
+     * The output consumer: This is a method reference (or lambda) to the drive
+     * subsystem method that passes the voltage outputs to the drive motors.
+     * 
+     * The robot drive: This is the drive subsystem itself, included to ensure the
+     * command does not operate on the drive at the same time as any other command
+     * that uses the drive.
+     */
     RamseteCommand ramseteCommand = new RamseteCommand(
       trajectory, // We input our desired trajectory here
       drivetrain::getPose,

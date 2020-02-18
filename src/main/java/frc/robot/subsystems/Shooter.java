@@ -10,22 +10,23 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
     
-    private static final double degreesOfTurret = 23;
-    private static final double diameterOfTurretWheelInches = 4;
+    private final double degreesOfTurret = 23;
+    private final double diameterOfTurretWheelInches = 4;
 
-    private WPI_TalonFX shootMotorR;
-    private WPI_TalonFX shootMotorL;
+    private final WPI_TalonFX shootMotorR;
+    private final WPI_TalonFX shootMotorL;
 
-    private double rightRatio = 5.0;
-    private double leftRatio = 3.0;
-    private double encoderEPR = 4096.0;
+    private final double rightRatio = 5.0;
+    private final double leftRatio = 3.0;
+    private final double encoderEPR = 4096.0;
 
     private double rightRPM;
     private double leftRPM;
 
-    private double rpmThreshold = 0.0;
+    //TODO: Idk but I feel like maybe this should be greater than 0?
+    private final double rpmThreshold = 0.0; 
 
-    private final double vThreshold = 1.0;
+    private final double voltThreshold = 1.0;
 
     /**
      * Shoots the balls into the targets.
@@ -57,7 +58,7 @@ public class Shooter extends SubsystemBase {
      * @return Required rpm of turret motor to shoot that far
      */
     // TODO: Explain this
-    public static int DistanceToRPM(double distance){
+    public int DistanceToRPM(double distance){
         distance = distance / 2;
         double val = distance * 32.6;
         val = val / (Math.sin(2 * degreesOfTurret));
@@ -93,7 +94,7 @@ public class Shooter extends SubsystemBase {
      * Checks if the motor voltages are greater than the acceptable voltage threshold
      */
     public boolean voltageSpike() {
-        return ((shootMotorR.getBusVoltage() >= vThreshold) || (shootMotorL.getBusVoltage() >= vThreshold));
+        return ((shootMotorR.getBusVoltage() >= voltThreshold) || (shootMotorL.getBusVoltage() >= voltThreshold));
     }
 
     /**

@@ -5,7 +5,7 @@ import frc.robot.subsystems.DataRecorder;
 
 public class RecordData extends CommandBase {
 
-    private DataRecorder dataRecorder;
+    private final DataRecorder dataRecorder;
     
     private int success;
 

@@ -6,7 +6,7 @@ import frc.robot.subsystems.Feeder;
 public class FeederRun extends CommandBase {
     
     // TODO: This can be replaced with some sort of RunCommand type and an inline definition probably
-    private Feeder feeder;
+    private final Feeder feeder;
 
     /**
      * 1. This feeds the balls to the shooter mechanism. <br>

@@ -11,8 +11,8 @@ public class MoveTurret extends CommandBase {
     private final double powerThreshold = 0.02;
     private double power = 0.0;
 
-    private Turret turret;
-    private XboxController gamepad;
+    private final Turret turret;
+    private final XboxController gamepad;
 
     // TODO: This command doesn't seem to be implemented anywhere
     public MoveTurret(Turret trrt, XboxController gmpd) {

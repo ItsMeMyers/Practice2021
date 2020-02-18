@@ -9,13 +9,13 @@ import frc.robot.subsystems.Turret;
 
 public class TargetEntity extends CommandBase {
 	
-	private Limelight limelight;
-	private Turret turret;
-	private XboxController gamepad;
+	private final Limelight limelight;
+	private final Turret turret;
+	private final XboxController gamepad;
 	
-	private static final double powerConstant = 0.025; // Proportional control constant to determine the power
-	private static final double minimumPower = 0.05; // If the power is any less than this minimumPower the turret may not actually move
-	private static final double threshold = 0.15; // The threshold in which the turret actually needs to move
+	private final double powerConstant = 0.025; // Proportional control constant to determine the power
+	private final double minimumPower = 0.05; // If the power is any less than this minimumPower the turret may not actually move
+	private final double threshold = 0.15; // The threshold in which the turret actually needs to move
 
 	private boolean hasValidTarget; // Updated by the LimeLight camera; whether it has a target
 	private double power; // Updated by the Limelight camera

@@ -10,11 +10,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
     
-    private Solenoid intakeSolenoid;
-    private WPI_TalonSRX intakeMotor;
+    private final Solenoid intakeSolenoid;
+    private final WPI_TalonSRX intakeMotor;
 
-    private double inSpeed = -1.0;
-    private double outSpeed = 1.0;
+    private final double inSpeed = -1.0;
+    private final double outSpeed = 1.0;
 
     /**
      * The intake pulls the balls from the ground into the robot.

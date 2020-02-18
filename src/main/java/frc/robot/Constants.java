@@ -89,7 +89,7 @@ public final class Constants {
 
     // Example value only - as above, this must be tuned for your drive!
     public static final double kPDriveVel = -12.5;
-    
+
     public static final double kMaxSpeedMetersPerSecond = 3;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
 
@@ -114,17 +114,4 @@ public final class Constants {
     public static final int kLimitSwitchRPort = 15;
     public static final int kLimitSwitchLPort = 16;
   }
-
-  /* An example trajectory to follow. All units in meters.
-  // rotation = 0 x = 5 y = 0
-  // TODO: All of these constants are unused
-
-  // Climber motors
-  public static final int kClimberMotor1Port = 9;
-  public static final int kClimberMotor2Port = 10;
-
-  /public static final int kIndexerMotorPort = 12;
-  public static final int klTowerMotorPort = 13;
-
-  public static final int kDriverControllerPort = 1;*/
 }

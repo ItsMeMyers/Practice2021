@@ -8,10 +8,10 @@ import frc.robot.subsystems.Shooter;
 
 public class RunShooter extends CommandBase {
 
-    private Shooter shooter;
-    private Feeder feeder;
-    private Limelight limelight;
-    private DataRecorder dataRecorder;
+    private final Shooter shooter;
+    private final Feeder feeder;
+    private final Limelight limelight;
+    private final DataRecorder dataRecorder;
 
     private double dist = 0.0;
 

@@ -38,8 +38,6 @@ public class Limelight extends SubsystemBase {
             getDouble("tx");
             getDouble("ty");
             getDouble("ta");
-            getDouble("ta0");
-            getDouble("ta1");
         } catch (Exception e) {
             System.out.println(String.format("Error initializing limelight. Error message: %s", e));
         }
@@ -71,21 +69,6 @@ public class Limelight extends SubsystemBase {
      */
     public double targetArea() {
         return getDouble("ta");
-    }
-
-    /**
-     * Get the target area on the right
-     */
-    public double rightTarget() {
-        return getDouble("ta0");
-    }
-    // TODO: Are you sure this is what ta0 and ta1 means? Also they aren't even used anywhere
-    // https://docs.limelightvision.io/en/latest/networktables_api.html#advanced-usage-with-raw-contours
-    /**
-     * Get the target area on the left
-     */
-    public double leftTarget() {
-        return getDouble("ta1");
     }
 
     /**

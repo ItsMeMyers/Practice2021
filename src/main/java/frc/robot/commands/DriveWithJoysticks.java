@@ -15,9 +15,9 @@ public class DriveWithJoysticks extends CommandBase {
     private double right = 0.0;
     private double left = 0.0;
 
-    private Drivetrain drivetrain;
-    private Joystick rightStick;
-    private Joystick leftStick;
+    private final Drivetrain drivetrain;
+    private final Joystick rightStick;
+    private final Joystick leftStick;
 
     /**
      * 1. This command drives the robot. <br>

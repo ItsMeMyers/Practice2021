@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Feeder extends SubsystemBase {
 
-    private WPI_TalonSRX feederMotor1;
-    private WPI_TalonSRX feederMotor2;
+    private final WPI_TalonSRX feederMotor1;
+    private final WPI_TalonSRX feederMotor2;
 
     private int ballCounter = 0;
 
