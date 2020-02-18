@@ -261,6 +261,6 @@ public class RobotContainer {
     );
 
     // Reset odometry, then run path following command, then stop at the end.
-    return ramseteCommand.beforeStarting(drivetrain::resetOdometry).andThen(drivetrain::stop);
+    return ramseteCommand.beforeStarting(drivetrain::resetOdometry).andThen(() -> drivetrain.tankDriveVolts(0,0));
   }
 }
