@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -72,10 +70,6 @@ public final class Constants {
     // Gamepad POV values in degrees
     public static final int kPovUp = 0;
     public static final int kPovDown = 180;
-
-    // Must be tuned for your drive
-    public static final double kMaxSpeedMetersPerSecond = 3;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
   }
 
   public static final class RouteFinderConstants {
@@ -92,11 +86,12 @@ public final class Constants {
     public static final double kvVoltSecondsPerMeter = 5.15;
     public static final double kaVoltSecondsSquaredPerMeter = 0.384;
     public static final double kTrackwidthMeters = 0.77;
-    public static final DifferentialDriveKinematics kDriveKinematics 
-      = new DifferentialDriveKinematics(kTrackwidthMeters);
 
     // Example value only - as above, this must be tuned for your drive!
     public static final double kPDriveVel = -12.5;
+    
+    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
 
     // On-the-go route finding waypoint variables
     public static final int pointx = 0;

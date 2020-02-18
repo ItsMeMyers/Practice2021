@@ -166,6 +166,13 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
+     * Resets the odometry to a default pose Pose2d(0, 0, new Rotation2d(0))
+     * Resets the encoders, also automatically resets heading
+     */
+    public void resetOdometry() {
+        resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
+    }
+    /**
      * Resets the odometry to the specified pose.
      * Resets the encoders, also automatically resets heading
      * @param pose The pose to which to set the odometry.

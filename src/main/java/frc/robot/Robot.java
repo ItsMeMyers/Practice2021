@@ -12,8 +12,6 @@ import static frc.robot.Constants.RouteFinderConstants.*;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.subsystems.RouteFinder;
 
 /**
@@ -78,10 +76,6 @@ public class Robot extends TimedRobot {
      * = new MyAutoCommand(); break; case "Default Auto": default:
      * autonomousCommand = new ExampleCommand(); break; }
      */
-
-    RobotContainer.drivetrain.resetEncoders();
-    RobotContainer.drivetrain.zeroHeading();
-    RobotContainer.drivetrain.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
@@ -41,35 +42,33 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
   // Joysticks
-  public final static Joystick rightStick = new Joystick(kRightStickPort);
-  public final static Joystick leftStick = new Joystick(kLeftStickPort);
+  private final Joystick rightStick = new Joystick(kRightStickPort);
+  private final Joystick leftStick = new Joystick(kLeftStickPort);
 
   // Xbox Controller
-  public final static XboxController gamepad = new XboxController(kGamepadPort);
+  private final XboxController gamepad = new XboxController(kGamepadPort);
 
-  public static TrajectoryConfig config;
+  // Data Recorder
+  private final DataRecorder dataRecorder = new DataRecorder();
 
   // Drivetrain
-  public final static Drivetrain drivetrain = new Drivetrain();
+  private final Drivetrain drivetrain = new Drivetrain();
 
   // Turret
-  public final static Turret turret = new Turret();
+  private final Turret turret = new Turret();
 
   // Shooter
-  public final static Shooter shooter = new Shooter();
+  private final Shooter shooter = new Shooter();
 
   // Feeder 
-  public final static Feeder feeder = new Feeder();
+  private final Feeder feeder = new Feeder();
 
   // Intake
-  public final static Intake intake = new Intake();
+  private final Intake intake = new Intake();
 
   // Limelight 
-  public final static Limelight limelight = new Limelight();
+  private final Limelight limelight = new Limelight();
   
-  // Data Recorder
-  public final static DataRecorder dataRecorder = new DataRecorder();
-
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -121,6 +120,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    var kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
     // Create a voltage constraint to ensure we don't accelerate too fast
     var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
@@ -129,11 +129,9 @@ public class RobotContainer {
                                        kaVoltSecondsSquaredPerMeter),
             kDriveKinematics,
             10);
-    // Creating a trajectory from PathWeaver
-    //Trajectory pathWeaverTest = TrajectoryUtil.fromPathweaverJson(Path.get("/home/lvuser/deploy/Mid.wpilib.json"));
 
     // Create config for trajectory
-     config =
+    TrajectoryConfig config =
         new TrajectoryConfig(kMaxSpeedMetersPerSecond,
                              kMaxAccelerationMetersPerSecondSquared)
             // Add kinematics to ensure max speed is actually obeyed
@@ -159,22 +157,22 @@ public class RobotContainer {
     );
 
     RamseteCommand ramseteCommand = new RamseteCommand(
-        trajectory, // We input our desired trajectory here
-        drivetrain::getPose,
-        new RamseteController(kRamseteB, kRamseteZeta),
-        new SimpleMotorFeedforward(ksVolts,
-                                   kvVoltSecondsPerMeter,
-                                   kaVoltSecondsSquaredPerMeter),
-        kDriveKinematics,
-        drivetrain::getWheelSpeeds,
-        new PIDController(kPDriveVel, 0, 0),
-        new PIDController(kPDriveVel, 0, 0),
-        // RamseteCommand passes volts to the callback
-        drivetrain::tankDriveVolts,
-        drivetrain
+      trajectory, // We input our desired trajectory here
+      drivetrain::getPose,
+      new RamseteController(kRamseteB, kRamseteZeta),
+      new SimpleMotorFeedforward(ksVolts,
+                                 kvVoltSecondsPerMeter,
+                                 kaVoltSecondsSquaredPerMeter),
+      kDriveKinematics,
+      drivetrain::getWheelSpeeds,
+      new PIDController(kPDriveVel, 0, 0),
+      new PIDController(kPDriveVel, 0, 0),
+      // RamseteCommand passes volts to the callback
+      drivetrain::tankDriveVolts,
+      drivetrain
     );
 
-    // Run path following command, then stop at the end.
-    return ramseteCommand.andThen(() -> drivetrain.tankDriveVolts(0, 0));
+    // Reset odometry, then run path following command, then stop at the end.
+    return ramseteCommand.beforeStarting(drivetrain::resetOdometry).andThen(drivetrain::stop);
   }
 }

@@ -8,29 +8,45 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.*;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.trajectory.*;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
 
 public class RouteFinder extends SubsystemBase {
 
+        private static Drivetrain drivetrain;
+
+        public RouteFinder(Drivetrain dt) {
+                RouteFinder.drivetrain = dt;
+        }
     /** Grants access to the pathCommand in RouteFinder */
     // TODO: Arnav what the fuck is this please change it or put in some explanations
+    // Ok so basically this returns a command that makes the robot go to a specified point
+    // and end up at the specified rotation. It also has to pass through the desired waypoint.
     public static Command getPathCommand(int pointx, int pointy, int rotation, int waypointx, int waypointy) {
+        // The path to take
         Trajectory foundTrajectory = trajectorygen(pointx, pointy, rotation,
                 List.of(new Translation2d(waypointx, waypointy)));
-        RamseteCommand ramseteCommand = new RamseteCommand(foundTrajectory, // We input our desired trajectory
-                                                                            // here
-                RobotContainer.drivetrain::getPose, new RamseteController(kRamseteB, kRamseteZeta),
-                new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter,
+
+        RamseteCommand ramseteCommand = new RamseteCommand(foundTrajectory, // Our desired trajectory
+                drivetrain::getPose,
+                new RamseteController(kRamseteB, kRamseteZeta),
+                new SimpleMotorFeedforward(ksVolts,
+                        kvVoltSecondsPerMeter,
                         kaVoltSecondsSquaredPerMeter),
-                kDriveKinematics, RobotContainer.drivetrain::getWheelSpeeds,
-                new PIDController(kPDriveVel, 0, 0), new PIDController(kPDriveVel, 0, 0),
+                new DifferentialDriveKinematics(kTrackwidthMeters),
+                drivetrain::getWheelSpeeds,
+                new PIDController(kPDriveVel, 0, 0),
+                new PIDController(kPDriveVel, 0, 0),
                 // RamseteCommand passes volts to the callback
-                RobotContainer.drivetrain::tankDriveVolts, RobotContainer.drivetrain);
-        return ramseteCommand.andThen(() -> RobotContainer.drivetrain.tankDriveVolts(0, 0));
+                drivetrain::tankDriveVolts,
+                drivetrain);
+        
+        // Follow the path finding command and then stop
+        return ramseteCommand.andThen(() -> drivetrain.tankDriveVolts(0, 0));
     }
 
     /**
@@ -40,6 +56,26 @@ public class RouteFinder extends SubsystemBase {
      * points to pass through(List<Translation2d list).
      */
     public static Trajectory trajectorygen(int pointx, int pointy, int rotation, List<Translation2d> list) {
+        var kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
+        // Create a voltage constraint to ensure we don't accelerate too fast
+        var autoVoltageConstraint =
+            new DifferentialDriveVoltageConstraint(
+                new SimpleMotorFeedforward(ksVolts,
+                                           kvVoltSecondsPerMeter,
+                                           kaVoltSecondsSquaredPerMeter),
+                kDriveKinematics,
+                10);
+            // Create config for trajectory
+    TrajectoryConfig config =
+    new TrajectoryConfig(kMaxSpeedMetersPerSecond,
+                         kMaxAccelerationMetersPerSecondSquared)
+        // Add kinematics to ensure max speed is actually obeyed
+        .setKinematics(kDriveKinematics)
+        // Apply the voltage constraint
+        .addConstraint(autoVoltageConstraint)
+        //Doesn't reverse the trajectory
+        .setReversed(false);
+
         return TrajectoryGenerator.generateTrajectory(
                 // Start at the origin facing the +X direction
                 new Pose2d(0, 0, new Rotation2d(rotation)),
@@ -48,6 +84,6 @@ public class RouteFinder extends SubsystemBase {
                 // End at this location
                 new Pose2d(pointx, pointy, new Rotation2d(rotation)),
                 // Pass config
-                RobotContainer.config);
+                config);
     }
 }
