@@ -9,10 +9,7 @@ package frc.robot;
 
 import static frc.robot.Constants.RouteFinderConstants.*;
 
-import java.util.List;
-
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -122,8 +119,7 @@ public class Robot extends TimedRobot {
     // TODO: needs to be changed so it works
     // Get a new command to move to the ball position
     // Make sure there are not multiple command scheduled
-    Trajectory ballTrajectory = RouteFinder.trajectorygen(pointx, pointy, rotation,
-        List.of(new Translation2d(waypointx, waypointy)));
+    Trajectory ballTrajectory = RouteFinder.trajectorygen(pointx, pointy, rotation);
     Command ballCommand = RouteFinder.getPathCommand(ballTrajectory);
   }
 

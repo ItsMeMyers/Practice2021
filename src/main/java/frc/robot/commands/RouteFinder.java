@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
@@ -28,8 +27,11 @@ public class RouteFinder extends SubsystemBase {
     }
 
     /**
-     * Creates a command to follow a certain trajectory. TODO: REstructure this so
-     * it makes sense
+     * Creates a command to follow a certain trajectory.
+     * TODO: Restructure this so it makes sense
+     * 
+     * This command will be repeatedly called in Robot.java. It constantly calculates
+     * a new command to go to the position. The command keeps getting calculates
      * 
      * @param trajectory the trajectory to follow
      * @return the command that satisifes the aforementioned conditions
@@ -98,15 +100,14 @@ public class RouteFinder extends SubsystemBase {
      * @param pointx   the x-coordinate to end up at
      * @param pointy   the y-coordinate to end up at
      * @param rotation the rotation to end up at
-     * @param waypointsList a list of points to go through
      * @return the trajectory that satisfies the aforementioned conditions
      */
-    public static Trajectory trajectorygen(int pointx, int pointy, int rotation, List<Translation2d> waypointsList) {
+    public static Trajectory trajectorygen(int pointx, int pointy, int rotation) {
         return TrajectoryGenerator.generateTrajectory(
-                // Start at the current pose facing the +X direction
+                // Start at the current pose
                 drivetrain.getPose(),
                 // Pass through these waypoints
-                waypointsList,
+                List.of(),
                 // End at this location
                 new Pose2d(pointx, pointy, new Rotation2d(rotation)),
                 // Pass config
