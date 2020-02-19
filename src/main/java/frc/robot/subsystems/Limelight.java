@@ -82,7 +82,6 @@ public class Limelight extends SubsystemBase {
 
     /**
      * Get the state of the LEDs
-     * TODO: This method isn't actually used anywhere
      */
     public LED getLED() {
         return LED.values()[(int) getDouble("ledMode")];
@@ -99,7 +98,6 @@ public class Limelight extends SubsystemBase {
 
     /**
      * @return the state of the Limelight camera
-     * TODO: This method isn't actually used anywhere
      */
     public CAM getCAM() {
         return CAM.values()[(int) getDouble("ledMode")];
