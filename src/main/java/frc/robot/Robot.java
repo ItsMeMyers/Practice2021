@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.RouteFinder;
+import frc.robot.commands.RouteFinder;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -118,8 +118,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    Trajectory ballTrajectory = RouteFinder.trajectorygen(pointx, pointy, rotation, List.of(new Translation2d(waypointx, waypointy)));
-    final Command ballCommand = RouteFinder.getPathCommand(ballTrajectory);
+    Trajectory ballTrajectory = frc.robot.commands.RouteFinder.trajectorygen(pointx, pointy, rotation,
+        List.of(new Translation2d(waypointx, waypointy)));
+    final Command ballCommand = frc.robot.commands.RouteFinder.getPathCommand(ballTrajectory);
   }
 
   @Override
