@@ -46,7 +46,7 @@ public class Limelight extends SubsystemBase {
     /**
      * @return Whether the limelight has any valid targets
      */
-    public boolean hasTargets() {
+    public boolean hasTarget() {
         return getDouble("tv") == 1.0;
     }
 
@@ -72,37 +72,9 @@ public class Limelight extends SubsystemBase {
     }
 
     /**
-     * Turn on Limelight's LEDs
-     */
-    public void turnOnLED() {
-        setLEDMode(LED.ON);
-    }
-
-    /**
-     * Turn of Limelight's LEDs
-     */
-    public void turnOffLED() {
-        setLEDMode(LED.OFF);
-    }
-
-    /**
-     * Set the Limelight camera to tracking (vision) mode
-     */
-    public void turnOnCam() {
-        setCameraMode(CAM.VISION);
-    }
-
-    /**
-     * Set the Limelight camera to driver mode (no filter)
-     */
-    public void turnOffCam() {
-        setCameraMode(CAM.DRIVER);
-    }
-
-    /**
      * @param state what to set the limelight LED mode to
      */
-    private void setLEDMode(LED state) {
+    public void setLED(LED state) {
         // Goes into the Limelight network tables and changes the LED mode value
         limelight.getEntry("ledMode").setNumber(state.ordinal());
         System.out.println("Setting LimeLight LEDs to " + state.ordinal());
@@ -119,7 +91,7 @@ public class Limelight extends SubsystemBase {
     /**
      * @param state what to set the limelight camera mode to
      */
-    private void setCameraMode(CAM state) {
+    public void setCAM(CAM state) {
         // Goes into the Limelight network tables and changes the cam mode value
         limelight.getEntry("camMode").setNumber(state.ordinal());
         System.out.println("Setting LimeLight CAMs to " + state.ordinal());
@@ -138,7 +110,7 @@ public class Limelight extends SubsystemBase {
      * @return The value stored in the network table entry.
      * If it doesn't exist, return 0.0
      */
-    private double getDouble(String entry) {
+    public double getDouble(String entry) {
         return limelight.getEntry(entry).getDouble(0.0);
     }
 }
