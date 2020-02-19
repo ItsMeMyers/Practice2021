@@ -12,8 +12,10 @@ public class Feeder extends SubsystemBase {
     private final WPI_TalonSRX feederMotor1;
     private final WPI_TalonSRX feederMotor2;
 
+    // Number of balls the feeder is storing
     private int ballCounter = 0;
 
+    // Makes sure the speed does not increase over this number
     private double speedLimiter = 0.7;
 
     /**
