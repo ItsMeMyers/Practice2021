@@ -29,6 +29,9 @@ public final class Constants {
    * by statically importing the necessary inner class."
    */
 
+   /**
+    * Constants for the drive train
+    */
   public static final class DrivetrainConstants {
 
     public static final double kInvertMotor = -1.0;
@@ -55,6 +58,9 @@ public final class Constants {
     public static final boolean kGyroReversed = true;
   }
 
+  /**
+   * Constants for the feeder system
+   */
   public static final class FeederConstants {
     public static final double kInvertMotor = -1.0;
 
@@ -63,6 +69,9 @@ public final class Constants {
     public static final int kMotor2Port = 15;
   }
 
+  /**
+   * Constants for the intake system
+   */
   public static final class IntakeConstants {
     // Power cell intake motor
     public static final int kMotorPort = 11;
@@ -70,6 +79,9 @@ public final class Constants {
     public static final int kSolenoidPort = 0;
   }
 
+  /**
+   * Constants for the input device ports
+   */
   public static final class RobotContainerConstants {
     // Sticks
     public static final int kRightStickPort = 0;
@@ -82,6 +94,9 @@ public final class Constants {
     public static final int kPovDown = 180;
   }
 
+  /**
+   * Constants for path finding and trajectories
+   */
   public static final class RouteFinderConstants {
     // Reasonable baseline values for a RAMSETE follower in units of meters and
     // seconds
@@ -111,12 +126,18 @@ public final class Constants {
     public static final int waypointy = 0;
   }
 
+  /**
+   * Constants for the shooter subsystem
+   */
   public static final class ShooterConstants {
     // Shooter spinner motors
     public static final int kShooterMotorRPort = 6;
     public static final int kShooterMotorLPort = 7;
   }
 
+  /**
+   * Constants for the turret subsystem
+   */
   public static final class TurretConstants {
     // Shooter spinner and turret moving motors
     public static final int kTurretMotorPort = 8;
