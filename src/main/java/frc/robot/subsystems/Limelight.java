@@ -30,17 +30,7 @@ public class Limelight extends SubsystemBase {
      * Initialize the Limelight file
      */
     public Limelight() {
-
         limelight = NetworkTableInstance.getDefault().getTable("limelight");
-
-        try {
-            getDouble("tv");
-            getDouble("tx");
-            getDouble("ty");
-            getDouble("ta");
-        } catch (Exception e) {
-            System.out.println(String.format("Error initializing limelight. Error message: %s", e));
-        }
     }
 
     /**
