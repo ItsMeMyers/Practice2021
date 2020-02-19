@@ -28,7 +28,7 @@ public class RouteFinder extends SubsystemBase {
         }
 
     /**
-     * Creates a command to follow a certain trajectory.
+     * Creates a command to follow a certain trajectory. TODO: REstructure this so it makes sense
      * @param trajectory the trajectory to follow
      * @return the command that satisifes the aforementioned conditions
      */
@@ -88,6 +88,7 @@ public class RouteFinder extends SubsystemBase {
                 new PIDController(kPDriveVel, 0, 0),
                 // RamseteCommand passes volts to the callback
                 drivetrain::tankDriveVolts,
+                // requires the drivetrain, will be interrupted if another command requires it
                 drivetrain);
         
         // Follow the path finding command and then stop

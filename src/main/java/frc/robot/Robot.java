@@ -118,9 +118,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    Trajectory ballTrajectory = frc.robot.commands.RouteFinder.trajectorygen(pointx, pointy, rotation,
+    // TODO: needs to be changed so it works
+    // Get a new command to move to the ball position
+    // Make sure there are not multiple command scheduled
+    Trajectory ballTrajectory = RouteFinder.trajectorygen(pointx, pointy, rotation,
         List.of(new Translation2d(waypointx, waypointy)));
-    final Command ballCommand = frc.robot.commands.RouteFinder.getPathCommand(ballTrajectory);
+    Command ballCommand = RouteFinder.getPathCommand(ballTrajectory);
   }
 
   @Override
