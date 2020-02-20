@@ -7,13 +7,9 @@
 
 package frc.robot;
 
-import static frc.robot.Constants.RouteFinderConstants.*;
-
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.RouteFinder;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Limelight.CAM;
 import frc.robot.subsystems.Limelight.LED;

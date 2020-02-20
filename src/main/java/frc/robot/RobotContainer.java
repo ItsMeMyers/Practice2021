@@ -153,13 +153,9 @@ public class RobotContainer {
     // Ends targeting when the down arrow on the D-pad is pressed
     new POVButton(gamepad, kPovDown)
       .cancelWhenPressed(new TargetEntity(limelight, turret, gamepad));
-<<<<<<< HEAD
     //Heads to a position when the left bumper is pressed
     new JoystickButton(gamepad, Button.kBumperLeft.value)
     .whenPressed(RouteFinder.getPathCommand(RouteFinder.trajectorygen(pointx, pointy, rotation)));
-=======
-
->>>>>>> parent of 21afb02... idfk
     // TODO: Might need to change this? This enables driving forever, but it wasn't implemented anywhere before
     new PerpetualCommand(new DriveWithJoysticks(drivetrain, rightStick, leftStick)).schedule();
   }
