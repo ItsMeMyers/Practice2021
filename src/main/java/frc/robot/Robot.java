@@ -22,14 +22,18 @@ import frc.robot.subsystems.Limelight.LED;
  * project.
  */
 public class Robot extends TimedRobot {
-  // 0: RobotInit
-  // 1: TeleOp
+  
+  // Default Limelight modes for when the different robot states initialize
+  // 0: Initial State (RobotInit)
+  // 1: Disabled
   // 2: Autonomous
-  // 3: Test
+  // 3: TeleOp
+  // 4: Test
   private final LED[] defaultLED = {
     LED.OFF,
     LED.OFF,
     LED.ON,
+    LED.OFF,
     LED.ON
   };
   
@@ -37,6 +41,7 @@ public class Robot extends TimedRobot {
     CAM.DRIVER,
     CAM.DRIVER,
     CAM.VISION,
+    CAM.DRIVER,
     CAM.VISION
   };
 
@@ -85,6 +90,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    limelight.setLED(defaultLED[1]);
+    limelight.setCAM(defaultCAM[1]);
   }
 
   @Override
@@ -123,12 +130,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    limelight.setLED(defaultLED[1]);
-    limelight.setCAM(defaultCAM[1]);
+    limelight.setLED(defaultLED[3]);
+    limelight.setCAM(defaultCAM[3]);
     /*
      * This makes sure that the autonomous stops running when teleop starts running.
      * If you want the autonomous to continue until interrupted by another command,
-     * remove this line or comment it out
+     * remove this line or comment it out.
      */
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
@@ -140,13 +147,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-
   }
 
   @Override
   public void testInit() {
-    limelight.setLED(defaultLED[3]);
-    limelight.setCAM(defaultCAM[3]);
+    limelight.setLED(defaultLED[4]);
+    limelight.setCAM(defaultCAM[4]);
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
   }
