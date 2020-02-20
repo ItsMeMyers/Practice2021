@@ -148,7 +148,10 @@ public final class Constants {
     public static final int kLimitSwitchRPort = 15;
     public static final int kLimitSwitchLPort = 16;
   }
-
-  
   public static NavxGyro gyro;
+  public static final class ClimberConstants
+  {
+    public static final int cMotorPort = 22;
+    public static final int cSolenoidPort = 55;
+  }
 }
