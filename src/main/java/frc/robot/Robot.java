@@ -9,15 +9,12 @@ package frc.robot;
 
 import static frc.robot.Constants.RouteFinderConstants.*;
 
-import java.util.List;
-
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.RouteFinder;
 import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.RouteFinder;
 import frc.robot.subsystems.Limelight.CAM;
 import frc.robot.subsystems.Limelight.LED;
 
@@ -77,13 +74,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    // Runs the Scheduler. This is responsible for polling buttons, adding
-    // newly-scheduled
-    // commands, running already-scheduled commands, removing finished or
-    // interrupted commands,
-    // and running subsystem periodic() methods. This must be called from the
-    // robot's periodic
-    // block in order for anything in the Command-based framework to work.
+    /*
+     * Runs the Scheduler. This is responsible for polling buttons, adding
+     * newly-scheduled commands, running already-scheduled commands, removing
+     * finished or interrupted commands, and running subsystem periodic() methods.
+     * This must be called from the robot's periodic block in order for anything in
+     * the Command-based framework to work.
+     */
     CommandScheduler.getInstance().run();
   }
 
@@ -132,10 +129,11 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     limelight.setLED(defaultLED[1]);
     limelight.setCAM(defaultCAM[1]);
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
+    /*
+     * This makes sure that the autonomous stops running when teleop starts running.
+     * If you want the autonomous to continue until interrupted by another command,
+     * remove this line or comment it out
+     */
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -146,8 +144,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    Trajectory ballTrajectory = RouteFinder.trajectorygen(pointx, pointy, rotation, List.of(new Translation2d(waypointx, waypointy)));
-    final Command ballCommand = RouteFinder.getPathCommand(ballTrajectory);
+    // TODO: needs to be changed so it works
+    // Get a new command to move to the ball position
+    // Make sure there are not multiple command scheduled
+    Trajectory ballTrajectory = RouteFinder.trajectorygen(pointx, pointy, rotation);
+    Command ballCommand = RouteFinder.getPathCommand(ballTrajectory);
   }
 
   @Override

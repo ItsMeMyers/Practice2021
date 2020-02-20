@@ -21,6 +21,15 @@ public class MoveTurret extends CommandBase {
         addRequirements(turret);
     }
 
+    /**
+     * 1. This command moves the turret. <br>
+     * 2. First it checks if it is next to the limit switches. <br>
+     * 3. If it is, it sets the power to 0 so the turret cannot move past the limit. <br>
+     * 4. If it isn't, the turret takes its power value from the left joystick on the game pad. <br>
+     * 5. Then, it makes sure that the power given is not less than the power threshold of 0.02.
+     * If it is, then it just sets the power to 0. <br>
+     * 6. Finally, it sends the speed value to the motor.
+     */
     @Override
     public void execute() {
         // If the limit switch is not activated then set the power
@@ -39,7 +48,9 @@ public class MoveTurret extends CommandBase {
         turret.setSpinPower(power);
     }
 
-    // Runs when command is interrupted
+    /**
+     * Stops the turret when the command ends
+     */
     @Override
     public void end(boolean interrupted) {
         turret.stopTurret();
