@@ -14,6 +14,9 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.RouteFinder;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Limelight.CAM;
+import frc.robot.subsystems.Limelight.LED;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,9 +26,28 @@ import frc.robot.commands.RouteFinder;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
+  // 0: RobotInit
+  // 1: TeleOp
+  // 2: Autonomous
+  // 3: Test
+  private final LED[] defaultLED = {
+    LED.OFF,
+    LED.OFF,
+    LED.ON,
+    LED.ON
+  };
+  
+  private final CAM[] defaultCAM = {
+    CAM.DRIVER,
+    CAM.DRIVER,
+    CAM.VISION,
+    CAM.VISION
+  };
 
-  public static RobotContainer m_robotContainer;
+  private Command m_autonomousCommand;
+  private Limelight limelight = new Limelight();
+
+  private RobotContainer m_robotContainer;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -37,6 +59,8 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    limelight.setLED(defaultLED[0]);
+    limelight.setCAM(defaultCAM[0]);
   }
 
   /**
@@ -78,6 +102,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    limelight.setLED(defaultLED[2]);
+    limelight.setCAM(defaultCAM[2]);
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -101,6 +127,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    limelight.setLED(defaultLED[1]);
+    limelight.setCAM(defaultCAM[1]);
     /*
      * This makes sure that the autonomous stops running when teleop starts running.
      * If you want the autonomous to continue until interrupted by another command,
@@ -125,6 +153,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+    limelight.setLED(defaultLED[3]);
+    limelight.setCAM(defaultCAM[3]);
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
   }

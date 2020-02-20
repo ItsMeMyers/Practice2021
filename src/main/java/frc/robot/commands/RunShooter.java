@@ -79,8 +79,7 @@ public class RunShooter extends CommandBase {
      * If it does, update the tx and ty values.
      */
     public void updateLimelightTracking() {
-        hasValidTarget = limelight.hasTargets();
-        if (!hasValidTarget) {
+        if (!limelight.hasTarget()) {
             dist = 0.0;
             return;
         }
