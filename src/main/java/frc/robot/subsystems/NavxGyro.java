@@ -19,8 +19,8 @@ public class NavxGyro extends AHRS {
 	 * Pitch: Rotation up or down about an axis running from side to side;
 	 * Roll: Rotation about an axis running from the front to the back.
 	 */
-	public NavxGyro(Port spi_port_id) throws RuntimeException {
-		super(spi_port_id);
+	public NavxGyro(Port spiPortID) throws RuntimeException {
+		super(spiPortID);
 	}
 
 	public void setToleranceDegrees(double toleranceDegrees) {

@@ -19,7 +19,7 @@ public class IntakeOut extends CommandBase {
     }
 
     @Override
-    public void initialize() {
+    public void execute() {
         intake.runOut();
     }
 
