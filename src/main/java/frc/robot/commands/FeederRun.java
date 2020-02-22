@@ -12,12 +12,21 @@ public class FeederRun extends CommandBase {
      * 3. The feeder is the system that takes the balls up into the shooter.
      */
     public FeederRun(Feeder fd) {
+        
         this.feeder = fd;
         addRequirements(feeder);
     }
 
     @Override
-    public void initialize() {
+    public void execute() {
         feeder.run();
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        
+        if (interrupted) {
+            feeder.stop();
+        }
     }
 }
