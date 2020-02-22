@@ -20,16 +20,16 @@ public class Drivetrain extends SubsystemBase {
     // The motors on the left side of the drive.
     private final SpeedControllerGroup leftMotors =
     new SpeedControllerGroup(
-        new WPI_TalonFX(kL1MotorPort),
-        new WPI_TalonFX(kL2MotorPort),
-        new WPI_TalonFX(kL3MotorPort));
+        new WPI_TalonFX(L1MotorPort),
+        new WPI_TalonFX(L2MotorPort),
+        new WPI_TalonFX(L3MotorPort));
 
     // The motors on the right side of the drive.
     private final SpeedControllerGroup rightMotors = 
     new SpeedControllerGroup(
-        new WPI_TalonFX(kR1MotorPort),
-        new WPI_TalonFX(kR2MotorPort),
-        new WPI_TalonFX(kR3MotorPort));
+        new WPI_TalonFX(R1MotorPort),
+        new WPI_TalonFX(R2MotorPort),
+        new WPI_TalonFX(R3MotorPort));
 
     // motor properties
     private double rightPower = 0.0;
@@ -43,13 +43,13 @@ public class Drivetrain extends SubsystemBase {
 
     // The left-side drive encoder
     private final Encoder leftEncoder =
-    new Encoder(kLeftEncoderPorts[0], kLeftEncoderPorts[1],
-                kLeftEncoderReversed);
+    new Encoder(leftEncoderPorts[0], leftEncoderPorts[1],
+                leftEncoderReversed);
 
     // The right-side drive encoder
     private final Encoder rightEncoder =
-    new Encoder(kRightEncoderPorts[0], kRightEncoderPorts[1],
-                kRightEncoderReversed);
+    new Encoder(rightEncoderPorts[0], rightEncoderPorts[1],
+                rightEncoderReversed);
 
     // The gyro sensor
     private final AHRS gyro = new AHRS(SPI.Port.kMXP);
@@ -59,8 +59,8 @@ public class Drivetrain extends SubsystemBase {
 
     public Drivetrain() {
         // Sets the distance per pulse for the encoders
-        leftEncoder.setDistancePerPulse(kEncoderDistancePerPulse);
-        rightEncoder.setDistancePerPulse(kEncoderDistancePerPulse);
+        leftEncoder.setDistancePerPulse(EncoderDistancePerPulse);
+        rightEncoder.setDistancePerPulse(EncoderDistancePerPulse);
 
         odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
         resetEncoders();
@@ -116,11 +116,11 @@ public class Drivetrain extends SubsystemBase {
      */
     public void drive(double rightP, double leftP) {
         if (invertRight) {
-            rightP *= kInvertMotor;
+            rightP *= INVERT_MOTOR;
         }
         
         if (invertLeft) {
-            leftP *= kInvertMotor;
+            leftP *= INVERT_MOTOR;
         }
         
         rightMotors.set(rightP);
@@ -242,7 +242,7 @@ public class Drivetrain extends SubsystemBase {
      * @return the robot's heading in degrees, from -180 to 180
      */
     public double getHeading() {
-        return Math.IEEEremainder(gyro.getAngle(), 360) * (kGyroReversed ? -1.0 : 1.0);
+        return Math.IEEEremainder(gyro.getAngle(), 360) * (GYRO_REVERSED ? -1.0 : 1.0);
     }
 
     /**
@@ -251,6 +251,6 @@ public class Drivetrain extends SubsystemBase {
      * @return The turn rate of the robot, in degrees per second
      */
     public double getTurnRate() {
-        return gyro.getRate() * (kGyroReversed ? -1.0 : 1.0);
+        return gyro.getRate() * (GYRO_REVERSED ? -1.0 : 1.0);
     }
 }
