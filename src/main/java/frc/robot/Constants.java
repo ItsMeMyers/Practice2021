@@ -154,6 +154,7 @@ public final class Constants {
   public static final class ClimberConstants
   {
     public static final int cMotorPort = 22;
-    public static final int cSolenoidPort = 55;
+    public static final int cLSolenoidPort = 55;
+    public static final int cRSolenoidPort = 66;
   }
 }
