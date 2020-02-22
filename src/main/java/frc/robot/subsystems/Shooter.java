@@ -89,7 +89,7 @@ public class Shooter extends SubsystemBase {
         return ((getRightRPM() >= rpmThreshold) && (getLeftRPM() >= rpmThreshold));
     }
 
-    // TODO test this method functionality
+    // TODO: Test this method's functionality
     /**
      * Checks if the motor voltages are greater than the acceptable voltage threshold
      */

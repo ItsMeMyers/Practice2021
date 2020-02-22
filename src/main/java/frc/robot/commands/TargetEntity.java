@@ -25,20 +25,20 @@ public class TargetEntity extends CommandBase {
 	private double turretPower; // Updated by the LimeLight camera; equal to power + additionalPower
 
 	/**
+	 * 1. Check if Limelight has a target<br>
+	 * 2. Get the tx value <br>
+	 * 3. Turn the value into a speed by inverting the X value and multiplying it by
+	 * the power constant <br>
+	 * 4. Tune the power to comply with the minimum power and threshold <br>
+	 * 5. Get the additional power from the right stick's Y value <br>
+	 * 6. If the total power is greater than 1, set it to 1 <br>
+	 * 7. If the total power is less than -1, set it to -1 <br>
+	 * 8. Pass the power to the motor <br>
+	 * 9. Print the values to SmartDashboard
+	 * 
 	 * @param ll   Limelight subsystem
 	 * @param trrt Turret subsystem
-	 * @param gmpd XboxController instance <br>
-	 *             1. Check if Limelight has a target<br>
-	 *             2. Get the tx value <br>
-	 *             3. Turn the value into a speed by inverting the X value and
-	 *             multiplying it by the power constant <br>
-	 *             4. Tune the power to comply with the minimum power and threshold
-	 *             <br>
-	 *             5. Get the additional power from the right stick's Y value <br>
-	 *             6. If the total power is greater than 1, set it to 1 <br>
-	 *             7. If the total power is less than -1, set it to -1 <br>
-	 *             8. Pass the power to the motor <br>
-	 *             9. Print the values to SmartDashboard
+	 * @param gmpd XboxController instance
 	 */
 	public TargetEntity(Limelight ll, Turret trrt, XboxController gmpd) {
 		turret = trrt;
@@ -108,10 +108,10 @@ public class TargetEntity extends CommandBase {
 	 * Log diagnostic values
 	 */
 	public void logValues() {
+		SmartDashboard.putNumber("GamePad.POV", gamepad.getPOV());
 		SmartDashboard.putNumber("Target.Power", power);
 		SmartDashboard.putNumber("Target.AddPower", additionalPower);
 		SmartDashboard.putNumber("Target.TurretPower", turretPower);
-		SmartDashboard.putNumber("GamePad.POV", gamepad.getPOV());
 	}
 
 	/**

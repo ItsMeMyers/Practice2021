@@ -121,6 +121,8 @@ public class RobotContainer {
         .whenPressed(RouteFinder.getPathCommand(RouteFinder.trajectorygen(pointx, pointy, rotation)));
     // Driving
     new PerpetualCommand(new DriveWithJoysticks(drivetrain, rightStick, leftStick)).schedule();
+    // Turret
+    new PerpetualCommand(new MoveTurret(turret, gamepad)).schedule();
   }
 
   public static TrajectoryConfig getConfig() {
