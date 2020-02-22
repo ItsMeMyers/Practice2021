@@ -35,6 +35,7 @@ public final class Constants {
   public static final class DrivetrainConstants {
 
     public static final double kInvertMotor = -1.0;
+
     // Drive Train motors
     public static final int kR1MotorPort = 0;
     public static final int kR2MotorPort = 1;
@@ -64,6 +65,10 @@ public final class Constants {
   public static final class FeederConstants {
     public static final double kInvertMotor = -1.0;
 
+    // Ball Present Sensor Config
+    public static final int feederBallPresentId = 0;
+    public static final double feederBallPresentThreshold = 125.0;
+
     // Power cell feeder motors
     public static final int kMotor1Port = 14;
     public static final int kMotor2Port = 15;
@@ -73,6 +78,9 @@ public final class Constants {
    * Constants for the intake system
    */
   public static final class IntakeConstants {
+    //Ball Present Sensor Config
+    public static final int intakeBallPresentId = 1;
+    public static final double intakeBallPresentThreshold = 125.0;
     // Power cell intake motor
     public static final int kMotorPort = 11;
     // Solenoids
