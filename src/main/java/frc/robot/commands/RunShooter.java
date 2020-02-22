@@ -26,6 +26,14 @@ public class RunShooter extends CommandBase {
     private double ty;
     private double tx;
 
+    /**
+     * Runs the shooter
+     * 
+     * @param sht Shooter subsystem
+     * @param fd Feeder subsystem
+     * @param ll Limelight subsystem
+     * @param dR DataRecorder subsystem
+     */
     public RunShooter(Shooter sht, Feeder fd, Limelight ll, DataRecorder dR) {
         this.shooter = sht;
         this.feeder = fd;
@@ -36,7 +44,6 @@ public class RunShooter extends CommandBase {
 
     @Override
     public void execute() {
-
         updateLimelightTracking();
         dist = findDistance();
         
