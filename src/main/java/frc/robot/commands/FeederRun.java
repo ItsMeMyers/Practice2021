@@ -19,7 +19,7 @@ public class FeederRun extends CommandBase {
     }
 
     @Override
-    public void execute() {
+    public void initialize() {
         feeder.run();
     }
 }
