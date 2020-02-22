@@ -29,7 +29,6 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -131,7 +130,7 @@ public class RobotContainer {
     // Attaches a commmand to each button
     // Stows in or puts out the intake system when the A button is pressed
     new JoystickButton(gamepad, Button.kA.value)
-      .whenPressed(new InstantCommand(intake::toggle, intake));
+      .whenPressed(new IntakeToggle(intake));
     // Records data with success when the B button is pressed
     new JoystickButton(gamepad, Button.kB.value)
       .whenPressed(new RecordData(dataRecorder, 1));
@@ -143,10 +142,10 @@ public class RobotContainer {
       .whenPressed(new RunShooter(shooter, feeder, limelight, dataRecorder));
     // Takes in balls from the ground when the right trigger is held
     new JoystickButton(gamepad, Axis.kRightTrigger.value)
-      .whenHeld(new InstantCommand(intake::runIn, intake).andThen(intake::stopMotor));
+      .whenHeld(new IntakeIn(intake));
     // Pushes out balls onto the ground when the right bumper is held
     new JoystickButton(gamepad, Button.kBumperRight.value)
-      .whenHeld(new InstantCommand(intake::runOut, intake).andThen(intake::stopMotor));
+      .whenHeld(new IntakeOut(intake));
     // Starts targeting when the up arrow on the D-pad is pressed
     new POVButton(gamepad, povUp)
       .whenPressed(new TargetEntity(limelight, turret, gamepad));

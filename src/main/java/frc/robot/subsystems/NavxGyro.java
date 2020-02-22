@@ -1,18 +1,24 @@
 package frc.robot.subsystems;
 
-import frc.robot.lib.RioLogger;
-
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.Constants;
-import edu.wpi.first.wpilibj.SPI.Port;
+import frc.robot.lib.RioLogger;
 
 public class NavxGyro extends AHRS {
 	private PIDController turnController;
 	private double toleranceDegrees = 2.0;
 	private double rotateToAngleRate;
 
+	/**
+	 * This detects the rotation on 3 axes; roll, pitch, and yaw
+	 * using the attitude and heading reference system (AHRS).
+	 * Yaw: Rotation left and right about an axis running up and down;
+	 * Pitch: Rotation up or down about an axis running from side to side;
+	 * Roll: Rotation about an axis running from the front to the back.
+	 */
 	public NavxGyro(Port spi_port_id) throws RuntimeException {
 		super(spi_port_id);
 	}
