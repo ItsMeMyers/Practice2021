@@ -23,7 +23,7 @@ public class Shooter extends SubsystemBase {
     private double rightRPM;
     private double leftRPM;
 
-    //TODO: Idk but I feel like maybe this should be greater than 0?
+    //TODO: Tune this value
     private final double rpmThreshold = 0.0; 
 
     private final double voltThreshold = 1.0;
