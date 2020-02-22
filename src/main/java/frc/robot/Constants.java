@@ -67,6 +67,10 @@ public final class Constants {
   public static final class FeederConstants {
     public static final double INVERT_MOTOR = -1.0;
 
+    // Ball Present Sensor Config
+    public static final int feederBallPresentId = 0;
+    public static final double feederBallPresentThreshold = 125.0;
+
     // Power cell feeder motors
     public static final int motor1Port = 14;
     public static final int motor2Port = 15;
@@ -76,6 +80,9 @@ public final class Constants {
    * Constants for the intake system
    */
   public static final class IntakeConstants {
+    //Ball Present Sensor Config
+    public static final int intakeBallPresentId = 1;
+    public static final double intakeBallPresentThreshold = 125.0;
     // Power cell intake motor
     public static final int intakeFrontMotorPort = 11;
     public static final int intakeMidMotorPort = 12;

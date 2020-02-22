@@ -5,6 +5,7 @@ import static frc.robot.Constants.IntakeConstants.*;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.playingwithfusion.TimeOfFlight;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,8 +14,10 @@ public class Intake extends SubsystemBase {
     
     private final Solenoid intakeSolenoid;
     private final WPI_TalonSRX intakeMotor;
+
     private final WPI_TalonSRX intakeMid;
     private final WPI_TalonFX intakeLowerTower;
+        // private final TimeOfFlight intakeBallPresentSensor;
 
     private final double inSpeed = -1.0;
     private final double outSpeed = 1.0;
@@ -31,6 +34,7 @@ public class Intake extends SubsystemBase {
         intakeLowerTower = new WPI_TalonFX(intakeLowerTowerPort);
 
         intakeSolenoid = new Solenoid(intakeSolenoidPort);
+        //intakeBallPresentSensor = new TimeOfFlight(intakeBallPresentId);
 
         // When the motor is in neutral mode the motor will keep moving easily (coast)
         intakeMotor.setNeutralMode(NeutralMode.Brake);
@@ -38,6 +42,9 @@ public class Intake extends SubsystemBase {
         intakeLowerTower.setNeutralMode(NeutralMode.Brake);
 
         intakeSolenoid.set(true);
+
+        //Set the distance mode of the TOF sensor
+        //intakeBallPresentSensor.setRangingMode(TimeOfFlight.RangingMode.Medium, 1.0);
     }
 
     /**
@@ -83,4 +90,16 @@ public class Intake extends SubsystemBase {
     public void toggle() {
         intakeSolenoid.set(!intakeSolenoid.get());
     }
+
+    /**
+     * Returns whether or not the TOF sensor currently sees a ball
+     */
+    // public boolean ballPresent() {
+    //     double range = intakeBallPresentSensor.getRange();
+    //     boolean ballPresent = false;
+    //     if (range <= intakeBallPresentThreshold) {
+    //         ballPresent = true;
+    //     }
+    //     return ballPresent;
+    // }
 }
