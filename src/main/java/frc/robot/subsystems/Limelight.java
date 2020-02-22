@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -34,21 +35,53 @@ public class Limelight extends SubsystemBase {
     }
 
     /**
-     * @return Whether the limelight has any valid targets
+     * @param entry The entry's ID
+     * @return The network table entry
      */
-    public boolean hasTarget() {
-        return getDouble("tv") == 1.0;
+    public NetworkTableEntry getEntry(String entry) {
+        return limelight.getEntry(entry);
     }
 
     /**
-     * @return Horizontal Offset From Crosshair To Target (-29.8 to 29.8 degrees)
+     * @param entry The entry's ID
+     * @return The double stored in the entry
+     */
+    public double getDouble(String entry) {
+        return getEntry(entry).getDouble(0.0);
+    }
+
+    /**
+     * @param entry The entry's ID
+     * @return The boolean stored in the entry
+     */
+    public boolean getBoolean(String entry) {
+        return getDouble(entry) == 1;
+    }
+
+    /**
+     * @param entry The entry's ID
+     * @return The integer stored in the entry
+     */
+    public int getInt(String entry) {
+        return (int) getDouble(entry);
+    }
+
+    /**
+     * @return Whether or not the limelight has any valid targets
+     */
+    public boolean hasTarget() {
+        return getBoolean("tv");
+    }
+
+    /**
+     * @return Horizontal Offset From Crosshair To Target (-27 to 27 degrees)
      */
     public double x() {
         return getDouble("tx");
     }
 
     /**
-     * @return Vertical Offset From Crosshair To Target (-24.85 to 24.85 degrees)
+     * @return Vertical Offset From Crosshair To Target (-20.5 to 20.5 degrees)
      */
     public double y() {
         return getDouble("ty");
@@ -62,43 +95,38 @@ public class Limelight extends SubsystemBase {
     }
 
     /**
-     * @param state what to set the limelight LED mode to
+     * @param entryName The entry's ID
+     * @param entryValue Value that the entry will be set to
      */
-    public void setLED(LED state) {
-        // Goes into the Limelight network tables and changes the LED mode value
-        limelight.getEntry("ledMode").setNumber(state.ordinal());
-        System.out.println("Setting LimeLight LEDs to " + state.ordinal());
+    public void setEntry(String entryName, int entryValue) {
+        getEntry(entryName).setNumber(entryValue);
     }
 
     /**
-     * Get the state of the LEDs
+     * @param state what to set the limelight LED mode to
+     */
+    public void setLED(LED state) {
+        setEntry("ledMode", state.ordinal());
+    }
+
+    /**
+     * @return Get the state of the LEDs
      */
     public LED getLED() {
-        return LED.values()[(int) getDouble("ledMode")];
+        return LED.values()[getInt("ledMode")];
     }
 
     /**
      * @param state what to set the limelight camera mode to
      */
     public void setCAM(CAM state) {
-        // Goes into the Limelight network tables and changes the cam mode value
-        limelight.getEntry("camMode").setNumber(state.ordinal());
-        System.out.println("Setting LimeLight CAMs to " + state.ordinal());
+        setEntry("camMode", state.ordinal());
     }
 
     /**
      * @return the state of the Limelight camera
      */
     public CAM getCAM() {
-        return CAM.values()[(int) getDouble("ledMode")];
-    }
-
-    /**
-     * @param entry what to check the Limelight network tables for
-     * @return The value stored in the network table entry.
-     * If it doesn't exist, return 0.0
-     */
-    public double getDouble(String entry) {
-        return limelight.getEntry(entry).getDouble(0.0);
+        return CAM.values()[getInt("ledMode")];
     }
 }

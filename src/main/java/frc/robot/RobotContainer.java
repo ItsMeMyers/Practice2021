@@ -29,7 +29,6 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -45,11 +44,11 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
   // Joysticks
-  private final Joystick rightStick = new Joystick(kRightStickPort);
-  private final Joystick leftStick = new Joystick(kLeftStickPort);
+  private final Joystick rightStick = new Joystick(rightStickPort);
+  private final Joystick leftStick = new Joystick(leftStickPort);
 
   // Xbox Controller
-  private final XboxController gamepad = new XboxController(kGamepadPort);
+  private final XboxController gamepad = new XboxController(gamepadPort);
 
   /* SUBSYSTEMS INFO
    * Why the subsystems are private, according to the official wpilib docs:
@@ -131,7 +130,7 @@ public class RobotContainer {
     // Attaches a commmand to each button
     // Stows in or puts out the intake system when the A button is pressed
     new JoystickButton(gamepad, Button.kA.value)
-      .whenPressed(new InstantCommand(intake::toggle, intake));
+      .whenPressed(new IntakeToggle(intake));
     // Records data with success when the B button is pressed
     new JoystickButton(gamepad, Button.kB.value)
       .whenPressed(new RecordData(dataRecorder, 1));
@@ -143,15 +142,15 @@ public class RobotContainer {
       .whenPressed(new RunShooter(shooter, feeder, limelight, dataRecorder));
     // Takes in balls from the ground when the right trigger is held
     new JoystickButton(gamepad, Axis.kRightTrigger.value)
-      .whenHeld(new InstantCommand(intake::runIn, intake).andThen(intake::stopMotor));
+      .whenHeld(new IntakeIn(intake));
     // Pushes out balls onto the ground when the right bumper is held
     new JoystickButton(gamepad, Button.kBumperRight.value)
-      .whenHeld(new InstantCommand(intake::runOut, intake).andThen(intake::stopMotor));
+      .whenHeld(new IntakeOut(intake));
     // Starts targeting when the up arrow on the D-pad is pressed
-    new POVButton(gamepad, kPovUp)
+    new POVButton(gamepad, povUp)
       .whenPressed(new TargetEntity(limelight, turret, gamepad));
     // Ends targeting when the down arrow on the D-pad is pressed
-    new POVButton(gamepad, kPovDown)
+    new POVButton(gamepad, povDown)
       .cancelWhenPressed(new TargetEntity(limelight, turret, gamepad));
     //Heads to a position when the left bumper is pressed
     new JoystickButton(gamepad, Button.kBumperLeft.value)

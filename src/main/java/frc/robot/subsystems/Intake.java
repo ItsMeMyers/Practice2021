@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.IntakeConstants.*;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.playingwithfusion.TimeOfFlight;
 
@@ -13,7 +14,10 @@ public class Intake extends SubsystemBase {
     
     private final Solenoid intakeSolenoid;
     private final WPI_TalonSRX intakeMotor;
-    // private final TimeOfFlight intakeBallPresentSensor;
+
+    private final WPI_TalonSRX intakeMid;
+    private final WPI_TalonFX intakeLowerTower;
+        // private final TimeOfFlight intakeBallPresentSensor;
 
     private final double inSpeed = -1.0;
     private final double outSpeed = 1.0;
@@ -25,12 +29,18 @@ public class Intake extends SubsystemBase {
      * The direction of the intake can also be switched.
      */
     public Intake() {
-        intakeMotor = new WPI_TalonSRX(kMotorPort);
-        intakeSolenoid = new Solenoid(kSolenoidPort);
+        intakeMotor = new WPI_TalonSRX(intakeFrontMotorPort);
+        intakeMid = new WPI_TalonSRX(intakeMidMotorPort);
+        intakeLowerTower = new WPI_TalonFX(intakeLowerTowerPort);
+
+        intakeSolenoid = new Solenoid(intakeSolenoidPort);
         //intakeBallPresentSensor = new TimeOfFlight(intakeBallPresentId);
-        
+
         // When the motor is in neutral mode the motor will keep moving easily (coast)
         intakeMotor.setNeutralMode(NeutralMode.Brake);
+        intakeMid.setNeutralMode(NeutralMode.Brake);
+        intakeLowerTower.setNeutralMode(NeutralMode.Brake);
+
         intakeSolenoid.set(true);
 
         //Set the distance mode of the TOF sensor
@@ -45,6 +55,8 @@ public class Intake extends SubsystemBase {
     */
     public void runIn() {
         intakeMotor.set(inSpeed);
+        intakeMid.set(inSpeed);
+        intakeLowerTower.set(inSpeed);
     }
 
     /**
@@ -55,6 +67,8 @@ public class Intake extends SubsystemBase {
     */
     public void runOut() {
         intakeMotor.set(outSpeed);
+        intakeMid.set(outSpeed);
+        intakeLowerTower.set(outSpeed);
     }
 
     /**
@@ -62,6 +76,8 @@ public class Intake extends SubsystemBase {
     */
     public void stopMotor() {
         intakeMotor.set(0.0);
+        intakeMid.set(0.0);
+        intakeLowerTower.set(0.0);
     }
 
     /**

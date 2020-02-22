@@ -53,6 +53,7 @@ public class Turret extends SubsystemBase {
      */
     public void stopTurret() {
         spinPower = 0.0;
+        
         turretMotor.stopMotor();
     }
 }

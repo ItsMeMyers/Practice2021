@@ -28,7 +28,6 @@ public class RouteFinder extends SubsystemBase {
 
     /**
      * Creates a command to follow a certain trajectory.
-     * TODO: Restructure this so it makes sense
      * 
      * This command will be repeatedly called in Robot.java. It constantly calculates
      * a new command to go to the position. The command keeps getting calculates
