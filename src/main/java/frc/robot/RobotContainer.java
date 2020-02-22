@@ -45,11 +45,11 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
   // Joysticks
-  private final Joystick rightStick = new Joystick(kRightStickPort);
-  private final Joystick leftStick = new Joystick(kLeftStickPort);
+  private final Joystick rightStick = new Joystick(rightStickPort);
+  private final Joystick leftStick = new Joystick(leftStickPort);
 
   // Xbox Controller
-  private final XboxController gamepad = new XboxController(kGamepadPort);
+  private final XboxController gamepad = new XboxController(gamepadPort);
 
   /* SUBSYSTEMS INFO
    * Why the subsystems are private, according to the official wpilib docs:
@@ -148,10 +148,10 @@ public class RobotContainer {
     new JoystickButton(gamepad, Button.kBumperRight.value)
       .whenHeld(new InstantCommand(intake::runOut, intake).andThen(intake::stopMotor));
     // Starts targeting when the up arrow on the D-pad is pressed
-    new POVButton(gamepad, kPovUp)
+    new POVButton(gamepad, povUp)
       .whenPressed(new TargetEntity(limelight, turret, gamepad));
     // Ends targeting when the down arrow on the D-pad is pressed
-    new POVButton(gamepad, kPovDown)
+    new POVButton(gamepad, povDown)
       .cancelWhenPressed(new TargetEntity(limelight, turret, gamepad));
     //Heads to a position when the left bumper is pressed
     new JoystickButton(gamepad, Button.kBumperLeft.value)
