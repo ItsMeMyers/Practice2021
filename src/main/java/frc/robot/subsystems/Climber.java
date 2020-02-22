@@ -7,18 +7,35 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Climber extends SubsystemBase
 {
-    WPI_TalonSRX motor = new WPI_TalonSRX(ClimberConstants.cMotorPort);
-    Solenoid solenoid = new Solenoid(ClimberConstants.cSolenoidPort);
-    public void deploy()
-    {
-        solenoid.set(true);
+    private WPI_TalonSRX winchMotor;
+    private Solenoid rSolenoid;
+    private Solenoid lSolenoid;
+
+    private double climbMotorSpeed = .80;
+
+    public Climber() {
+        winchMotor = new WPI_TalonSRX(ClimberConstants.cMotorPort);
+        rSolenoid = new Solenoid(ClimberConstants.cRSolenoidPort);
+        lSolenoid = new Solenoid(ClimberConstants.cLSolenoidPort);
     }
-    public void climb()
-    {
+
+    public void deploy() {
+        rSolenoid.set(true);
+        lSolenoid.set(true);
     }
-    public void undeploy()
-    {
-        solenoid.set(false);
+
+    public void climb() {
+
+        winchMotor.set(climbMotorSpeed);
+    }
+
+    public void withdraw() {
+        rSolenoid.set(false);
+        lSolenoid.set(false);
+    }
+
+    public void stop() {
+        winchMotor.set(0.0);
     }
 
 }
