@@ -23,7 +23,6 @@ public class RunShooter extends CommandBase {
     private final double angleToGround = (Math.PI / 6.0);
     private double angleToTarget = 0.0;
 
-    private boolean hasValidTarget = false;
     private double ty;
     private double tx;
 
@@ -44,8 +43,8 @@ public class RunShooter extends CommandBase {
         while (!shooter.atSpeed()) {
             shooter.getToSpeed();
         }
+
         while (shooter.atSpeed()) {
-            // TODO: What does this even do it doesn't schedule it or anything it just initializes it
             new FeederRun(feeder);
         }
         feeder.shotBall();
@@ -56,14 +55,6 @@ public class RunShooter extends CommandBase {
             dataRecorder.setX(limelight.x());
             dataRecorder.setY(limelight.y());
         } */
-    }
-
-    /**
-     * Command stops when interrupted
-     * */
-    @Override
-    public void end(boolean interrupted) {
-        shooter.stopShooter();
     }
 
     /**
@@ -79,12 +70,19 @@ public class RunShooter extends CommandBase {
      * If it does, update the tx and ty values.
      */
     public void updateLimelightTracking() {
-        if (!limelight.hasTarget()) {
+        if (limelight.hasTarget()) {
+            tx = limelight.x();
+            ty = limelight.y();
+        } else {
             dist = 0.0;
-            return;
         }
-        
-        tx = limelight.x();
-        ty = limelight.y();
+    }
+
+    /**
+     * Command stops when interrupted
+     */
+    @Override
+    public void end(boolean interrupted) {
+        shooter.stopShooter();
     }
 }
