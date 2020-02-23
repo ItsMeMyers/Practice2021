@@ -17,17 +17,14 @@ public class Feeder extends SubsystemBase {
     // Number of balls the feeder is storing
     private int ballCounter = 0;
 
-    // Makes sure the speed does not increase over this number
-    private double speedLimiter = 0.7;
-
     /**
      * This is the subsystem that sends the balls to the shooter.
      * It also stores the balls that come in from the Intake.
      */
     public Feeder() {
 
-        feederMotor1 = new WPI_TalonSRX(motor1Port);
-        feederMotor2 = new WPI_TalonSRX(motor2Port);
+        feederMotor1 = new WPI_TalonSRX(feederMotor1Port);
+        feederMotor2 = new WPI_TalonSRX(feederMotor2Port);
 
         // When the motors are in neutral mode the motors will keep moving easily (coast)
         feederMotor1.setNeutralMode(NeutralMode.Coast);

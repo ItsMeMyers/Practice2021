@@ -59,8 +59,8 @@ public class Drivetrain extends SubsystemBase {
 
     public Drivetrain() {
         // Sets the distance per pulse for the encoders
-        leftEncoder.setDistancePerPulse(EncoderDistancePerPulse);
-        rightEncoder.setDistancePerPulse(EncoderDistancePerPulse);
+        leftEncoder.setDistancePerPulse(encoderDistancePerPulse);
+        rightEncoder.setDistancePerPulse(encoderDistancePerPulse);
 
         odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
         resetEncoders();

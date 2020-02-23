@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.NavxGyro;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -32,6 +30,16 @@ public final class Constants {
    * by statically importing the necessary inner class."
    */
 
+  /**
+   * Constants for the climber subsystem
+   */
+  public static final class ClimberConstants
+  {
+    public static final int winchMotorPort = 22;
+    public static final int lSolenoidPort = 55;
+    public static final int rSolenoidPort = 66;
+  }
+
    /**
     * Constants for the drive train
     */
@@ -52,11 +60,11 @@ public final class Constants {
     public static final boolean leftEncoderReversed = false;
     public static final boolean rightEncoderReversed = false;
 
-    public static final int EncoderCPR = 128;
-    public static final double WheelDiameterMeters = 0.1;
-    public static final double EncoderDistancePerPulse =
+    public static final int encoderCPR = 128;
+    public static final double wheelDiameterMeters = 0.1;
+    public static final double encoderDistancePerPulse =
         // Assumes the encoders are directly mounted on the wheel shafts
-        (WheelDiameterMeters * Math.PI) / (double) EncoderCPR;
+        (wheelDiameterMeters * Math.PI) / (double) encoderCPR;
 
     public static final boolean GYRO_REVERSED = true;
   }
@@ -72,8 +80,11 @@ public final class Constants {
     public static final double feederBallPresentThreshold = 125.0;
 
     // Power cell feeder motors
-    public static final int motor1Port = 14;
-    public static final int motor2Port = 15;
+    public static final int feederMotor1Port = 14;
+    public static final int feederMotor2Port = 15;
+
+    // Makes sure the speed does not increase over this number
+    public static final double speedLimiter = 0.7;
   }
 
   /**
@@ -134,8 +145,6 @@ public final class Constants {
     public static final int pointx = 0;
     public static final int pointy = 0;
     public static final int rotation = 0;
-    public static final int waypointx = 0;
-    public static final int waypointy = 0;
   }
 
   /**
@@ -143,8 +152,8 @@ public final class Constants {
    */
   public static final class ShooterConstants {
     // Shooter spinner motors
-    public static final int kShooterMotorRPort = 6;
-    public static final int kShooterMotorLPort = 7;
+    public static final int shootMotorRPort = 6;
+    public static final int shootMotorLPort = 7;
   }
 
   /**
@@ -152,16 +161,9 @@ public final class Constants {
    */
   public static final class TurretConstants {
     // Shooter spinner and turret moving motors
-    public static final int kTurretMotorPort = 8;
+    public static final int turretMotorPort = 8;
     // Turret limit switches
-    public static final int kLimitSwitchRPort = 15;
-    public static final int kLimitSwitchLPort = 16;
-  }
-  public static NavxGyro gyro;
-  public static final class ClimberConstants
-  {
-    public static final int cMotorPort = 22;
-    public static final int cLSolenoidPort = 55;
-    public static final int cRSolenoidPort = 66;
+    public static final int limitRPort = 15;
+    public static final int limitLPort = 16;
   }
 }

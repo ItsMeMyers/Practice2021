@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
+
+import static frc.robot.Constants.ClimberConstants.*;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import static frc.robot.Constants.ClimberConstants;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -14,9 +16,9 @@ public class Climber extends SubsystemBase
     private double climbMotorSpeed = .80;
 
     public Climber() {
-        winchMotor = new WPI_TalonSRX(ClimberConstants.cMotorPort);
-        rSolenoid = new Solenoid(ClimberConstants.cRSolenoidPort);
-        lSolenoid = new Solenoid(ClimberConstants.cLSolenoidPort);
+        winchMotor = new WPI_TalonSRX(winchMotorPort);
+        rSolenoid = new Solenoid(rSolenoidPort);
+        lSolenoid = new Solenoid(lSolenoidPort);
     }
 
     public void deploy() {

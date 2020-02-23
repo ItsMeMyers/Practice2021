@@ -4,7 +4,6 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import frc.robot.Constants;
 import frc.robot.lib.RioLogger;
 
 public class NavxGyro extends AHRS {
@@ -35,8 +34,9 @@ public class NavxGyro extends AHRS {
 		try {
 			int maxCalibrationPasses = 20;
 			for (int iCalibrationPasses = 0; iCalibrationPasses < maxCalibrationPasses; iCalibrationPasses++) {
-				if (!Constants.gyro.isCalibrating())
+				if (!isCalibrating()) {
 					break;
+				}
 				RioLogger.log("robotInit() gyro is calibrating, pass " + iCalibrationPasses);
 				try {
 					Thread.sleep(100); // Sleep 1/10 of second
@@ -45,10 +45,11 @@ public class NavxGyro extends AHRS {
 				}
 			}
 
-			RioLogger.log("robotInit() gyro is calibrating " + Constants.gyro.isCalibrating());
-			if (!Constants.gyro.isCalibrating())
-				Constants.gyro.zeroYaw();
-			RioLogger.log("robotInit() currentYaw " + Constants.gyro.getYaw());
+			RioLogger.log("robotInit() gyro is calibrating " + isCalibrating());
+			if (!isCalibrating()) {
+				zeroYaw();
+			}
+			RioLogger.log("robotInit() currentYaw " + getYaw());
 		} catch (RuntimeException ex) {
 			RioLogger.errorLog("navX-MXP initialization error " + ex);
 		}

@@ -17,7 +17,7 @@ public class Intake extends SubsystemBase {
 
     private final WPI_TalonSRX intakeMid;
     private final WPI_TalonFX intakeLowerTower;
-        // private final TimeOfFlight intakeBallPresentSensor;
+    // private final TimeOfFlight intakeBallPresentSensor;
 
     private final double inSpeed = -1.0;
     private final double outSpeed = 1.0;

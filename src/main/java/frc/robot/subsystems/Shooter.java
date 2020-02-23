@@ -33,8 +33,8 @@ public class Shooter extends SubsystemBase {
      */
     public Shooter() {
 
-        shootMotorR = new WPI_TalonFX(kShooterMotorRPort);
-        shootMotorL = new WPI_TalonFX(kShooterMotorLPort);
+        shootMotorR = new WPI_TalonFX(shootMotorRPort);
+        shootMotorL = new WPI_TalonFX(shootMotorLPort);
         
         // When the motors are in neutral mode the motors will keep moving easily (coast)
         shootMotorR.setNeutralMode(NeutralMode.Coast);
