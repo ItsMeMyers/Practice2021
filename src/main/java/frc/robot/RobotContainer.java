@@ -46,9 +46,6 @@ public class RobotContainer {
   // Xbox Controller
   private final XboxController gamepad = new XboxController(gamepadPort);
 
-  // Data Recorder
-  private final DataRecorder dataRecorder = new DataRecorder();
-
   // Drivetrain
   private final Drivetrain drivetrain = new Drivetrain();
 
@@ -102,12 +99,8 @@ public class RobotContainer {
     // Attaches a commmand to each button
     // Stows in or puts out the intake system when the A button is pressed
     new JoystickButton(gamepad, Button.kA.value).whenPressed(new IntakeToggle(intake));
-    // Records data with success when the B button is pressed
-    new JoystickButton(gamepad, Button.kB.value).whenPressed(new RecordData(dataRecorder, 1));
-    // Records data without success when the X button is pressed
-    new JoystickButton(gamepad, Button.kX.value).whenPressed(new RecordData(dataRecorder, 0));
     // Starts the shooter motors when the Y button is pressed
-    new JoystickButton(gamepad, Button.kY.value).whenPressed(new RunShooter(shooter, feeder, limelight, dataRecorder));
+    new JoystickButton(gamepad, Button.kY.value).whenPressed(new RunShooter(shooter, feeder, limelight));
     // Takes in balls from the ground when the right trigger is held
     new JoystickButton(gamepad, Axis.kRightTrigger.value).whenHeld(new IntakeIn(intake));
     // Pushes out balls onto the ground when the right bumper is held
