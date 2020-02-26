@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.NavxGyro;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -32,54 +30,76 @@ public final class Constants {
    * by statically importing the necessary inner class."
    */
 
+  /**
+   * Constants for the climber subsystem
+   */
+  public static final class ClimberConstants
+  {
+    public static final int winchMotorPort = 22;
+    public static final int lSolenoidPort = 55;
+    public static final int rSolenoidPort = 66;
+  }
+
    /**
     * Constants for the drive train
     */
   public static final class DrivetrainConstants {
 
-    public static final double kInvertMotor = -1.0;
+    public static final double INVERT_MOTOR = -1.0;
     // Drive Train motors
-    public static final int kR1MotorPort = 0;
-    public static final int kR2MotorPort = 1;
-    public static final int kR3MotorPort = 2;
-    public static final int kL1MotorPort = 3;
-    public static final int kL2MotorPort = 4;
-    public static final int kL3MotorPort = 5;
+    public static final int R1MotorPort = 0;
+    public static final int R2MotorPort = 1;
+    public static final int R3MotorPort = 2;
+    public static final int L1MotorPort = 3;
+    public static final int L2MotorPort = 4;
+    public static final int L3MotorPort = 5;
 
     // Need to edit all the numbers under this for 2020
-    public static final int[] kLeftEncoderPorts = new int[] { 2, 3 };
-    public static final int[] kRightEncoderPorts = new int[] { 0, 1 };
-    public static final boolean kLeftEncoderReversed = false;
-    public static final boolean kRightEncoderReversed = false;
+    public static final int[] leftEncoderPorts = new int[] { 2, 3 };
+    public static final int[] rightEncoderPorts = new int[] { 0, 1 };
+    public static final boolean leftEncoderReversed = false;
+    public static final boolean rightEncoderReversed = false;
 
-    public static final int kEncoderCPR = 128;
-    public static final double kWheelDiameterMeters = 0.1;
-    public static final double kEncoderDistancePerPulse =
+    public static final int encoderCPR = 128;
+    public static final double wheelDiameterMeters = 0.1;
+    public static final double encoderDistancePerPulse =
         // Assumes the encoders are directly mounted on the wheel shafts
-        (kWheelDiameterMeters * Math.PI) / (double) kEncoderCPR;
+        (wheelDiameterMeters * Math.PI) / (double) encoderCPR;
 
-    public static final boolean kGyroReversed = true;
+    public static final boolean GYRO_REVERSED = true;
   }
 
   /**
    * Constants for the feeder system
    */
   public static final class FeederConstants {
-    public static final double kInvertMotor = -1.0;
+    public static final double INVERT_MOTOR = -1.0;
+
+    // Ball Present Sensor Config
+    public static final int feederBallPresentId = 0;
+    public static final double feederBallPresentThreshold = 125.0;
 
     // Power cell feeder motors
-    public static final int kMotor1Port = 14;
-    public static final int kMotor2Port = 15;
+    public static final int feederMotor1Port = 14;
+    public static final int feederMotor2Port = 15;
+
+    // Makes sure the speed does not increase over this number
+    public static final double speedLimiter = 0.7;
   }
 
   /**
    * Constants for the intake system
    */
   public static final class IntakeConstants {
+    //Ball Present Sensor Config
+    public static final int intakeBallPresentId = 1;
+    public static final double intakeBallPresentThreshold = 125.0;
     // Power cell intake motor
-    public static final int kMotorPort = 11;
+    public static final int intakeFrontMotorPort = 11;
+    public static final int intakeMidMotorPort = 12;
+    public static final int intakeLowerTowerPort = 13;
     // Solenoids
-    public static final int kSolenoidPort = 0;
+    public static final int intakeSolenoidPort = 0;
   }
 
   /**
@@ -87,14 +107,23 @@ public final class Constants {
    */
   public static final class RobotContainerConstants {
     // Sticks
-    public static final int kRightStickPort = 0;
-    public static final int kLeftStickPort = 1;
-    public static final int kGamepadPort = 2;
+    public static final int rightStickPort = 0;
+    public static final int leftStickPort = 1;
+    public static final int gamepadPort = 2;
+    
+    // Could I recommend a button on the POV? - Eric
     // TODO: Add a free button mapping for running the on-the-go pathfinder command
 
     // Gamepad POV values in degrees
-    public static final int kPovUp = 0;
-    public static final int kPovDown = 180;
+    // public static final int povNone = -1;
+    public static final int povUp = 0;
+    // public static final int povUpperRight = 45;
+    // public static final int povRight = 90;
+    // public static final int povLowerRight = 135;
+    public static final int povDown = 180;
+    // public static final int povLowerLeft = 225;
+    // public static final int povLeft = 270;
+    // public static final int povUpperLeft = 315;
   }
 
   /**
@@ -125,8 +154,6 @@ public final class Constants {
     public static final int pointx = 0;
     public static final int pointy = 0;
     public static final int rotation = 0;
-    public static final int waypointx = 0;
-    public static final int waypointy = 0;
   }
 
   /**
@@ -134,8 +161,8 @@ public final class Constants {
    */
   public static final class ShooterConstants {
     // Shooter spinner motors
-    public static final int kShooterMotorRPort = 6;
-    public static final int kShooterMotorLPort = 7;
+    public static final int shootMotorRPort = 6;
+    public static final int shootMotorLPort = 7;
   }
 
   /**
@@ -143,15 +170,9 @@ public final class Constants {
    */
   public static final class TurretConstants {
     // Shooter spinner and turret moving motors
-    public static final int kTurretMotorPort = 8;
+    public static final int turretMotorPort = 8;
     // Turret limit switches
-    public static final int kLimitSwitchRPort = 15;
-    public static final int kLimitSwitchLPort = 16;
-  }
-  public static NavxGyro gyro;
-  public static final class ClimberConstants
-  {
-    public static final int cMotorPort = 22;
-    public static final int cSolenoidPort = 55;
+    public static final int limitRPort = 15;
+    public static final int limitLPort = 16;
   }
 }

@@ -14,22 +14,21 @@ public class MoveTurret extends CommandBase {
     private final Turret turret;
     private final XboxController gamepad;
 
-    // TODO: This command doesn't seem to be implemented anywhere
+    /**
+     * 1. Comply with limit switchs <br>
+     * 3. Takes power value from the left joystick on the game pad <br>
+     * 4. Comply with minimum power threshold <br>
+     * 5. Set the turret's speed
+     * 
+     * @param trrt Turret subsystem
+     * @param gmpd XboxController instance
+     */
     public MoveTurret(Turret trrt, XboxController gmpd) {
         this.turret = trrt;
         this.gamepad = gmpd;
         addRequirements(turret);
     }
-
-    /**
-     * 1. This command moves the turret. <br>
-     * 2. First it checks if it is next to the limit switches. <br>
-     * 3. If it is, it sets the power to 0 so the turret cannot move past the limit. <br>
-     * 4. If it isn't, the turret takes its power value from the left joystick on the game pad. <br>
-     * 5. Then, it makes sure that the power given is not less than the power threshold of 0.02.
-     * If it is, then it just sets the power to 0. <br>
-     * 6. Finally, it sends the speed value to the motor.
-     */
+    
     @Override
     public void execute() {
         // If the limit switch is not activated then set the power

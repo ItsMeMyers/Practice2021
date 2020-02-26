@@ -23,10 +23,17 @@ public class RunShooter extends CommandBase {
     private final double angleToGround = (Math.PI / 6.0);
     private double angleToTarget = 0.0;
 
-    private boolean hasValidTarget = false;
     private double ty;
     private double tx;
 
+    /**
+     * Runs the shooter
+     * 
+     * @param sht Shooter subsystem
+     * @param fd Feeder subsystem
+     * @param ll Limelight subsystem
+     * @param dR DataRecorder subsystem
+     */
     public RunShooter(Shooter sht, Feeder fd, Limelight ll, DataRecorder dR) {
         this.shooter = sht;
         this.feeder = fd;
@@ -37,15 +44,14 @@ public class RunShooter extends CommandBase {
 
     @Override
     public void execute() {
-
         updateLimelightTracking();
         dist = findDistance();
         
         while (!shooter.atSpeed()) {
             shooter.getToSpeed();
         }
+
         while (shooter.atSpeed()) {
-            // TODO: What does this even do it doesn't schedule it or anything it just initializes it
             new FeederRun(feeder);
         }
         feeder.shotBall();
@@ -56,14 +62,6 @@ public class RunShooter extends CommandBase {
             dataRecorder.setX(limelight.x());
             dataRecorder.setY(limelight.y());
         } */
-    }
-
-    /**
-     * Command stops when interrupted
-     * */
-    @Override
-    public void end(boolean interrupted) {
-        shooter.stopShooter();
     }
 
     /**
@@ -79,12 +77,19 @@ public class RunShooter extends CommandBase {
      * If it does, update the tx and ty values.
      */
     public void updateLimelightTracking() {
-        if (!limelight.hasTarget()) {
+        if (limelight.hasTarget()) {
+            tx = limelight.x();
+            ty = limelight.y();
+        } else {
             dist = 0.0;
-            return;
         }
-        
-        tx = limelight.x();
-        ty = limelight.y();
+    }
+
+    /**
+     * Command stops when interrupted
+     */
+    @Override
+    public void end(boolean interrupted) {
+        shooter.stopShooter();
     }
 }

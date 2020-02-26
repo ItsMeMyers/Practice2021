@@ -17,10 +17,10 @@ public class Turret extends SubsystemBase {
     private final DigitalInput limitL;
 
     public Turret() {
-        turretMotor = new WPI_TalonFX(kTurretMotorPort);
+        turretMotor = new WPI_TalonFX(turretMotorPort);
 
-        limitR = new DigitalInput(kLimitSwitchRPort);
-        limitL = new DigitalInput(kLimitSwitchLPort);
+        limitR = new DigitalInput(limitRPort);
+        limitL = new DigitalInput(limitLPort);
 
         // When the motor is in neutral mode the motor will keep moving easily (coast)
         turretMotor.setNeutralMode(NeutralMode.Brake);
@@ -53,6 +53,7 @@ public class Turret extends SubsystemBase {
      */
     public void stopTurret() {
         spinPower = 0.0;
+        
         turretMotor.stopMotor();
     }
 }

@@ -23,7 +23,7 @@ public class Shooter extends SubsystemBase {
     private double rightRPM;
     private double leftRPM;
 
-    //TODO: Idk but I feel like maybe this should be greater than 0?
+    //TODO: Tune this value
     private final double rpmThreshold = 0.0; 
 
     private final double voltThreshold = 1.0;
@@ -33,8 +33,8 @@ public class Shooter extends SubsystemBase {
      */
     public Shooter() {
 
-        shootMotorR = new WPI_TalonFX(kShooterMotorRPort);
-        shootMotorL = new WPI_TalonFX(kShooterMotorLPort);
+        shootMotorR = new WPI_TalonFX(shootMotorRPort);
+        shootMotorL = new WPI_TalonFX(shootMotorLPort);
         
         // When the motors are in neutral mode the motors will keep moving easily (coast)
         shootMotorR.setNeutralMode(NeutralMode.Coast);
@@ -89,7 +89,7 @@ public class Shooter extends SubsystemBase {
         return ((getRightRPM() >= rpmThreshold) && (getLeftRPM() >= rpmThreshold));
     }
 
-    // TODO test this method functionality
+    // TODO: Test this method's functionality
     /**
      * Checks if the motor voltages are greater than the acceptable voltage threshold
      */
