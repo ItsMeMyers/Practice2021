@@ -6,7 +6,6 @@ import frc.robot.subsystems.Climber;
 
 public class Climb extends CommandBase {
     private final Climber climber;
-    private double pwr;
 
     public Climb(Climber cb)
     {
@@ -23,10 +22,8 @@ public class Climb extends CommandBase {
     }
     @Override
     public void execute() {
-        climber.climb(pwr);
+        climber.climb();
     }
-
-
     
     @Override
     public void end(boolean interrupted)
