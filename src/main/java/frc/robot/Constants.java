@@ -110,11 +110,20 @@ public final class Constants {
     public static final int rightStickPort = 0;
     public static final int leftStickPort = 1;
     public static final int gamepadPort = 2;
+    
+    // Could I recommend a button on the POV? - Eric
     // TODO: Add a free button mapping for running the on-the-go pathfinder command
 
     // Gamepad POV values in degrees
+    // public static final int povNone = -1;
     public static final int povUp = 0;
+    // public static final int povUpperRight = 45;
+    // public static final int povRight = 90;
+    // public static final int povLowerRight = 135;
     public static final int povDown = 180;
+    // public static final int povLowerLeft = 225;
+    // public static final int povLeft = 270;
+    // public static final int povUpperLeft = 315;
   }
 
   /**
