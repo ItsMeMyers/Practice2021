@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DataRecorder;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
@@ -11,7 +10,6 @@ public class RunShooter extends CommandBase {
     private final Shooter shooter;
     private final Feeder feeder;
     private final Limelight limelight;
-    private final DataRecorder dataRecorder;
 
     private double dist = 0.0;
 
@@ -32,13 +30,11 @@ public class RunShooter extends CommandBase {
      * @param sht Shooter subsystem
      * @param fd Feeder subsystem
      * @param ll Limelight subsystem
-     * @param dR DataRecorder subsystem
      */
-    public RunShooter(Shooter sht, Feeder fd, Limelight ll, DataRecorder dR) {
+    public RunShooter(Shooter sht, Feeder fd, Limelight ll) {
         this.shooter = sht;
         this.feeder = fd;
         this.limelight = ll;
-        this.dataRecorder = dR;
         addRequirements(shooter, feeder);
     }
 
