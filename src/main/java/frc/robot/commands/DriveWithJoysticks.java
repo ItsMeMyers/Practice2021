@@ -63,8 +63,8 @@ public class DriveWithJoysticks extends CommandBase {
                 left = 0.0;
             }
 
-            drivetrain.setPower(right, true);
-            drivetrain.setPower(left, false);
+            drivetrain.setRightPower(right);
+            drivetrain.setLeftPower(left);
             drivetrain.drive();
         } else {
             drivetrain.stop();

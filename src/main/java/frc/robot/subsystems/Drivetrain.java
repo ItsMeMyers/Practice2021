@@ -83,26 +83,30 @@ public class Drivetrain extends SubsystemBase {
      * @param pwr the power to set it to
      * @param isRight if this is the right motor power or not
      */
-    public void setPower(double pwr, boolean isRight) {
-        if (pwr > 1.0) {
-            pwr = 1.0;
-        } else if (pwr < -1.0) {
-            pwr = -1.0;
-        }
 
-        // Sqrt power scalar
-        if (pwr < 0) {
-            pwr = -1.0 * (Math.sqrt(-1.0 * pwr));
-        } else {
-            pwr = Math.sqrt(pwr);
-        }
+     public void setRightPower(double pwr) {
+         if (pwr > 1.0) {
+             rightPower = 1.0;
+             return;
+         } else if (pwr < -1.0) {
+             rightPower = -1.0;
+             return;
+         }
 
-        if (isRight) {
-            this.rightPower = pwr;
-        } else {
-            this.leftPower = pwr;
-        }
-    }
+         rightPower = pwr;
+     }
+
+     public void setLeftPower(double pwr) {
+         if (pwr > 1.0) {
+             leftPower = 1.0;
+             return;
+         } else if (pwr < -1.0) {
+             leftPower = -1.0;
+             return;
+         }
+
+         leftPower = pwr;
+     }
 
     /**
      * Drive with default values from the joysticks
