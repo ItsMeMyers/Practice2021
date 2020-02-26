@@ -57,7 +57,6 @@ public class Shooter extends SubsystemBase {
      * @param distance in ft
      * @return Required rpm of turret motor to shoot that far
      */
-    // TODO: Explain this
     public int DistanceToRPM(double distance){
         distance = distance / 2;
         double val = distance * 32.6;

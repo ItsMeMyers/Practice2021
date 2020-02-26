@@ -183,7 +183,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Drives the robot using arcade controls. TODO: Unused method
+     * Drives the robot using arcade controls.
      *
      * @param fwd the commanded forward movement
      * @param rot the commanded rotation
