@@ -17,46 +17,29 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
 
-    // The motors on the left side of the drive.
-    private final SpeedControllerGroup leftMotors =
-    new SpeedControllerGroup(
-        new WPI_TalonFX(L1MotorPort),
-        new WPI_TalonFX(L2MotorPort),
-        new WPI_TalonFX(L3MotorPort));
+    private final SpeedControllerGroup leftMotors = new SpeedControllerGroup(new WPI_TalonFX(L1MotorPort), new WPI_TalonFX(L2MotorPort), new WPI_TalonFX(L3MotorPort)); // The motors on the left side of the drive.
 
-    // The motors on the right side of the drive.
-    private final SpeedControllerGroup rightMotors = 
-    new SpeedControllerGroup(
-        new WPI_TalonFX(R1MotorPort),
-        new WPI_TalonFX(R2MotorPort),
-        new WPI_TalonFX(R3MotorPort));
+    private final SpeedControllerGroup rightMotors = new SpeedControllerGroup(new WPI_TalonFX(R1MotorPort), new WPI_TalonFX(R2MotorPort), new WPI_TalonFX(R3MotorPort)); // The motors on the right side of the drive.
 
-    // motor properties
     private double rightPower = 0.0;
     private double leftPower = 0.0;
 
-    private boolean invertRight = false;
-    private boolean invertLeft = false;
+    private boolean invertRight = false; // Whether or not to invert the right motor
+    private boolean invertLeft = false; // Whether or not to invert the left motor
 
-    // The robot's drive
-    private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotors, rightMotors);
+    private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotors, rightMotors); // The robot's drive
 
-    // The left-side drive encoder
-    private final Encoder leftEncoder =
-    new Encoder(leftEncoderPorts[0], leftEncoderPorts[1],
-                leftEncoderReversed);
+    private final Encoder leftEncoder = new Encoder(leftEncoderPorts[0], leftEncoderPorts[1], leftEncoderReversed); // The left-side drive encoder
 
-    // The right-side drive encoder
-    private final Encoder rightEncoder =
-    new Encoder(rightEncoderPorts[0], rightEncoderPorts[1],
-                rightEncoderReversed);
+    private final Encoder rightEncoder = new Encoder(rightEncoderPorts[0], rightEncoderPorts[1], rightEncoderReversed); // The right-side drive encoder
 
-    // The gyro sensor
-    private final AHRS gyro = new AHRS(SPI.Port.kMXP);
+    private final AHRS gyro = new AHRS(SPI.Port.kMXP); // The gyro sensor
 
-    // Odometry class for tracking robot pose
-    private final DifferentialDriveOdometry odometry;
+    private final DifferentialDriveOdometry odometry; // Odometry class for tracking robot pose
 
+    /**
+     * Method use to drive the robot
+     */
     public Drivetrain() {
         // Sets the distance per pulse for the encoders
         leftEncoder.setDistancePerPulse(encoderDistancePerPulse);
@@ -67,41 +50,61 @@ public class Drivetrain extends SubsystemBase {
         zeroHeading();
     }
 
+    /**
+     * Get the left motor power
+     * @return The left motor power
+     */
     public double getLeftPower() {
         return leftPower;
     }
 
+    /**
+     * Get the right motor power
+     * @return The right motor power
+     */
     public double getRightPower() {
         return rightPower;
     }
 
     /**
-     * First, it determines if the power is greater than 1 or less than 1.
-     * If the power is, then it changes the power so it is within [-1, 1].
-     * Then, it takes the square root of the power.
-     * Then it sets the appropiate power value in the class to the new power value.
-     * @param pwr the power to set it to
-     * @param isRight if this is the right motor power or not
+     * Scale the power
+     * @param pwr Value to scale
+     * @return The scaled value
      */
-    public void setPower(double pwr, boolean isRight) {
-        if (pwr > 1.0) {
-            pwr = 1.0;
-        } else if (pwr < -1.0) {
-            pwr = -1.0;
-        }
+    private double scalePower(double pwr) {
+        return pwr > 1.0 ? 1.0 : pwr < -1.0 ? -1.0 : pwr;
+    }
 
-        // Sqrt power scalar
-        if (pwr < 0) {
-            pwr = -1.0 * (Math.sqrt(-1.0 * pwr));
-        } else {
-            pwr = Math.sqrt(pwr);
-        }
+    /**
+     * Set the right power
+     * @param pwr Value to set the power to
+     */
+     public void setRightPower(double pwr) {
+         rightPower = scalePower(pwr);
+     }
 
-        if (isRight) {
-            this.rightPower = pwr;
-        } else {
-            this.leftPower = pwr;
-        }
+     /**
+      * Set the left power
+      * @param pwr Value to set the power to
+      */
+     public void setLeftPower(double pwr) {
+         leftPower = scalePower(pwr);
+     }
+
+     /**
+      * Stop the right motor
+      */
+     public void stopRightMotor() {
+         rightPower = 0.0;
+         rightMotors.stopMotor();
+     }
+
+    /**
+     * Stop the left motor
+     */
+    public void stopLeftMotor() {
+        leftPower = 0.0;
+        leftMotors.stopMotor();
     }
 
     /**
@@ -113,6 +116,8 @@ public class Drivetrain extends SubsystemBase {
     
     /**
      * Drive with custom values
+     * @param rightP Right motor power
+     * @param leftP Left motor power
      */
     public void drive(double rightP, double leftP) {
         if (invertRight) {
@@ -128,28 +133,23 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Stops the drive train.
+     * Stops the drive train
      */
     public void stop() {
-        rightPower = 0.0;
-        leftPower = 0.0;
-        leftMotors.stopMotor();
-        rightMotors.stopMotor();
+        stopRightMotor();
+        stopLeftMotor();
     }
 
     /**
-     * Called periodically by the CommmandScheduler.
+     * Called periodically by the CommmandScheduler
      */
     @Override
     public void periodic() {
-        // Update the odometry in the periodic block (gets location on field)
-        odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getDistance(),
-                        rightEncoder.getDistance());
+        odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getDistance(), rightEncoder.getDistance()); // Update the odometry in the periodic block (gets location on field)
     }
 
     /**
-     * Returns the currently-estimated pose of the robot.
-     *
+     * Returns the currently-estimated pose of the robot
      * @return The pose. (position on the field)
      */
     public Pose2d getPose() {
@@ -157,8 +157,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Returns the current wheel speeds of the robot.
-     *
+     * Returns the current wheel speeds of the robot
      * @return The current wheel speeds.
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
@@ -172,10 +171,11 @@ public class Drivetrain extends SubsystemBase {
     public void resetOdometry() {
         resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
     }
+
     /**
-     * Resets the odometry to the specified pose.
+     * Resets the odometry to the specified pose
      * Resets the encoders, also automatically resets heading
-     * @param pose The pose to which to set the odometry.
+     * @param pose The pose to which to set the odometry
      */
     public void resetOdometry(Pose2d pose) {
         resetEncoders();
@@ -183,8 +183,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Drives the robot using arcade controls. TODO: Unused method
-     *
+     * Drives the robot using arcade controls
      * @param fwd the commanded forward movement
      * @param rot the commanded rotation
      */
@@ -193,8 +192,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Controls the left and right sides of the drive directly with voltages.
-     *
+     * Controls the left and right sides of the drive directly with voltages
      * @param leftVolts the commanded left output
      * @param rightVolts the commanded right output
      */
@@ -204,7 +202,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Resets the drive encoders to currently read a position of 0.
+     * Resets the drive encoders to currently read a position of 0
      */
     public void resetEncoders() {
         leftEncoder.reset();
@@ -212,8 +210,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Gets the average distance of the two encoders.
-     *
+     * Gets the average distance of the two encoders
      * @return the average of the two encoder readings
      */
     public double getAverageEncoderDistance() {
@@ -221,8 +218,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Sets the max output of the drive.  Useful for scaling the drive to drive more slowly.
-     *
+     * Sets the max output of the drive.  Useful for scaling the drive to drive more slowly
      * @param maxOutput the maximum output to which the drive will be constrained
      */
     public void setMaxOutput(double maxOutput) {
@@ -230,15 +226,14 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Zeroes the heading of the robot.
+     * Zeroes the heading of the robot
      */
     public void zeroHeading() {
         gyro.reset();
     }
 
     /**
-     * Returns the heading of the robot.
-     *
+     * Returns the heading of the robot
      * @return the robot's heading in degrees, from -180 to 180
      */
     public double getHeading() {
@@ -246,8 +241,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Returns the turn rate of the robot.
-     *
+     * Returns the turn rate of the robot
      * @return The turn rate of the robot, in degrees per second
      */
     public double getTurnRate() {

@@ -5,10 +5,10 @@ import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
-public class DriveWithJoysticks extends CommandBase {
+public class DriveTele extends CommandBase {
 
     // If the speed of a motor is less than this threshold, we'll just set it to zero
-    private final double driveThreshold = 0.08;
+    private final double driveThreshold = 0.04;
 
     // Represents the position of the right and left joysticks
     // These determine the speed of the right and left motors
@@ -36,7 +36,7 @@ public class DriveWithJoysticks extends CommandBase {
      * negative value. <br>
      * 12. This command is perpetually active, but the robot cannot drive during autonomous mode.
      */
-    public DriveWithJoysticks(Drivetrain drivetrain, Joystick rightStick, Joystick leftStick) {
+    public DriveTele(Drivetrain drivetrain, Joystick rightStick, Joystick leftStick) {
         this.drivetrain = drivetrain;
         this.rightStick = rightStick;
         this.leftStick = leftStick;
@@ -63,9 +63,7 @@ public class DriveWithJoysticks extends CommandBase {
                 left = 0.0;
             }
 
-            drivetrain.setPower(right, true);
-            drivetrain.setPower(left, false);
-            drivetrain.drive();
+            drivetrain.drive(right, left);
         } else {
             drivetrain.stop();
         }
