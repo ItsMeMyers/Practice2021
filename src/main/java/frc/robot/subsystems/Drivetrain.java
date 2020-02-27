@@ -78,20 +78,19 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Scale the power
-     * @param pwr Value to scale
-     * @return The scaled value
-     */
-    private double scalePower(double pwr) {
-        return pwr > 1.0 ? 1.0 : pwr < -1.0 ? -1.0 : pwr;
-    }
-
-    /**
      * Set the right power
      * @param pwr Value to set the power to
      */
      public void setRightPower(double pwr) {
-         rightPower = scalePower(pwr);
+         if (pwr > 1.0) {
+             rightPower = 1.0;
+             return;
+         } else if (pwr < -1.0) {
+             rightPower = -1.0;
+             return;
+         }
+
+         rightPower = pwr;
      }
 
      /**
@@ -99,7 +98,15 @@ public class Drivetrain extends SubsystemBase {
       * @param pwr Value to set the power to
       */
      public void setLeftPower(double pwr) {
-         leftPower = scalePower(pwr);
+        if (pwr > 1.0) {
+            leftPower = 1.0;
+            return;
+        } else if (pwr < -1.0) {
+            leftPower = -1.0;
+            return;
+        }
+
+        leftPower = pwr;
      }
 
      /**
