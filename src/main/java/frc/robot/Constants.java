@@ -36,8 +36,7 @@ public final class Constants {
   public static final class ClimberConstants
   {
     public static final int winchMotorPort = 8;
-    public static final int lSolenoidPort = 55;
-    public static final int rSolenoidPort = 66;
+    public static final int climberSolenoidPort = 3;
   }
 
    /**
@@ -97,7 +96,6 @@ public final class Constants {
     public static final int intakeBarMotorPort = 9; 
     public static final int intakeFunnelMotorPort = 6;
     public static final int intakeLowerTowerFalconPort = 12;
-    // Solenoids
     public static final int intakeSolenoidPort = 0;
   }
 
@@ -159,6 +157,7 @@ public final class Constants {
     // Shooter spinner motors
     public static final int shooterFalcon1Port = 13;
     public static final int shooterFalcon2Port = 14;
+    public static final int shooterAngleSolenoid = 2;
   }
 
   /**
@@ -168,5 +167,6 @@ public final class Constants {
     // Shooter spinner and turret moving motors
     public static final int turretMotorPort = 8;
     public static final double turretMotorHardStopCurrentThreshold = 10.0;
+    public static final int turretSolenoid = 1;
   }
 }
