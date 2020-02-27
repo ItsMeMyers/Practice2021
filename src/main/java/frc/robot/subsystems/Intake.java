@@ -17,7 +17,7 @@ public class Intake extends SubsystemBase {
 
     private final WPI_TalonSRX intakeMid;
     private final WPI_TalonFX intakeLowerTower;
-    // private final TimeOfFlight intakeBallPresentSensor;
+    private final TimeOfFlight intakeBallPresentSensor;
 
     private final double inSpeed = -1.0;
     private final double outSpeed = 1.0;
@@ -34,7 +34,7 @@ public class Intake extends SubsystemBase {
         intakeLowerTower = new WPI_TalonFX(intakeLowerTowerPort);
 
         intakeSolenoid = new Solenoid(intakeSolenoidPort);
-        //intakeBallPresentSensor = new TimeOfFlight(intakeBallPresentId);
+        intakeBallPresentSensor = new TimeOfFlight(intakeBallPresentId);
 
         // When the motor is in neutral mode the motor will keep moving easily (coast)
         intakeMotor.setNeutralMode(NeutralMode.Brake);
@@ -44,7 +44,7 @@ public class Intake extends SubsystemBase {
         intakeSolenoid.set(true);
 
         //Set the distance mode of the TOF sensor
-        //intakeBallPresentSensor.setRangingMode(TimeOfFlight.RangingMode.Medium, 1.0);
+        intakeBallPresentSensor.setRangingMode(TimeOfFlight.RangingMode.Medium, 1.0);
     }
 
     /**
@@ -94,12 +94,12 @@ public class Intake extends SubsystemBase {
     /**
      * Returns whether or not the TOF sensor currently sees a ball
      */
-    // public boolean ballPresent() {
-    //     double range = intakeBallPresentSensor.getRange();
-    //     boolean ballPresent = false;
-    //     if (range <= intakeBallPresentThreshold) {
-    //         ballPresent = true;
-    //     }
-    //     return ballPresent;
-    // }
+    public boolean ballPresent() {
+        double range = intakeBallPresentSensor.getRange();
+        boolean ballPresent = false;
+        if (range <= intakeBallPresentThreshold) {
+            ballPresent = true;
+        }
+        return ballPresent;
+    }
 }

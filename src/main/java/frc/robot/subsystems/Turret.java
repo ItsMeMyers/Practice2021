@@ -3,25 +3,17 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.TurretConstants.*;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Turret extends SubsystemBase {
-    private final WPI_TalonFX turretMotor;
+    private final WPI_TalonSRX turretMotor;
 
     private double spinPower;
 
-    private final DigitalInput limitR;
-    private final DigitalInput limitL;
-
     public Turret() {
-        turretMotor = new WPI_TalonFX(turretMotorPort);
-
-        limitR = new DigitalInput(limitRPort);
-        limitL = new DigitalInput(limitLPort);
-
+        turretMotor = new WPI_TalonSRX(turretMotorPort);
         // When the motor is in neutral mode the motor will keep moving easily (coast)
         turretMotor.setNeutralMode(NeutralMode.Brake);
     }
@@ -37,15 +29,17 @@ public class Turret extends SubsystemBase {
             spinPwr = -1.0;
         }
         this.spinPower = spinPwr;
-        turretMotor.set(spinPower);
+        //If we are below 
+        if (turretMotor.getStatorCurrent() < turretMotorHardStopCurrentThreshold) {
+            turretMotor.set(spinPower);
+        }
     }
 
-    public boolean getLimitR() {
-        return limitR.get();
-    }
-
-    public boolean getLimitL() {
-        return limitL.get();
+    /**
+     * Get motor at hardstop
+     */
+    public boolean turretAtHardStop() {
+        return turretMotor.getStatorCurrent() >= turretMotorHardStopCurrentThreshold;
     }
 
     /**

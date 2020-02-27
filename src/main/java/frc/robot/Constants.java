@@ -171,8 +171,6 @@ public final class Constants {
   public static final class TurretConstants {
     // Shooter spinner and turret moving motors
     public static final int turretMotorPort = 8;
-    // Turret limit switches
-    public static final int limitRPort = 15;
-    public static final int limitLPort = 16;
+    public static final double turretMotorHardStopCurrentThreshold = 10.0;
   }
 }
