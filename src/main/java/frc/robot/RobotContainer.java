@@ -113,7 +113,7 @@ public class RobotContainer {
     new JoystickButton(gamepad, Button.kBumperLeft.value)
         .whenPressed(RouteFinder.getPathCommand(RouteFinder.trajectorygen(pointx, pointy, rotation)));
     // Driving
-    new PerpetualCommand(new DriveWithJoysticks(drivetrain, rightStick, leftStick)).schedule();
+    new PerpetualCommand(new DriveTele(drivetrain, rightStick, leftStick)).schedule();
     // Turret
     new PerpetualCommand(new MoveTurret(turret, gamepad)).schedule();
   }
