@@ -8,7 +8,7 @@ import frc.robot.subsystems.Drivetrain;
 public class DriveWithJoysticks extends CommandBase {
 
     // If the speed of a motor is less than this threshold, we'll just set it to zero
-    private final double driveThreshold = 0.08;
+    private final double driveThreshold = 0.04;
 
     // Represents the position of the right and left joysticks
     // These determine the speed of the right and left motors
@@ -63,9 +63,7 @@ public class DriveWithJoysticks extends CommandBase {
                 left = 0.0;
             }
 
-            drivetrain.setRightPower(right);
-            drivetrain.setLeftPower(left);
-            drivetrain.drive();
+            drivetrain.drive(right, left);
         } else {
             drivetrain.stop();
         }
