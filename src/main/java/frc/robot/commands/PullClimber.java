@@ -1,15 +1,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.XboxController;
 
 public class PullClimber extends CommandBase {
 
     private Climber climber;
+    private final XboxController gamepad;
 
-    public PullClimber(Climber cl) {
+    public PullClimber(Climber cl, XboxController gpd) {
 
         this.climber = cl;
+        this.gamepad = gpd;
         addRequirements(climber);
     }
 
@@ -20,8 +24,10 @@ public class PullClimber extends CommandBase {
 
     @Override
     public void execute() {
-        
-        climber.climb();
+        //If the climber is deployed AND left joystick is pressed AND left joystick is aimed down
+        if (gamepad.getRawButton(RobotContainer.Left_Joystick_Pressed) && climber.getDeployed() && (gamepad.getRawAxis(RobotContainer.Left_Joystick_Y_Axis) < 0)) {
+            climber.climb();
+        }
     }
 
     @Override

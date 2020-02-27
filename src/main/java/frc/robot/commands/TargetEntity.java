@@ -4,10 +4,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Turret;
-import frc.robot.subsystems.Limelight.CAM;
-import frc.robot.subsystems.Limelight.LED;
+import frc.robot.subsystems.*;
 
 public class TargetEntity extends CommandBase {
 	// Minimum power is reach at (1.351...) degrees from the center
@@ -56,20 +53,23 @@ public class TargetEntity extends CommandBase {
 	 */
 	@Override
 	public void execute() {
-		limelight.setLED(LED.ON); // Turn on the LED's if they haven't been turned on before
-		limelight.setCAM(CAM.VISION); // Turn on vision mode if it wasn't turned on before
+		// If user is pressing right joystick in... target
+		if (gamepad.getRawButton(RobotController.Right_Joystick_Pressed)) {
+			limelight.setLED(LED.ON); // Turn on the LED's if they haven't been turned on before
+			limelight.setCAM(CAM.VISION); // Turn on vision mode if it wasn't turned on before
 
-		if (limelight.hasTarget()) {
-			updateTurretPower();
-			turret.setSpinPower(turretPower);
-		} else {
-			power = 0;
-			additionalPower = 0;
-			turretPower = 0;
+			if (limelight.hasTarget()) {
+				updateTurretPower();
+				turret.setSpinPower(turretPower);
+			} else {
+				power = 0;
+				additionalPower = 0;
+				turretPower = 0;
+			}
+
+			// Put values on the Smart Dashboard
+			logValues();
 		}
-
-		// Put values on the Smart Dashboard
-		logValues();
 	}
 
 	/**

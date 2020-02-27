@@ -12,6 +12,8 @@ public class Climber extends SubsystemBase
     private WPI_TalonSRX winchMotor;
     private Solenoid liftSolenoid;
 
+    private boolean deployed = false;
+
     private double climbMotorSpeed = .80;
 
     public Climber() {
@@ -21,6 +23,7 @@ public class Climber extends SubsystemBase
 
     public void deploy() {
         liftSolenoid.set(true);
+        deployed = true;
     }
 
     public void climb() {
@@ -29,9 +32,14 @@ public class Climber extends SubsystemBase
 
     public void withdraw() {
         liftSolenoid.set(false);
+        deployed = false;
     }
 
     public void stop() {
         winchMotor.stopMotor();
+    }
+
+    public boolean getDeployed() {
+        return deployed;
     }
 }

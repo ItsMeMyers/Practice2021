@@ -11,11 +11,14 @@ public class Turret extends SubsystemBase {
     private final WPI_TalonSRX turretMotor;
 
     private double spinPower;
+    private Solenoid turretSolenoid;
+    private boolean folded = true;
 
     public Turret() {
         turretMotor = new WPI_TalonSRX(turretMotorPort);
         // When the motor is in neutral mode the motor will keep moving easily (coast)
         turretMotor.setNeutralMode(NeutralMode.Brake);
+        turretSolenoid = new Solenoid(turretSolenoidPort);
     }
 
     /**
@@ -33,6 +36,29 @@ public class Turret extends SubsystemBase {
         if (turretMotor.getStatorCurrent() < turretMotorHardStopCurrentThreshold) {
             turretMotor.set(spinPower);
         }
+    }
+
+    /**
+     * Retract turret
+     */
+    public void foldTurret() {
+        turretSolenoid.set(false);
+        foled = true;
+    }
+
+    /**
+     * Expand turret
+     */
+    public void unfoldTurret() {
+        turretSolenoid.set(true);
+        folded = false;
+    }
+
+    /**
+     * Check if turret is folded down
+     */
+    public boolean getFolded() {
+        return folded;
     }
 
     /**

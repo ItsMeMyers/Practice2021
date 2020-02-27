@@ -20,8 +20,11 @@ public class Shooter extends SubsystemBase {
     private final double leftRatio = 3.0;
     private final double encoderEPR = 4096.0;
 
+    private Solenoid pancakeSolenoid;
+
     private double rightRPM;
     private double leftRPM;
+    private boolean pancakeExpanded = true;
 
     //TODO: Tune this value
     private final double rpmThreshold = 0.0; 
@@ -44,6 +47,20 @@ public class Shooter extends SubsystemBase {
         shooterFalcon2.follow(shooterFalcon1);
         // The left motor needs to spin the opposite direction of the right motor
         shooterFalcon2.setInverted(InvertType.OpposeMaster);
+
+        pancakeSolenoid = new Solenoid(shooterAngleSolenoid);
+    }
+
+    public boolean getPancakeExpanded() {
+        return pancakeExpanded;
+    }
+
+    /**
+     * Set whether the pancake is expanded or not
+     */
+    public void setPancake(boolean expanded) {
+        pancakeSolenoid.set(expanded);
+        pancakeExpanded = expanded;
     }
 
     /**
@@ -51,6 +68,14 @@ public class Shooter extends SubsystemBase {
      */
     public void getToSpeed() {
         shooterFalcon1.set(1.0);
+    }
+
+    /**
+     * Reverse shooter motors
+     */
+    public void reverseShooters() {
+        //Is this 1%?
+        shooterFalcon1.set(-.01);
     }
 
     /**

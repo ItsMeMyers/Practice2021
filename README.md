@@ -35,6 +35,9 @@ Below lines are gamepad layout as of 2/26/20
 - Right Joystick (PRESSED DOWN): :Lime Light auto target
 - Right Joystick (NOT PRESSED DOWN, Left & Right): Control tower based on direction
 
+ REQUIRED COMMANDS THAT AREN'T ASSIGNED YET
+- Disengage climbing mechanism (maybe not necessary)
+- Turn color wheel
 
 ###########################################################   
 

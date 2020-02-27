@@ -38,6 +38,13 @@ public class Feeder extends SubsystemBase {
     }
 
     /**
+     * Runs the feeder in reverse. This clears the feeder
+     */
+    public void reverse() {
+        feederMotor1.set(-speedLimiter);
+    }
+
+    /**
      * Stops the feeder.
      */
     public void stop() {

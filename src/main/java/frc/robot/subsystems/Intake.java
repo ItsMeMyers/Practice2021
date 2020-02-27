@@ -22,6 +22,8 @@ public class Intake extends SubsystemBase {
     private final double inSpeed = -1.0;
     private final double outSpeed = 1.0;
 
+    private boolean engaged = false;
+
     /**
      * The intake pulls the balls from the ground into the robot.
      * The balls are then stored in the feeder to wait to be shot.
@@ -47,38 +49,67 @@ public class Intake extends SubsystemBase {
         ballPresentSensor.setRangingMode(TimeOfFlight.RangingMode.Medium, 1.0);
     }
 
+    public void runIntakeIn() {
+        intakeBarMotor.set(inSpeed);
+    }
+
+    public void runIntakeOut() {
+        intakeBarMotor.set(outSpeed);
+    }
+
+    public void stopIntake() {
+        intakeBarMotor.set(0.0);
+    }
+
+    public void runFunnelIn() {
+        intakeFunnel.set(inSpeed);
+    }
+
+    public void runFunnelOut() {
+        intakeFunnel.set(outSpeed);
+    }
+
+    public void stopFunnel() {
+        intakeFunnel.set(0.0);
+    }
+
+    public void runLowerTowerIn() {
+        intakeLowerTower.set(inSpeed);
+    }
+
+    public void runLowerTowerOut() {
+        intakeLowerTower.set(outSpeed);
+    }
+
+    public void stopLowerTower() {
+        intakeLowerTower.set(0.0);
+    }
+
+
     /**
     * 1. Changes the intake direction to take in balls from the ground. <br>
     * 2. Hold the right trigger to activate the command. <br>
     * 3. Balls from the intake are then stored in the feeder. <br>
     * 4. This changes the intake direction, not whether it is stowed in or not.
     */
-    public void runIn() {
+    public void runAllIn() {
         intakeBarMotor.set(inSpeed);
         intakeFunnel.set(inSpeed);
         intakeLowerTower.set(inSpeed);
     }
-
+    
     /**
     * 1. Changes the intake direction to take in balls from the ground. <br>
     * 2. Hold the right button to activate the command. <br>
     * 3. Balls can be pushed out onto the ground. <br>
     * 4. This changes the intake direction, not whether it is stowed out or not.
     */
-    public void runOut() {
+    public void runAllOut() {
         intakeBarMotor.set(outSpeed);
         intakeFunnel.set(outSpeed);
         intakeLowerTower.set(outSpeed);
     }
 
-    /**
-    * Stops the intake motor.
-    */
-    public void stopMotor() {
-        intakeBarMotor.set(0.0);
-        intakeFunnel.set(0.0);
-        intakeLowerTower.set(0.0);
-    }
 
     /**
     * 1. This command stows in the intake system and puts it out.
@@ -89,6 +120,22 @@ public class Intake extends SubsystemBase {
     */
     public void toggle() {
         intakeSolenoid.set(!intakeSolenoid.get());
+        engaged = intakeSolenoid.get();
+    }
+
+    /**
+     * Allows ability of forcing intake to certain position (not just toggle)
+     */
+    public void forceTo(boolean override) {
+        intakeSolenoid.set(override);
+        engaged = override;
+    }
+
+    /**
+     * Check if we are currently engaged
+     */
+    public boolean getEngaged() {
+        return engaged;
     }
 
     /**

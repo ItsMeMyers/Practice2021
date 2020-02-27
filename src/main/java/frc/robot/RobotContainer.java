@@ -40,30 +40,58 @@ public class RobotContainer {
   // Subsystems should be private here and have to be passed to commands because it is better coding practice.
 
   // Joysticks
-  private final Joystick rightStick = new Joystick(rightStickPort);
-  private final Joystick leftStick = new Joystick(leftStickPort);
+  private static final Joystick rightStick = new Joystick(rightStickPort);
+  private static final Joystick leftStick = new Joystick(leftStickPort);
 
   // Xbox Controller
-  private final XboxController gamepad = new XboxController(gamepadPort);
-
+  //Should this be joystick like last year?
+  private static final XboxController gamepad = new XboxController(gamepadPort);
+  
   // Drivetrain
-  private final Drivetrain drivetrain = new Drivetrain();
+  private static final Drivetrain drivetrain = new Drivetrain();
 
   // Turret
-  private final Turret turret = new Turret();
+  private static final Turret turret = new Turret();
 
   // Shooter
-  private final Shooter shooter = new Shooter();
+  private static final Shooter shooter = new Shooter();
 
   // Feeder
-  private final Feeder feeder = new Feeder();
+  private static final Feeder feeder = new Feeder();
 
   // Intake
-  private final Intake intake = new Intake();
+  private static final Intake intake = new Intake();
 
   // Limelight
-  private final Limelight limelight = new Limelight();
+  private static final Limelight limelight = new Limelight();
 
+  //Color Wheel
+  //private static final ColorWheel colorwheel = new ColorWheel();
+
+  //Button definitions for gamepad
+  private static final int A_Button = 1;
+  private static final int B_Button = 2;
+  private static final int X_Button = 3;
+  private static final int Y_Button = 4;
+
+  private static final int Right_Bumper_Button = 5;
+  private static final int Right_Trigger_Button = 6;
+  private static final int Left_Bumper_Button = 7;
+  private static final int Left_Trigger_Button = 8;
+
+  private static final int Left_Joystick_Pressed = 9;
+  private static final int Right_Joystick_Pressed = 10;
+
+  private static final int Left_Joystick_X_Axis= 11;
+  private static final int Left_Joystick_Y_Axis= 12;
+
+  private static final int Right_Joystick_X_Axis= 13;
+  private static final int Right_Joystick_Y_Axis= 14;
+
+  private static final int D_Pad_Up = 15;
+  private static final int D_Pad_Down = 16;
+  private static final int D_Pad_Left = 17;
+  private static final int D_Pad_Right = 18;
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -98,24 +126,24 @@ public class RobotContainer {
      */
     // Attaches a commmand to each button
     // Stows in or puts out the intake system when the A button is pressed
-    new JoystickButton(gamepad, Button.kA.value).whenPressed(new IntakeToggle(intake));
-    // Starts the shooter motors when the Y button is pressed
-    new JoystickButton(gamepad, Button.kY.value).whenPressed(new RunShooter(shooter, feeder, limelight));
-    // Takes in balls from the ground when the right trigger is held
-    new JoystickButton(gamepad, Axis.kRightTrigger.value).whenHeld(new IntakeIn(intake));
-    // Pushes out balls onto the ground when the right bumper is held
-    new JoystickButton(gamepad, Button.kBumperRight.value).whenHeld(new IntakeOut(intake));
-    // Starts targeting when the up arrow on the D-pad is pressed
-    new POVButton(gamepad, povUp).whenPressed(new TargetEntity(limelight, turret, gamepad));
-    // Ends targeting when the down arrow on the D-pad is pressed
-    new POVButton(gamepad, povDown).cancelWhenPressed(new TargetEntity(limelight, turret, gamepad));
-    // Heads to a position when the left bumper is pressed
-    new JoystickButton(gamepad, Button.kBumperLeft.value)
-        .whenPressed(RouteFinder.getPathCommand(RouteFinder.trajectorygen(pointx, pointy, rotation)));
-    // Driving
-    new PerpetualCommand(new DriveTele(drivetrain, rightStick, leftStick)).schedule();
-    // Turret
-    new PerpetualCommand(new MoveTurret(turret, gamepad)).schedule();
+    // new JoystickButton(gamepad, Button.kA.value).whenPressed(new IntakeToggle(intake));
+    // // Starts the shooter motors when the Y button is pressed
+    // new JoystickButton(gamepad, Button.kY.value).whenPressed(new RunShooter(shooter, feeder, limelight));
+    // // Takes in balls from the ground when the right trigger is held
+    // new JoystickButton(gamepad, Axis.kRightTrigger.value).whenHeld(new IntakeIn(intake));
+    // // Pushes out balls onto the ground when the right bumper is held
+    // new JoystickButton(gamepad, Button.kBumperRight.value).whenHeld(new IntakeOut(intake));
+    // // Starts targeting when the up arrow on the D-pad is pressed
+    // new POVButton(gamepad, povUp).whenPressed(new TargetEntity(limelight, turret, gamepad));
+    // // Ends targeting when the down arrow on the D-pad is pressed
+    // new POVButton(gamepad, povDown).cancelWhenPressed(new TargetEntity(limelight, turret, gamepad));
+    // // Heads to a position when the left bumper is pressed
+    // new JoystickButton(gamepad, Button.kBumperLeft.value)
+    //     .whenPressed(RouteFinder.getPathCommand(RouteFinder.trajectorygen(pointx, pointy, rotation)));
+    // // Driving
+    // new PerpetualCommand(new DriveTele(drivetrain, rightStick, leftStick)).schedule();
+    // // Turret
+    // new PerpetualCommand(new MoveTurret(turret, gamepad)).schedule();
   }
 
   public static TrajectoryConfig getConfig() {

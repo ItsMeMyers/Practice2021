@@ -1,11 +1,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.XboxController;
 
 public class IntakeIn extends CommandBase {
 
     private Intake intake;
+    private final XboxController gamepad;
 
     /**
      * 1. Changes the intake direction to take in balls from the ground. <br>
@@ -13,9 +16,9 @@ public class IntakeIn extends CommandBase {
      * 3. Balls from the intake are then stored in the feeder. <br>
      * 4. This changes the intake direction, not whether it is stowed in or not.
      */
-    public IntakeIn(Intake itk) {
-        
+    public IntakeIn(Intake itk, XboxController gpd) {
         this.intake = itk;
+        this.gamepad = gpd;
         addRequirements(intake);
     }
 
@@ -24,13 +27,16 @@ public class IntakeIn extends CommandBase {
      */
     @Override
     public void execute() {
-        intake.runIn();
+        //if right bumper pressed and NOT right trigger pressed
+        if (gamepad.getRawButton(RobotContainer.Right_Bumper_Button) && !gamepad.getRawButton(RobotContainer.Right_Trigger_Button)) {
+            intake.runIntakeIn();
+        }
     }
 
     @Override
     public void end(boolean interrupted) {
         if (interrupted) {
-            intake.stopMotor();
+            intake.stopIntake();
         }
     }
 }

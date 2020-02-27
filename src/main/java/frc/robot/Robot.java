@@ -10,9 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Limelight.CAM;
-import frc.robot.subsystems.Limelight.LED;
+import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
   
@@ -40,19 +38,18 @@ public class Robot extends TimedRobot {
 
   private Command m_autonomousCommand;
   private Limelight limelight = new Limelight();
-
-  private RobotContainer m_robotContainer;
+  private RobotContainer robotContainer;
 
   @Override
   public void robotInit() {
-    m_robotContainer = new RobotContainer();
+    robotContainer = new RobotContainer();
     limelight.setLED(defaultLED[0]);
     limelight.setCAM(defaultCAM[0]);
   }
 
   @Override
   public void robotPeriodic() {
-    CommandScheduler.getInstance().run();
+    
   }
 
   @Override
@@ -69,7 +66,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     limelight.setLED(defaultLED[2]);
     limelight.setCAM(defaultCAM[2]);
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -78,6 +75,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
+
   }
 
   @Override
@@ -92,7 +90,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-
+    //This should fire off commands to the robot based on the user input to controller?
+    //Every x ms
+    CommandScheduler.getInstance().run();
   }
 
   @Override

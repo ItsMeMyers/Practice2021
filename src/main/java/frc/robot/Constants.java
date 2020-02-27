@@ -169,6 +169,15 @@ public final class Constants {
     // Shooter spinner and turret moving motors
     public static final int turretMotorPort = 8;
     public static final double turretMotorHardStopCurrentThreshold = 10.0;
-    public static final int turretSolenoid = 1;
+    public static final int turretSolenoidPort = 1;
+
+  }
+
+  /**
+   * Constants for the color wheel subsystem
+   */
+  public static final class ColorWheelConstants {
+    public static final int colorWheelMotorPort = 8;
+
   }
 }

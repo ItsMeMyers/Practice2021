@@ -1,16 +1,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Feeder;
-import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Shooter;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.XboxController;
 
 public class RunShooter extends CommandBase {
 
     private final Shooter shooter;
     private final Feeder feeder;
     private final Limelight limelight;
-
+    private final XboxController gamepad;
     private double dist = 0.0;
 
     // How high the outer port is above the ground (inches)
@@ -31,33 +31,31 @@ public class RunShooter extends CommandBase {
      * @param fd Feeder subsystem
      * @param ll Limelight subsystem
      */
-    public RunShooter(Shooter sht, Feeder fd, Limelight ll) {
+    public RunShooter(Shooter sht, Feeder fd, Limelight ll), XboxController gpd {
         this.shooter = sht;
         this.feeder = fd;
         this.limelight = ll;
+        this.gamepad = gpd;
         addRequirements(shooter, feeder);
     }
 
     @Override
     public void execute() {
-        updateLimelightTracking();
-        dist = findDistance();
-        
-        while (!shooter.atSpeed()) {
-            shooter.getToSpeed();
+        if (gamepad.getRawButton(RobotContainer.Left_Bumper_Button)) {
+            updateLimelightTracking();
+            dist = findDistance();
+            
+            while (!shooter.atSpeed()) {
+                shooter.getToSpeed();
+            }
+            
+            /*
+            if (shooter.voltageSpike()) {
+                dataRecorder.setDistance(dist);
+                dataRecorder.setX(limelight.x());
+                dataRecorder.setY(limelight.y());
+            } */
         }
-
-        while (shooter.atSpeed()) {
-            new FeederRun(feeder);
-        }
-        feeder.shotBall();
-        
-        /*
-        if (shooter.voltageSpike()) {
-            dataRecorder.setDistance(dist);
-            dataRecorder.setX(limelight.x());
-            dataRecorder.setY(limelight.y());
-        } */
     }
 
     /**

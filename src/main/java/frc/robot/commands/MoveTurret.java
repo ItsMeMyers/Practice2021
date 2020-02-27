@@ -2,7 +2,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Turret;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.*;
 
 public class MoveTurret extends CommandBase {
     
@@ -11,8 +12,6 @@ public class MoveTurret extends CommandBase {
     public static final double percentToTurnMotorWhenCommandedByButton = .05;
 
     private final Turret turret;
-    private boolean rotateTurretLeftPressed = false;
-    private boolean rotateTurretRightPressed = false;
     private final XboxController gamepad;
 
     /**
@@ -32,22 +31,17 @@ public class MoveTurret extends CommandBase {
     
     @Override
     public void execute() {
-        rotateTurretLeftPressed = gamepad.getRawButton(7);
-        rotateTurretRightPressed = gamepad.getRawButton(8);
+        double rightJoyStickXAxis = gamepad.getRawAxis(RobotContainer.Right_Joystick_X_Axis);
+        boolean rightJoyStickDown = gamepad.getRawButton(RobotContainer.RightJoystick_Pressed);
 
-        // The setSpinPower function automatically takes care of the hard stop
-        // The user can override what the limelight says based on the buttons pressed
-        if (rotateTurretLeftPressed && !rotateTurretRightPressed) {
-            power = -percentToTurnMotorWhenCommandedByButton;
-        } else if (!rotateTurretLeftPressed && rotateTurretRightPressed){
-            power = percentToTurnMotorWhenCommandedByButton;
-        } else if (false) {
-            //Limelight stuff here
-        } else {
-            power = 0.0;
+        //If right is NOT pressed down AND joystick x axis is moved (disregarding nominal movement)
+        //Is .02 a good threshold?
+        if (!rightJoyStickDown && (rightJoyStickXAxis < -.02 || rightJoyStickXAxis > .02)) {
+            //Is this too lower, high?
+            turret.setSpinPower(rightJoyStickXAxis);
         }
 
-        turret.setSpinPower(power);
+        
     }
 
     /**
