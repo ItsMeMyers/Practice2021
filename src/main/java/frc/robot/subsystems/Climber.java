@@ -10,20 +10,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Climber extends SubsystemBase
 {
     private WPI_TalonSRX winchMotor;
-    private Solenoid rSolenoid;
-    private Solenoid lSolenoid;
+    private Solenoid liftSolenoid;
 
     private double climbMotorSpeed = .80;
 
     public Climber() {
         winchMotor = new WPI_TalonSRX(winchMotorPort);
-        rSolenoid = new Solenoid(rSolenoidPort);
-        lSolenoid = new Solenoid(lSolenoidPort);
+        liftSolenoid = new Solenoid(climberSolenoidPort);
     }
 
     public void deploy() {
-        rSolenoid.set(true);
-        lSolenoid.set(true);
+        liftSolenoid.set(true);
     }
 
     public void climb() {
@@ -31,8 +28,7 @@ public class Climber extends SubsystemBase
     }
 
     public void withdraw() {
-        rSolenoid.set(false);
-        lSolenoid.set(false);
+        liftSolenoid.set(false);
     }
 
     public void stop() {
