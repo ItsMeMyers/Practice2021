@@ -35,7 +35,7 @@ public final class Constants {
    */
   public static final class ClimberConstants
   {
-    public static final int winchMotorPort = 22;
+    public static final int winchMotorPort = 8;
     public static final int lSolenoidPort = 55;
     public static final int rSolenoidPort = 66;
   }
@@ -47,12 +47,12 @@ public final class Constants {
 
     public static final double INVERT_MOTOR = -1.0;
     // Drive Train motors
-    public static final int R1MotorPort = 0;
-    public static final int R2MotorPort = 1;
-    public static final int R3MotorPort = 2;
-    public static final int L1MotorPort = 3;
-    public static final int L2MotorPort = 4;
-    public static final int L3MotorPort = 5;
+    public static final int LTMotorPort = 1;
+    public static final int LMMotorPort = 2;
+    public static final int LLMotorPort = 3;
+    public static final int RTMotorPort = 4;
+    public static final int RMMotorPort = 5;
+    public static final int RLMotorPort = 6;
 
     // Need to edit all the numbers under this for 2020
     public static final int[] leftEncoderPorts = new int[] { 2, 3 };
@@ -80,8 +80,7 @@ public final class Constants {
     public static final double feederBallPresentThreshold = 125.0;
 
     // Power cell feeder motors
-    public static final int feederMotor1Port = 14;
-    public static final int feederMotor2Port = 15;
+    public static final int feederMotor1Port = 11;
 
     // Makes sure the speed does not increase over this number
     public static final double speedLimiter = 0.7;
@@ -95,9 +94,9 @@ public final class Constants {
     public static final int intakeBallPresentId = 1;
     public static final double intakeBallPresentThreshold = 125.0;
     // Power cell intake motor
-    public static final int intakeFrontMotorPort = 11;
-    public static final int intakeMidMotorPort = 12;
-    public static final int intakeLowerTowerPort = 13;
+    public static final int intakeBarMotorPort = 9; 
+    public static final int intakeFunnelMotorPort = 6;
+    public static final int intakeLowerTowerFalconPort = 12;
     // Solenoids
     public static final int intakeSolenoidPort = 0;
   }
@@ -158,8 +157,8 @@ public final class Constants {
    */
   public static final class ShooterConstants {
     // Shooter spinner motors
-    public static final int shootMotorRPort = 6;
-    public static final int shootMotorLPort = 7;
+    public static final int shooterFalcon1Port = 13;
+    public static final int shooterFalcon2Port = 14;
   }
 
   /**
@@ -168,8 +167,5 @@ public final class Constants {
   public static final class TurretConstants {
     // Shooter spinner and turret moving motors
     public static final int turretMotorPort = 8;
-    // Turret limit switches
-    public static final int limitRPort = 15;
-    public static final int limitLPort = 16;
   }
 }

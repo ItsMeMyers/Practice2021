@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Intake extends SubsystemBase {
     
     private final Solenoid intakeSolenoid;
-    private final WPI_TalonSRX intakeMotor;
+    private final WPI_TalonSRX intakeBarMotor;
 
-    private final WPI_TalonSRX intakeMid;
+    private final WPI_TalonSRX intakeFunnel;
     private final WPI_TalonFX intakeLowerTower;
     // private final TimeOfFlight intakeBallPresentSensor;
 
@@ -29,16 +29,16 @@ public class Intake extends SubsystemBase {
      * The direction of the intake can also be switched.
      */
     public Intake() {
-        intakeMotor = new WPI_TalonSRX(intakeFrontMotorPort);
-        intakeMid = new WPI_TalonSRX(intakeMidMotorPort);
-        intakeLowerTower = new WPI_TalonFX(intakeLowerTowerPort);
+        intakeBarMotor = new WPI_TalonSRX(intakeBarMotorPort);
+        intakeFunnel = new WPI_TalonSRX(intakeFunnelMotorPort);
+        intakeLowerTower = new WPI_TalonFX(intakeLowerTowerFalconPort);
 
         intakeSolenoid = new Solenoid(intakeSolenoidPort);
         //intakeBallPresentSensor = new TimeOfFlight(intakeBallPresentId);
 
         // When the motor is in neutral mode the motor will keep moving easily (coast)
-        intakeMotor.setNeutralMode(NeutralMode.Brake);
-        intakeMid.setNeutralMode(NeutralMode.Brake);
+        intakeBarMotor.setNeutralMode(NeutralMode.Brake);
+        intakeFunnel.setNeutralMode(NeutralMode.Brake);
         intakeLowerTower.setNeutralMode(NeutralMode.Brake);
 
         intakeSolenoid.set(true);
@@ -54,8 +54,8 @@ public class Intake extends SubsystemBase {
     * 4. This changes the intake direction, not whether it is stowed in or not.
     */
     public void runIn() {
-        intakeMotor.set(inSpeed);
-        intakeMid.set(inSpeed);
+        intakeBarMotor.set(inSpeed);
+        intakeFunnel.set(inSpeed);
         intakeLowerTower.set(inSpeed);
     }
 
@@ -66,8 +66,8 @@ public class Intake extends SubsystemBase {
     * 4. This changes the intake direction, not whether it is stowed out or not.
     */
     public void runOut() {
-        intakeMotor.set(outSpeed);
-        intakeMid.set(outSpeed);
+        intakeBarMotor.set(outSpeed);
+        intakeFunnel.set(outSpeed);
         intakeLowerTower.set(outSpeed);
     }
 
@@ -75,8 +75,8 @@ public class Intake extends SubsystemBase {
     * Stops the intake motor.
     */
     public void stopMotor() {
-        intakeMotor.set(0.0);
-        intakeMid.set(0.0);
+        intakeBarMotor.set(0.0);
+        intakeFunnel.set(0.0);
         intakeLowerTower.set(0.0);
     }
 

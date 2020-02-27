@@ -38,5 +38,4 @@ public class Climber extends SubsystemBase
     public void stop() {
         winchMotor.stopMotor();
     }
-
 }

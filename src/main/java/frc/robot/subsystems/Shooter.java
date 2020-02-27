@@ -13,8 +13,8 @@ public class Shooter extends SubsystemBase {
     private final double degreesOfTurret = 23;
     private final double diameterOfTurretWheelInches = 4;
 
-    private final WPI_TalonFX shootMotorR;
-    private final WPI_TalonFX shootMotorL;
+    private final WPI_TalonFX shooterFalcon1;
+    private final WPI_TalonFX shooterFalcon2;
 
     private final double rightRatio = 5.0;
     private final double leftRatio = 3.0;
@@ -33,24 +33,24 @@ public class Shooter extends SubsystemBase {
      */
     public Shooter() {
 
-        shootMotorR = new WPI_TalonFX(shootMotorRPort);
-        shootMotorL = new WPI_TalonFX(shootMotorLPort);
+        shooterFalcon1 = new WPI_TalonFX(shooterFalcon1Port);
+        shooterFalcon2 = new WPI_TalonFX(shooterFalcon1Port);
         
         // When the motors are in neutral mode the motors will keep moving easily (coast)
-        shootMotorR.setNeutralMode(NeutralMode.Coast);
-        shootMotorL.setNeutralMode(NeutralMode.Coast);
+        shooterFalcon1.setNeutralMode(NeutralMode.Coast);
+        shooterFalcon2.setNeutralMode(NeutralMode.Coast);
 
         // This means the left motor speed will be equal to the right motor speed
-        shootMotorL.follow(shootMotorR);
+        shooterFalcon2.follow(shooterFalcon1);
         // The left motor needs to spin the opposite direction of the right motor
-        shootMotorL.setInverted(InvertType.OpposeMaster);
+        shooterFalcon2.setInverted(InvertType.OpposeMaster);
     }
 
     /**
      * Starts the shooter motors
      */
     public void getToSpeed() {
-        shootMotorR.set(1.0);
+        shooterFalcon1.set(1.0);
     }
 
     /**
@@ -69,7 +69,7 @@ public class Shooter extends SubsystemBase {
      * @return Updates the RPM value of the right shooter motor
      */
     public double getRightRPM() {
-        rightRPM = shootMotorR.getSelectedSensorVelocity() * 600.0 / (rightRatio * encoderEPR);
+        rightRPM = shooterFalcon1.getSelectedSensorVelocity() * 600.0 / (rightRatio * encoderEPR);
         return rightRPM;
     }
 
@@ -77,7 +77,7 @@ public class Shooter extends SubsystemBase {
      * @return Updates the RPM value of the left shooter motor
      */
     public double getLeftRPM() {
-        leftRPM = shootMotorL.getSelectedSensorVelocity() * 600.0 / (leftRatio * encoderEPR);
+        leftRPM = shooterFalcon2.getSelectedSensorVelocity() * 600.0 / (leftRatio * encoderEPR);
         return leftRPM;
     }
 
@@ -93,14 +93,14 @@ public class Shooter extends SubsystemBase {
      * Checks if the motor voltages are greater than the acceptable voltage threshold
      */
     public boolean voltageSpike() {
-        return ((shootMotorR.getBusVoltage() >= voltThreshold) || (shootMotorL.getBusVoltage() >= voltThreshold));
+        return ((shooterFalcon1.getBusVoltage() >= voltThreshold) || (shooterFalcon2.getBusVoltage() >= voltThreshold));
     }
 
     /**
      * Stops the shooter
      */
     public void stopShooter() {
-        shootMotorR.stopMotor();
-        shootMotorL.stopMotor();
+        shooterFalcon1.stopMotor();
+        shooterFalcon2.stopMotor();
     }
 }

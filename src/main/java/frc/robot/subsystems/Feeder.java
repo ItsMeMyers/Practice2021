@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Feeder extends SubsystemBase {
 
     private final WPI_TalonSRX feederMotor1;
-    private final WPI_TalonSRX feederMotor2;
     //private final TimeOfFlight feederBallPresentSensor;
 
     // Number of balls the feeder is storing
@@ -24,11 +23,9 @@ public class Feeder extends SubsystemBase {
     public Feeder() {
 
         feederMotor1 = new WPI_TalonSRX(feederMotor1Port);
-        feederMotor2 = new WPI_TalonSRX(feederMotor2Port);
 
         // When the motors are in neutral mode the motors will keep moving easily (coast)
         feederMotor1.setNeutralMode(NeutralMode.Coast);
-        feederMotor2.setNeutralMode(NeutralMode.Coast);
 
         //Set the distance mode of the TOF sensor
         //feederBallPresentSensor.setRangingMode(TimeOfFlight.RangingMode.Medium, 1.0);
@@ -39,7 +36,6 @@ public class Feeder extends SubsystemBase {
      */
     public void run() {
         feederMotor1.set(speedLimiter);
-        feederMotor2.set(speedLimiter * INVERT_MOTOR);
     }
 
     /**
@@ -47,7 +43,6 @@ public class Feeder extends SubsystemBase {
      */
     public void stop() {
         feederMotor1.stopMotor();
-        feederMotor2.stopMotor();
     }
 
     // TODO: Unimplemented method addBall

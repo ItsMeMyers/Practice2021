@@ -17,10 +17,21 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
 
-    private final SpeedControllerGroup leftMotors = new SpeedControllerGroup(new WPI_TalonFX(L1MotorPort), new WPI_TalonFX(L2MotorPort), new WPI_TalonFX(L3MotorPort)); // The motors on the left side of the drive.
+    // The motors on the left side of the drive.
+    private final SpeedControllerGroup leftMotors =
+    new SpeedControllerGroup(
+        new WPI_TalonFX(LTMotorPort),
+        new WPI_TalonFX(LMMotorPort),
+        new WPI_TalonFX(LLMotorPort));
 
-    private final SpeedControllerGroup rightMotors = new SpeedControllerGroup(new WPI_TalonFX(R1MotorPort), new WPI_TalonFX(R2MotorPort), new WPI_TalonFX(R3MotorPort)); // The motors on the right side of the drive.
+    // The motors on the right side of the drive.
+    private final SpeedControllerGroup rightMotors = 
+    new SpeedControllerGroup(
+        new WPI_TalonFX(RTMotorPort),
+        new WPI_TalonFX(RMMotorPort),
+        new WPI_TalonFX(RLMotorPort));
 
+    // motor properties
     private double rightPower = 0.0;
     private double leftPower = 0.0;
 
