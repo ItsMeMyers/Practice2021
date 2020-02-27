@@ -29,7 +29,7 @@ public class IntakeIn extends CommandBase {
     public void execute() {
         //if right bumper pressed and NOT right trigger pressed
         if (gamepad.getRawButton(RobotContainer.Right_Bumper_Button) && !gamepad.getRawButton(RobotContainer.Right_Trigger_Button)) {
-            intake.runIntakeIn();
+            intake.runIntakeIn(true);
         }
     }
 

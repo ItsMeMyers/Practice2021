@@ -32,22 +32,22 @@ public class FeederRun extends CommandBase {
             
             //No balls in tower at all
             if (!lowerBallPresent && !upperBallPresent) {
-                feeder.run()
-                intake.runFunnelIn();
-                intake.runLowerTowerIn();
+                feeder.run(false)
+                intake.runFunnelIn(false);
+                intake.runLowerTowerIn(false);
 
             //Ball at upper tower but not lower
             } else if (!lowerBallPresent && upperBallPresent) {
-                intake.runFunnelIn();
-                intake.runLowerTowerIn();
+                intake.runFunnelIn(false);
+                intake.runLowerTowerIn(false);
                 feeder.stop();
             //We have balls at upper and lower
             } else if (lowerBallPresent && upperBallPresent) {
                 //Shooter motors are at full speed 
                 if (shooter.atSpeed()) {
-                    feeder.run()
-                    intake.runFunnelIn();
-                    intake.runLowerTowerIn();
+                    feeder.run(true)
+                    intake.runFunnelIn(true);
+                    intake.runLowerTowerIn(true);
                 } else {
                     feeder.stop();
                     intake.stopFunnel();

@@ -33,8 +33,12 @@ public class Feeder extends SubsystemBase {
     /**
      * Runs the feeder. This feeds the balls to the shooter.
      */
-    public void run() {
-        feederMotor1.set(speedLimiter);
+    public void run(boolean fullSpeed) {
+        if (fullSpeed) {
+            feederMotor1.set(speedLimiter);
+        } else {
+            feederMotor1.set(speedLimiterSlow);
+        }
     }
 
     /**

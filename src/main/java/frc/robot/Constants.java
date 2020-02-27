@@ -84,6 +84,8 @@ public final class Constants {
     // Makes sure the speed does not increase over this number
     public static final double speedLimiter = 0.7;
 
+    public static final double speedLimiterSlow = 0.3;
+
     public static final int feederBallPresentSensor = 0;
   }
 

@@ -20,6 +20,7 @@ public class Intake extends SubsystemBase {
     private final TimeOfFlight ballPresentSensor;
 
     private final double inSpeed = -1.0;
+    private final double inHalfSpeed = -.3;
     private final double outSpeed = 1.0;
 
     private boolean engaged = false;
@@ -49,8 +50,13 @@ public class Intake extends SubsystemBase {
         ballPresentSensor.setRangingMode(TimeOfFlight.RangingMode.Medium, 1.0);
     }
 
-    public void runIntakeIn() {
-        intakeBarMotor.set(inSpeed);
+    public void runIntakeIn(boolean fullSpeed) {
+        if (fullSpeed) {
+            intakeBarMotor.set(inSpeed);
+        } else {
+            intakeBarMotor.set(inHalfSpeed); 
+        }
+        
     }
 
     public void runIntakeOut() {
@@ -61,8 +67,12 @@ public class Intake extends SubsystemBase {
         intakeBarMotor.set(0.0);
     }
 
-    public void runFunnelIn() {
-        intakeFunnel.set(inSpeed);
+    public void runFunnelIn(boolean fullSpeed) {
+        if (fullSpeed) {
+            intakeFunnel.set(inSpeed);
+        } else {
+            intakeFunnel.set(inHalfSpeed);
+        }
     }
 
     public void runFunnelOut() {
@@ -73,8 +83,12 @@ public class Intake extends SubsystemBase {
         intakeFunnel.set(0.0);
     }
 
-    public void runLowerTowerIn() {
-        intakeLowerTower.set(inSpeed);
+    public void runLowerTowerIn(boolean fullSpeed) {
+        if (fullSpeed) {
+            intakeLowerTower.set(inSpeed);
+        } else {
+            intakeLowerTower.set(inHalfSpeed);
+        }
     }
 
     public void runLowerTowerOut() {
@@ -97,7 +111,7 @@ public class Intake extends SubsystemBase {
         intakeFunnel.set(inSpeed);
         intakeLowerTower.set(inSpeed);
     }
-    
+
     /**
     * 1. Changes the intake direction to take in balls from the ground. <br>
     * 2. Hold the right button to activate the command. <br>
