@@ -83,6 +83,8 @@ public final class Constants {
 
     // Makes sure the speed does not increase over this number
     public static final double speedLimiter = 0.7;
+
+    public static final int feederBallPresentSensor = 0;
   }
 
   /**
@@ -90,7 +92,7 @@ public final class Constants {
    */
   public static final class IntakeConstants {
     //Ball Present Sensor Config
-    public static final int intakeBallPresentId = 1;
+    public static final int intakeBallPresentSensor = 1;
     public static final double intakeBallPresentThreshold = 125.0;
     // Power cell intake motor
     public static final int intakeBarMotorPort = 9; 
