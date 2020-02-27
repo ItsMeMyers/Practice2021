@@ -1,6 +1,43 @@
 # 2020-InfiniteRecharge
 This is code for the 2020 Infinite Recharge robot. This version of the robot has the LimeLight camera and API.
 
+#############################################################
+Below lines are gamepad layout as of 2/26/20
+(NEVER HIT MODE BUTTON, LEAVE MODE LIGHT OFF)
+(CONTROLLER IN X MODE)
+
+- A Button: Fold turret down
+- B Button: Unfold turret
+- X Button: Intake into down position 
+- Y Button: Intake into up position
+
+- Right Bumper: Spin intake in
+- Right Trigger: Spin intake out
+
+- Left Bumper: Toggle shooter on/off
+- Left Trigger: Run the feeders based on below rules
+    - (No Balls in robot at all)
+       Run upper tower, lower tower, funnel
+    - (Ball at top TOF sensor BUT NOT lower TOF Sensor)
+       Only run the lower tower and funnel
+    - (Ball at top TOF sensor AND lower TOF Sensor AND we are NOT shooting)
+       Stop all (lower, upper and funnel)
+    - (Ball at top TOF sensor AND lower TOF Sensor AND we ARE shooting)
+       Run upper tower, lower tower, funnel
+
+- D-Pad Up: Release the climbing mechasnism
+- D-Pad Left: Shooter pancake decrease angle
+- D-Pad Right: Shooter pancake increase angle
+- D-Pad Down: Emergency reverse all motors to evacuate all balls
+
+- Left Joystick (PRESSED and MOVE DOWN AND {Climber is released}): Retract climber winch
+
+- Right Joystick (PRESSED DOWN): :Lime Light auto target
+- Right Joystick (NOT PRESSED DOWN, Left & Right): Control tower based on direction
+
+
+###########################################################   
+
 Laptop List
 
 Probook 6550b (marked A/T 205896 on bottom)
