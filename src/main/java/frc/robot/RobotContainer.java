@@ -68,30 +68,6 @@ public class RobotContainer {
   //Color Wheel
   //private static final ColorWheel colorwheel = new ColorWheel();
 
-  //Button definitions for gamepad
-  private static final int A_Button = 1;
-  private static final int B_Button = 2;
-  private static final int X_Button = 3;
-  private static final int Y_Button = 4;
-
-  private static final int Right_Bumper_Button = 5;
-  private static final int Right_Trigger_Button = 6;
-  private static final int Left_Bumper_Button = 7;
-  private static final int Left_Trigger_Button = 8;
-
-  private static final int Left_Joystick_Pressed = 9;
-  private static final int Right_Joystick_Pressed = 10;
-
-  private static final int Left_Joystick_X_Axis= 11;
-  private static final int Left_Joystick_Y_Axis= 12;
-
-  private static final int Right_Joystick_X_Axis= 13;
-  private static final int Right_Joystick_Y_Axis= 14;
-
-  private static final int D_Pad_Up = 15;
-  private static final int D_Pad_Down = 16;
-  private static final int D_Pad_Left = 17;
-  private static final int D_Pad_Right = 18;
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */

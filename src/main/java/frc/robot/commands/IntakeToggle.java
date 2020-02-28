@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Constants;
 
 public class IntakeToggle extends CommandBase {
 
@@ -30,12 +31,12 @@ public class IntakeToggle extends CommandBase {
         //intake.toggle();
 
         //If user commands to engage, and we aren't already
-        if (gamepad.getRawButton(RobotContainer.X_Button)) {
+        if (gamepad.getRawButton(Constants.X_Button)) {
             if (!intake.getEngaged()) {
                 intake.forceTo(true);
             }
         // If user commands to disengage and we are currently engaged
-        } else if (gamepad.getRawButton(RobotContainer.Y_Button)) {
+        } else if (gamepad.getRawButton(Constants.Y_Button)) {
             if (intake.getEngaged()) {
                 intake.forceTo(false);
             }

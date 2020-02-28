@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.*;
+import frc.robot.Constants;
 import edu.wpi.first.wpilibj.XboxController;
 
 public class RunShooter extends CommandBase {
@@ -31,7 +32,7 @@ public class RunShooter extends CommandBase {
      * @param fd Feeder subsystem
      * @param ll Limelight subsystem
      */
-    public RunShooter(Shooter sht, Feeder fd, Limelight ll), XboxController gpd {
+    public RunShooter(Shooter sht, Feeder fd, Limelight ll, XboxController gpd) {
         this.shooter = sht;
         this.feeder = fd;
         this.limelight = ll;
@@ -41,7 +42,7 @@ public class RunShooter extends CommandBase {
 
     @Override
     public void execute() {
-        if (gamepad.getRawButton(RobotContainer.Left_Bumper_Button)) {
+        if (gamepad.getRawButton(Constants.Left_Bumper_Button)) {
             updateLimelightTracking();
             dist = findDistance();
             

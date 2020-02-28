@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.*;
+import frc.robot.Constants;
 
 public class ClearAllBalls extends CommandBase {
 
@@ -17,14 +18,14 @@ public class ClearAllBalls extends CommandBase {
         this.intake = itk;
         this.feeder = fdr;
         this.shooter = str;
-        this.gamepad = gpd
+        this.gamepad = gpd;
         addRequirements(intake, feeder, shooter);
     }
 
     @Override
     public void execute() {
         //If user is pressing d pad down
-        if (gamepad.getRawButton(RobotContainer.D_Pad_Down)) {
+        if (gamepad.getRawButton(Constants.D_Pad_Down)) {
             intake.runAllOut();
             shooter.reverseShooters();
             feeder.reverse();

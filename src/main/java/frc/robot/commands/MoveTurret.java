@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.*;
+import frc.robot.Constants;
 
 public class MoveTurret extends CommandBase {
     
@@ -31,8 +32,8 @@ public class MoveTurret extends CommandBase {
     
     @Override
     public void execute() {
-        double rightJoyStickXAxis = gamepad.getRawAxis(RobotContainer.Right_Joystick_X_Axis);
-        boolean rightJoyStickDown = gamepad.getRawButton(RobotContainer.RightJoystick_Pressed);
+        double rightJoyStickXAxis = gamepad.getRawAxis(Constants.Right_Joystick_X_Axis);
+        boolean rightJoyStickDown = gamepad.getRawButton(Constants.Right_Joystick_Pressed);
 
         //If right is NOT pressed down AND joystick x axis is moved (disregarding nominal movement)
         //Is .02 a good threshold?

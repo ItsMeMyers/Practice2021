@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Constants;
 
 public class PullClimber extends CommandBase {
 
@@ -25,7 +26,7 @@ public class PullClimber extends CommandBase {
     @Override
     public void execute() {
         //If the climber is deployed AND left joystick is pressed AND left joystick is aimed down
-        if (gamepad.getRawButton(RobotContainer.Left_Joystick_Pressed) && climber.getDeployed() && (gamepad.getRawAxis(RobotContainer.Left_Joystick_Y_Axis) < 0)) {
+        if (gamepad.getRawButton(Constants.Left_Joystick_Pressed) && climber.getDeployed() && (gamepad.getRawAxis(Constants.Left_Joystick_Y_Axis) < 0)) {
             climber.climb();
         }
     }

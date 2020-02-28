@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Constants;
 
 public class PancakeController extends CommandBase {
 
@@ -21,10 +22,10 @@ public class PancakeController extends CommandBase {
         //As of right now... its either open all the way or collapsed... subject to change
 
         //If use says to expand and we are not expanded
-        if (gamepad.getRawButton(D_Pad_Right) && !shooter.getPancakeExpanded) {
+        if (gamepad.getRawButton(Constants.D_Pad_Right) && !shooter.getPancakeExpanded()) {
             shooter.setPancake(true);
         //If user says to collape and we are not collapsed
-        } else if (gamepad.getRawButton(D_Pad_Left) && shooter.getPancakeExpanded) {
+        } else if (gamepad.getRawButton(Constants.D_Pad_Left) && shooter.getPancakeExpanded()) {
             shooter.setPancake(false);
         }
     }

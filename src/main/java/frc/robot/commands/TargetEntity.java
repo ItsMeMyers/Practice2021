@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
+import frc.robot.Constants;
 
 public class TargetEntity extends CommandBase {
 	// Minimum power is reach at (1.351...) degrees from the center
@@ -54,9 +55,9 @@ public class TargetEntity extends CommandBase {
 	@Override
 	public void execute() {
 		// If user is pressing right joystick in... target
-		if (gamepad.getRawButton(RobotController.Right_Joystick_Pressed)) {
-			limelight.setLED(LED.ON); // Turn on the LED's if they haven't been turned on before
-			limelight.setCAM(CAM.VISION); // Turn on vision mode if it wasn't turned on before
+		if (gamepad.getRawButton(Constants.Right_Joystick_Pressed)) {
+			limelight.setLED(Limelight.LED.ON); // Turn on the LED's if they haven't been turned on before
+			limelight.setCAM(Limelight.CAM.VISION); // Turn on vision mode if it wasn't turned on before
 
 			if (limelight.hasTarget()) {
 				updateTurretPower();
@@ -122,6 +123,6 @@ public class TargetEntity extends CommandBase {
 	 */
 	@Override
 	public void end(boolean interrupted) {
-		limelight.setLED(LED.OFF);
+		limelight.setLED(Limelight.LED.OFF); //TODO Fix all limeLight.setLED() calls to right things
 	}
 }

@@ -30,9 +30,37 @@ public final class Constants {
    * by statically importing the necessary inner class."
    */
 
+  //Button definitions for gamepad
+  public static final int A_Button = 1;
+  public static final int B_Button = 2;
+  public static final int X_Button = 3;
+  public static final int Y_Button = 4;
+
+  public static final int Right_Bumper_Button = 5;
+  public static final int Right_Trigger_Button = 6;
+  public static final int Left_Bumper_Button = 7;
+  public static final int Left_Trigger_Button = 8;
+
+  public static final int Left_Joystick_Pressed = 9;
+  public static final int Right_Joystick_Pressed = 10;
+
+  public static final int Left_Joystick_X_Axis= 11;
+  public static final int Left_Joystick_Y_Axis= 12;
+
+  public static final int Right_Joystick_X_Axis= 13;
+  public static final int Right_Joystick_Y_Axis= 14;
+
+  public static final int D_Pad_Up = 15;
+  public static final int D_Pad_Down = 16;
+  public static final int D_Pad_Left = 17;
+  public static final int D_Pad_Right = 18;
+
+  
+
   /**
    * Constants for the climber subsystem
    */
+   
   public static final class ClimberConstants
   {
     public static final int winchMotorPort = 8;

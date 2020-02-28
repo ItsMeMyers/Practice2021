@@ -3,6 +3,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.*;
+import frc.robot.Constants;
+import edu.wpi.first.wpilibj.XboxController;
 
 public class IntakeOut extends CommandBase {
 
@@ -24,7 +26,8 @@ public class IntakeOut extends CommandBase {
     @Override
     public void execute() {
         //If right trigger pressed and NOT right bumper
-        if (gamepad.getRawButton(RobotContainer.Right_Trigger_Button) && !gamepad.getRawButton(RobotContainer.Right_Bumper_Button)
+        if (gamepad.getRawButton(Constants.Right_Trigger_Button) &&
+                 !gamepad.getRawButton(Constants.Right_Bumper_Button)){
             intake.runIntakeOut();
         }
     }

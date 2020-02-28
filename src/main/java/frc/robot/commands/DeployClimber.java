@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.*;
+import frc.robot.Constants;
 
 public class DeployClimber extends CommandBase {
 
@@ -19,7 +20,7 @@ public class DeployClimber extends CommandBase {
     @Override
     public void execute() {
         //If not deployed already and the user is pressing D pad up
-        if (!climber.deployed() && gamepad.getRawButton(RobotContainer.D_Pad_Up)) {
+        if (!climber.getDeployed() && gamepad.getRawButton(Constants.D_Pad_Up)) {
             climber.deploy();
         }
     }

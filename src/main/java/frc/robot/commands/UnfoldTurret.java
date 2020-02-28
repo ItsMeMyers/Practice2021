@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.*;
+import frc.robot.Constants;
 
 public class UnfoldTurret extends CommandBase {
 
@@ -19,7 +20,7 @@ public class UnfoldTurret extends CommandBase {
     @Override
     public void execute() {
         //If folded and user is pressing B button
-        if (turret.getFolded() && gamepad.getRawButtonPressed(RobotContainer.B_Button)) {
+        if (turret.getFolded() && gamepad.getRawButtonPressed(Constants.B_Button)) {
             turret.unfoldTurret();
         }
     }

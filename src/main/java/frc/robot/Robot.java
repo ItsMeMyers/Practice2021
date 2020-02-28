@@ -20,20 +20,20 @@ public class Robot extends TimedRobot {
   // 2: Autonomous
   // 3: TeleOp
   // 4: Test
-  private final LED[] defaultLED = {
-    LED.OFF,
-    LED.OFF,
-    LED.ON,
-    LED.OFF,
-    LED.ON
+  private final Limelight.LED[] defaultLED = {
+    Limelight.LED.OFF,
+    Limelight.LED.OFF,
+    Limelight.LED.ON,
+    Limelight.LED.OFF,
+    Limelight.LED.ON
   };
   
-  private final CAM[] defaultCAM = {
-    CAM.DRIVER,
-    CAM.DRIVER,
-    CAM.VISION,
-    CAM.DRIVER,
-    CAM.VISION
+  private final Limelight.CAM[] defaultCAM = {
+    Limelight.CAM.DRIVER,
+    Limelight.CAM.DRIVER,
+    Limelight.CAM.VISION,
+    Limelight.CAM.DRIVER,
+    Limelight.CAM.VISION
   };
 
   private Command m_autonomousCommand;

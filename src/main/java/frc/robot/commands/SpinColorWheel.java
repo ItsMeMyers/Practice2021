@@ -8,7 +8,7 @@ import frc.robot.subsystems.*;
 public class SpinColorWheel extends CommandBase {
 
     private ColorWheel colorWheel;
-    private final XboxController gamepad;
+    // bprivate final XboxController gamepad;
 
     public SpinColorWheel(ColorWheel clw) {
         

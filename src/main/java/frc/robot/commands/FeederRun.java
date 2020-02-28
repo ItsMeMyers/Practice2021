@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.*;
+import frc.robot.Constants;
 import edu.wpi.first.wpilibj.XboxController;
 
 public class FeederRun extends CommandBase {
@@ -26,13 +27,13 @@ public class FeederRun extends CommandBase {
     @Override
     public void execute() {
         //Look at the README.md for the rulesw that the below logic should match
-        if (gamepad.getRawButton(RobotContainer.Left_Trigger_Button)) {
+        if (gamepad.getRawButton(Constants.Left_Trigger_Button)) {
             boolean lowerBallPresent = intake.getBallPresent();
             boolean upperBallPresent = feeder.getBallPresent();
             
             //No balls in tower at all
             if (!lowerBallPresent && !upperBallPresent) {
-                feeder.run(false)
+                feeder.run(false);
                 intake.runFunnelIn(false);
                 intake.runLowerTowerIn(false);
 
@@ -45,7 +46,7 @@ public class FeederRun extends CommandBase {
             } else if (lowerBallPresent && upperBallPresent) {
                 //Shooter motors are at full speed 
                 if (shooter.atSpeed()) {
-                    feeder.run(true)
+                    feeder.run(true);
                     intake.runFunnelIn(true);
                     intake.runLowerTowerIn(true);
                 } else {

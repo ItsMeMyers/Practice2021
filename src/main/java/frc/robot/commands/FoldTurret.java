@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.*;
+import frc.robot.Constants;
 import edu.wpi.first.wpilibj.XboxController;
 
 public class FoldTurret extends CommandBase {
@@ -19,7 +20,7 @@ public class FoldTurret extends CommandBase {
     @Override
     public void execute() {
         //If not folded already and user is pressing A button
-        if (!turret.getFolded() && gamepad.getRawButtonPressed(RobotContainer.A_Button)) {
+        if (!turret.getFolded() && gamepad.getRawButtonPressed(Constants.A_Button)) {
             turret.foldTurret();
         }
     }
