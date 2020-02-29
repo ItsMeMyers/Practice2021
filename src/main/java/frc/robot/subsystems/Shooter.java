@@ -30,6 +30,8 @@ public class Shooter extends SubsystemBase {
     private final double rpmThreshold = 0.0; 
 
     private final double voltThreshold = 1.0;
+    
+    private boolean isRunning = false;
 
     /**
      * Shoots the balls into the targets.
@@ -127,5 +129,13 @@ public class Shooter extends SubsystemBase {
     public void stopShooter() {
         shooterFalcon1.stopMotor();
         shooterFalcon2.stopMotor();
+    }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public void setRunning(boolean isRunning) {
+        this.isRunning = isRunning;
     }
 }

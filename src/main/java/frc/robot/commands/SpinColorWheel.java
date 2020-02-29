@@ -1,9 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.ColorWheel;
 
 public class SpinColorWheel extends CommandBase {
 

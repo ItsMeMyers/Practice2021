@@ -1,10 +1,10 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.*;
-import frc.robot.Constants;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Shooter;
 
 public class RunShooter extends CommandBase {
 
@@ -42,21 +42,27 @@ public class RunShooter extends CommandBase {
 
     @Override
     public void execute() {
-        if (gamepad.getRawButton(Constants.Left_Bumper_Button)) {
-            // updateLimelightTracking();
-            // dist = findDistance();
-            
+        // updateLimelightTracking();
+        // dist = findDistance();
+        if(shooter.isRunning())
+        {
+            shooter.stopShooter();
+            shooter.setRunning(false);
+        }else{
+            shooter.setRunning(true);
             while (!shooter.atSpeed()) {
                 shooter.getToSpeed();
             }
-            
-            /*
-            if (shooter.voltageSpike()) {
-                dataRecorder.setDistance(dist);
-                dataRecorder.setX(limelight.x());
-                dataRecorder.setY(limelight.y());
-            } */
         }
+
+        
+        /*
+        if (shooter.voltageSpike()) {
+            dataRecorder.setDistance(dist);
+            dataRecorder.setX(limelight.x());
+            dataRecorder.setY(limelight.y());
+        } */
+        
     }
 
     /**

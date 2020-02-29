@@ -1,10 +1,10 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.*;
-import frc.robot.Constants;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
 public class FeederRun extends CommandBase {
     private Feeder feeder;
@@ -27,35 +27,32 @@ public class FeederRun extends CommandBase {
     @Override
     public void execute() {
         //Look at the README.md for the rulesw that the below logic should match
-        if (gamepad.getRawButton(Constants.Left_Trigger_Button)) {
-            boolean lowerBallPresent = intake.getBallPresent();
-            boolean upperBallPresent = feeder.getBallPresent();
-            
-            //No balls in tower at all
-            if (!lowerBallPresent && !upperBallPresent) {
-                feeder.run(false);
-                intake.runFunnelIn(false);
-                intake.runLowerTowerIn(false);
-
-            //Ball at upper tower but not lower
-            } else if (!lowerBallPresent && upperBallPresent) {
-                intake.runFunnelIn(false);
-                intake.runLowerTowerIn(false);
+        boolean lowerBallPresent = intake.getBallPresent();
+        boolean upperBallPresent = feeder.getBallPresent();
+        
+        //No balls in tower at all
+        if (!lowerBallPresent && !upperBallPresent) {
+            feeder.run(false);
+            intake.runFunnelIn(false);
+            intake.runLowerTowerIn(false);
+        //Ball at upper tower but not lower
+        } else if (!lowerBallPresent && upperBallPresent) {
+            intake.runFunnelIn(false);
+            intake.runLowerTowerIn(false);
+            feeder.stop();
+        //We have balls at upper and lower
+        } else if (lowerBallPresent && upperBallPresent) {
+            //Shooter motors are at full speed 
+            if (shooter.atSpeed()) {
+                feeder.run(true);
+                intake.runFunnelIn(true);
+                intake.runLowerTowerIn(true);
+            } else {
                 feeder.stop();
-            //We have balls at upper and lower
-            } else if (lowerBallPresent && upperBallPresent) {
-                //Shooter motors are at full speed 
-                if (shooter.atSpeed()) {
-                    feeder.run(true);
-                    intake.runFunnelIn(true);
-                    intake.runLowerTowerIn(true);
-                } else {
-                    feeder.stop();
-                    intake.stopFunnel();
-                    intake.stopLowerTower();
-                }                
-            } 
-        }
+                intake.stopFunnel();
+                intake.stopLowerTower();
+            }                
+        }   
     }
 
     @Override

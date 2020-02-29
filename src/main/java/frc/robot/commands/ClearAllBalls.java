@@ -1,10 +1,10 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.*;
-import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
 public class ClearAllBalls extends CommandBase {
 
@@ -25,10 +25,12 @@ public class ClearAllBalls extends CommandBase {
     @Override
     public void execute() {
         //If user is pressing d pad down
-        // if (gamepad.getRawButton(Constants.D_Pad_Down)) {
-        //     intake.runAllOut();
-        //     shooter.reverseShooters();
-        //     feeder.reverse();
-        // }
+        int dpadval = gamepad.getPOV();
+
+        if(dpadval >= 135 && dpadval <= 225){
+            intake.runAllOut();
+            shooter.reverseShooters();
+            feeder.reverse();
+        }
     }
 }

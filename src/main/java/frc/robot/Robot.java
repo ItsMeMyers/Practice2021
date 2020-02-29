@@ -10,10 +10,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.DriveTele;
+import frc.robot.commands.MoveTurret;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
   
+  private DriveTele drivetele = new DriveTele(RobotContainer.drivetrain, RobotContainer.rightStick, RobotContainer.leftStick);
+  private MoveTurret moveTurret = new MoveTurret(RobotContainer.turret, RobotContainer.gamepad);
   // Default Limelight modes for when the different robot states initialize
   // 0: Initial State (RobotInit)
   // 1: Disabled
@@ -38,11 +42,9 @@ public class Robot extends TimedRobot {
 
   private Command m_autonomousCommand;
   private Limelight limelight = new Limelight();
-  private RobotContainer robotContainer;
 
   @Override
   public void robotInit() {
-    robotContainer = new RobotContainer();
     limelight.setLED(defaultLED[0]);
     limelight.setCAM(defaultCAM[0]);
   }
@@ -83,6 +85,9 @@ public class Robot extends TimedRobot {
     limelight.setLED(defaultLED[3]);
     limelight.setCAM(defaultCAM[3]);
     
+    drivetele.schedule();
+    moveTurret.schedule();
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -91,7 +96,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     //This should fire off commands to the robot based on the user input to controller?
-    //Every x ms
+    //Every 20 ms
     CommandScheduler.getInstance().run();
   }
 

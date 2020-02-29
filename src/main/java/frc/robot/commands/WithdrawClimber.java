@@ -1,26 +1,25 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.*;
+import frc.robot.Constants;
+import frc.robot.subsystems.Climber;
 public class WithdrawClimber extends CommandBase {
 
     private Climber climber;
-    private final XboxController gamepad;
+    private final Joystick leftstick;
 
-    public WithdrawClimber(Climber cl, XboxController gpd) {
+    public WithdrawClimber(Climber cl, Joystick j) {
         
         this.climber = cl;
-        this.gamepad = gpd;
+         
+        this.leftstick = j;
         addRequirements(climber);
     }
 
     @Override
     public void execute() {
         //Not assigned to any button as of right now
-        if (false) {
-            climber.withdraw();
-        }
+        climber.climb(leftstick.getRawAxis(Constants.Left_Joystick_X_Axis));
     }
 }

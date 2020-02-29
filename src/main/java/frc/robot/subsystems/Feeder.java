@@ -78,6 +78,8 @@ public class Feeder extends SubsystemBase {
      * Returns whether or not the TOF sensor currently sees a ball
      */
     public boolean getBallPresent() {
+        if(ballPresentSensor == null)
+            return false;
         double range = ballPresentSensor.getRange();
         boolean ballPresent = false;
         if (range <= feederBallPresentThreshold) {

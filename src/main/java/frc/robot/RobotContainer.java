@@ -7,63 +7,75 @@
 
 package frc.robot;
 
-import static frc.robot.Constants.RobotContainerConstants.*;
-import static frc.robot.Constants.RouteFinderConstants.*;
-
-import java.util.List;
+import static frc.robot.Constants.RobotContainerConstants.gamepadPort;
+import static frc.robot.Constants.RobotContainerConstants.leftStickPort;
+import static frc.robot.Constants.RobotContainerConstants.povDown;
+import static frc.robot.Constants.RobotContainerConstants.povUp;
+import static frc.robot.Constants.RobotContainerConstants.rightStickPort;
+import static frc.robot.Constants.RouteFinderConstants.kMaxAccelerationMetersPerSecondSquared;
+import static frc.robot.Constants.RouteFinderConstants.kMaxSpeedMetersPerSecond;
+import static frc.robot.Constants.RouteFinderConstants.kTrackwidthMeters;
+import static frc.robot.Constants.RouteFinderConstants.kaVoltSecondsSquaredPerMeter;
+import static frc.robot.Constants.RouteFinderConstants.ksVolts;
+import static frc.robot.Constants.RouteFinderConstants.kvVoltSecondsPerMeter;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Axis;
-import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.PerpetualCommand;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
+import frc.robot.commands.DeployClimber;
+import frc.robot.commands.FeederRun;
+import frc.robot.commands.IntakeDown;
+import frc.robot.commands.IntakeIn;
+import frc.robot.commands.IntakeOut;
+import frc.robot.commands.IntakeUp;
+import frc.robot.commands.RunShooter;
+import frc.robot.commands.TargetEntity;
+import frc.robot.commands.WithdrawClimber;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
 
 public class RobotContainer {
   // Subsystems should be private here and have to be passed to commands because it is better coding practice.
 
   // Joysticks
-  private static final Joystick rightStick = new Joystick(rightStickPort);
-  private static final Joystick leftStick = new Joystick(leftStickPort);
+  public static final Joystick rightStick = new Joystick(rightStickPort);
+  public static final Joystick leftStick = new Joystick(leftStickPort);
 
   // Xbox Controller
   //Should this be joystick like last year?
-  private static final XboxController gamepad = new XboxController(gamepadPort);
+  public static final XboxController gamepad = new XboxController(gamepadPort);
   
   // Drivetrain
-  private static final Drivetrain drivetrain = new Drivetrain();
+  public static final Drivetrain drivetrain = new Drivetrain();
 
   // Turret
-  private static final Turret turret = new Turret();
+  public static final Turret turret = new Turret();
 
   // Shooter
-  private static final Shooter shooter = new Shooter();
+  public static final Shooter shooter = new Shooter();
 
   // Feeder
-  private static final Feeder feeder = new Feeder();
+  public static final Feeder feeder = new Feeder();
 
   // Intake
-  private static final Intake intake = new Intake();
+  public static final Intake intake = new Intake();
 
   // Limelight
-  private static final Limelight limelight = new Limelight();
+  public static final Limelight limelight = new Limelight();
+
+  //Climber
+  public static final Climber climber = new Climber();
 
   //Color Wheel
   //private static final ColorWheel colorwheel = new ColorWheel();
@@ -101,29 +113,36 @@ public class RobotContainer {
      * expression: () -> subsystem.method() They essentially do the same thing
      */
     // Attaches a commmand to each button
-    // Stows in or puts out the intake system when the A button is pressed
-   // new JoystickButton(gamepad, Button.kA.value).whenPressed(new IntakeToggle(intake,gamepad));
     // Starts the shooter motors when the Y button is pressed
-    new JoystickButton(gamepad, Constants.Left_Bumper_Button).whenPressed(new RunShooter(shooter, feeder, limelight,gamepad));
+    new JoystickButton(gamepad, Constants.Left_Bumper_Button).whenPressed(new RunShooter(shooter, feeder, limelight, gamepad));
     // Takes in balls from the ground when the right trigger is held
     new JoystickButton(gamepad, Constants.Right_Bumper_Button).whenHeld(new IntakeIn(intake,gamepad));
     // Pushes out balls onto the ground when the right bumper is held
     new JoystickButton(gamepad, Constants.Right_Trigger_Button).whenHeld(new IntakeOut(intake,gamepad));
-
+    //Run the feeder system
+    new JoystickButton(gamepad, Constants.Left_Trigger_Button).whenHeld(new FeederRun(feeder, intake, shooter, gamepad));
+    //Lift Intake pneau
     new JoystickButton(gamepad, Constants.X_Button).whenPressed(new IntakeUp(intake));
-
+    //lower intake pneau
     new JoystickButton(gamepad, Constants.Y_Button).whenPressed(new IntakeDown(intake));
+
+    new JoystickButton(gamepad, Constants.Left_Joystick_Pressed).whenHeld(new WithdrawClimber(climber, leftStick));
     // Starts targeting when the up arrow on the D-pad is pressed
-    new POVButton(gamepad, povUp).whenPressed(new TargetEntity(limelight, turret, gamepad));
+    new POVButton(gamepad, povUp).whenPressed(new DeployClimber(climber, gamepad));
     // Ends targeting when the down arrow on the D-pad is pressed
     new POVButton(gamepad, povDown).cancelWhenPressed(new TargetEntity(limelight, turret, gamepad));
+    //raise shooter angle
+    // new POVButton(gamepad, povRight).whenPressed(new PancakeUp(shooter, gamepad));
+    //lower shooter angle
+    // new POVButton(gamepad, povLeft).whenPressed(new PancakeDown(shooter, gamepad));
     // Heads to a position when the left bumper is pressed
     // new JoystickButton(gamepad, Button.kBumperLeft.value)
     //     .whenPressed(RouteFinder.getPathCommand(RouteFinder.trajectorygen(pointx, pointy, rotation)));
+    
     // Driving
-    new PerpetualCommand(new DriveTele(drivetrain, rightStick, leftStick)).schedule();
+    // new PerpetualCommand(new DriveTele(drivetrain, rightStick, leftStick)).schedule();
     // Turret
-    new PerpetualCommand(new MoveTurret(turret, gamepad)).schedule(); 
+   // new PerpetualCommand(new MoveTurret(turret, gamepad)).schedule(); 
   }
 
   public static TrajectoryConfig getConfig() {

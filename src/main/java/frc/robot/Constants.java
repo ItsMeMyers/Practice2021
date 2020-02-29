@@ -7,9 +7,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -47,8 +44,9 @@ public final class Constants {
   public static final int Left_Joystick_Pressed = 11;
   public static final int Right_Joystick_Pressed = 12;
 
-  // public static final int Left_Joystick_X_Axis= 0;
-  // public static final int Left_Joystick_Y_Axis= 12;
+
+  public static final int Left_Joystick_X_Axis= 0;
+  public static final int Left_Joystick_Y_Axis= 12;
 
   // public static final int Right_Joystick_X_Axis= 13;
   // public static final int Right_Joystick_Y_Axis= 14;
@@ -147,11 +145,11 @@ public final class Constants {
     // public static final int povNone = -1;
     public static final int povUp = 0;
     // public static final int povUpperRight = 45;
-    // public static final int povRight = 90;
+    public static final int povRight = 90;
     // public static final int povLowerRight = 135;
     public static final int povDown = 180;
     // public static final int povLowerLeft = 225;
-    // public static final int povLeft = 270;
+    public static final int povLeft = 270;
     // public static final int povUpperLeft = 315;
   }
 
