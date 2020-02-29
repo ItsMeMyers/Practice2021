@@ -22,11 +22,11 @@ public class PancakeController extends CommandBase {
         //As of right now... its either open all the way or collapsed... subject to change
 
         //If use says to expand and we are not expanded
-        if (gamepad.getRawButton(Constants.D_Pad_Right) && !shooter.getPancakeExpanded()) {
-            shooter.setPancake(true);
-        //If user says to collape and we are not collapsed
-        } else if (gamepad.getRawButton(Constants.D_Pad_Left) && shooter.getPancakeExpanded()) {
-            shooter.setPancake(false);
-        }
+        // if (gamepad.getRawButton(Constants.D_Pad_Right) && !shooter.getPancakeExpanded()) {
+        //     shooter.setPancake(true);
+        // //If user says to collape and we are not collapsed
+        // } else if (gamepad.getRawButton(Constants.D_Pad_Left) && shooter.getPancakeExpanded()) {
+        //     shooter.setPancake(false);
+        // }
     }
 }

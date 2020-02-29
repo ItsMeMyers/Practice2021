@@ -25,10 +25,10 @@ public class ClearAllBalls extends CommandBase {
     @Override
     public void execute() {
         //If user is pressing d pad down
-        if (gamepad.getRawButton(Constants.D_Pad_Down)) {
-            intake.runAllOut();
-            shooter.reverseShooters();
-            feeder.reverse();
-        }
+        // if (gamepad.getRawButton(Constants.D_Pad_Down)) {
+        //     intake.runAllOut();
+        //     shooter.reverseShooters();
+        //     feeder.reverse();
+        // }
     }
 }

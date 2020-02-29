@@ -43,8 +43,8 @@ public class RunShooter extends CommandBase {
     @Override
     public void execute() {
         if (gamepad.getRawButton(Constants.Left_Bumper_Button)) {
-            updateLimelightTracking();
-            dist = findDistance();
+            // updateLimelightTracking();
+            // dist = findDistance();
             
             while (!shooter.atSpeed()) {
                 shooter.getToSpeed();

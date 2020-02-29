@@ -59,8 +59,12 @@ public class Intake extends SubsystemBase {
         
     }
 
-    public void runIntakeOut() {
-        intakeBarMotor.set(outSpeed);
+    public void runIntakeOut(boolean fullSpeed) {
+        if (fullSpeed) {
+            intakeBarMotor.set(-1*inSpeed);
+        } else {
+            intakeBarMotor.set(-1*inHalfSpeed); 
+        }
     }
 
     public void stopIntake() {
@@ -143,6 +147,14 @@ public class Intake extends SubsystemBase {
     public void forceTo(boolean override) {
         intakeSolenoid.set(override);
         engaged = override;
+    }
+
+    public void intakeUp(){
+        intakeSolenoid.set(true);
+    }
+
+    public void intakeDown(){
+        intakeSolenoid.set(false);
     }
 
     /**

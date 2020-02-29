@@ -66,7 +66,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     limelight.setLED(defaultLED[2]);
     limelight.setCAM(defaultCAM[2]);
-    m_autonomousCommand = robotContainer.getAutonomousCommand();
+    //m_autonomousCommand = robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();

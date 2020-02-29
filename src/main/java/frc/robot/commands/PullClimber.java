@@ -26,9 +26,9 @@ public class PullClimber extends CommandBase {
     @Override
     public void execute() {
         //If the climber is deployed AND left joystick is pressed AND left joystick is aimed down
-        if (gamepad.getRawButton(Constants.Left_Joystick_Pressed) && climber.getDeployed() && (gamepad.getRawAxis(Constants.Left_Joystick_Y_Axis) < 0)) {
-            climber.climb();
-        }
+        // if (gamepad.getRawButton(Constants.Left_Joystick_Pressed) && climber.getDeployed() && (gamepad.getRawAxis(Constants.Left_Joystick_Y_Axis) < 0)) {
+        //     climber.climb();
+        // }
     }
 
     @Override

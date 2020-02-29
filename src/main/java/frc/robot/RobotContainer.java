@@ -83,7 +83,7 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    /**
+     /**
      * COMMAND INFO From the official wpilib docs: "While users are able to create
      * commands by explicitly writing command classes (either by subclassing
      * CommandBase or implementing Command), for many commands (such as those that
@@ -102,24 +102,28 @@ public class RobotContainer {
      */
     // Attaches a commmand to each button
     // Stows in or puts out the intake system when the A button is pressed
-    // new JoystickButton(gamepad, Button.kA.value).whenPressed(new IntakeToggle(intake));
-    // // Starts the shooter motors when the Y button is pressed
-    // new JoystickButton(gamepad, Button.kY.value).whenPressed(new RunShooter(shooter, feeder, limelight));
-    // // Takes in balls from the ground when the right trigger is held
-    // new JoystickButton(gamepad, Axis.kRightTrigger.value).whenHeld(new IntakeIn(intake));
-    // // Pushes out balls onto the ground when the right bumper is held
-    // new JoystickButton(gamepad, Button.kBumperRight.value).whenHeld(new IntakeOut(intake));
-    // // Starts targeting when the up arrow on the D-pad is pressed
-    // new POVButton(gamepad, povUp).whenPressed(new TargetEntity(limelight, turret, gamepad));
-    // // Ends targeting when the down arrow on the D-pad is pressed
-    // new POVButton(gamepad, povDown).cancelWhenPressed(new TargetEntity(limelight, turret, gamepad));
-    // // Heads to a position when the left bumper is pressed
+   // new JoystickButton(gamepad, Button.kA.value).whenPressed(new IntakeToggle(intake,gamepad));
+    // Starts the shooter motors when the Y button is pressed
+    new JoystickButton(gamepad, Constants.Left_Bumper_Button).whenPressed(new RunShooter(shooter, feeder, limelight,gamepad));
+    // Takes in balls from the ground when the right trigger is held
+    new JoystickButton(gamepad, Constants.Right_Bumper_Button).whenHeld(new IntakeIn(intake,gamepad));
+    // Pushes out balls onto the ground when the right bumper is held
+    new JoystickButton(gamepad, Constants.Right_Trigger_Button).whenHeld(new IntakeOut(intake,gamepad));
+
+    new JoystickButton(gamepad, Constants.X_Button).whenPressed(new IntakeUp(intake));
+
+    new JoystickButton(gamepad, Constants.Y_Button).whenPressed(new IntakeDown(intake));
+    // Starts targeting when the up arrow on the D-pad is pressed
+    new POVButton(gamepad, povUp).whenPressed(new TargetEntity(limelight, turret, gamepad));
+    // Ends targeting when the down arrow on the D-pad is pressed
+    new POVButton(gamepad, povDown).cancelWhenPressed(new TargetEntity(limelight, turret, gamepad));
+    // Heads to a position when the left bumper is pressed
     // new JoystickButton(gamepad, Button.kBumperLeft.value)
     //     .whenPressed(RouteFinder.getPathCommand(RouteFinder.trajectorygen(pointx, pointy, rotation)));
-    // // Driving
-    // new PerpetualCommand(new DriveTele(drivetrain, rightStick, leftStick)).schedule();
-    // // Turret
-    // new PerpetualCommand(new MoveTurret(turret, gamepad)).schedule();
+    // Driving
+    new PerpetualCommand(new DriveTele(drivetrain, rightStick, leftStick)).schedule();
+    // Turret
+    new PerpetualCommand(new MoveTurret(turret, gamepad)).schedule(); 
   }
 
   public static TrajectoryConfig getConfig() {
@@ -143,7 +147,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  /* public Command getAutonomousCommand() {
     var kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
 
     // An example trajectory to follow. All units in meters.
@@ -156,7 +160,7 @@ public class RobotContainer {
         new Pose2d(5, 0, new Rotation2d(0)),
         // Pass config
         getConfig());
-
+ */
     /**
      * This declaration is fairly substantial, so we’ll go through it
      * argument-by-argument:
@@ -199,14 +203,13 @@ public class RobotContainer {
      * command does not operate on the drive at the same time as any other command
      * that uses the drive.
      */
-    RamseteCommand ramseteCommand = new RamseteCommand(trajectory, // We input our desired trajectory here
-        drivetrain::getPose, new RamseteController(kRamseteB, kRamseteZeta),
-        new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter), kDriveKinematics,
-        drivetrain::getWheelSpeeds, new PIDController(kPDriveVel, 0, 0), new PIDController(kPDriveVel, 0, 0),
-        // RamseteCommand passes volts to the callback
-        drivetrain::tankDriveVolts, drivetrain);
+//     RamseteCommand ramseteCommand = new RamseteCommand(trajectory, // We input our desired trajectory here
+//         drivetrain::getPose, new RamseteController(kRamseteB, kRamseteZeta),
+//         new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter), kDriveKinematics,
+//         drivetrain::getWheelSpeeds, new PIDController(kPDriveVel, 0, 0), new PIDController(kPDriveVel, 0, 0),
+//         // RamseteCommand passes volts to the callback
+//         drivetrain::tankDriveVolts, drivetrain);
 
-    // Reset odometry, then run path following command, then stop at the end.
-    return ramseteCommand.beforeStarting(drivetrain::resetOdometry).andThen(() -> drivetrain.tankDriveVolts(0, 0));
-  }
+//     // Reset odometry, then run path following command, then stop at the end.
+//     return ramseteCommand.beforeStarting(drivetrain::resetOdometry).andThen(() -> drivetrain.tankDriveVolts(0, 0));
 }

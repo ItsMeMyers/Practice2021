@@ -20,8 +20,8 @@ public class DeployClimber extends CommandBase {
     @Override
     public void execute() {
         //If not deployed already and the user is pressing D pad up
-        if (!climber.getDeployed() && gamepad.getRawButton(Constants.D_Pad_Up)) {
-            climber.deploy();
-        }
+        // if (!climber.getDeployed() && gamepad.getRawButton(Constants.D_Pad_Up)) {
+        //     climber.deploy();
+        // }
     }
 }

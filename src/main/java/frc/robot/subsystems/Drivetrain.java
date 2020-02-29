@@ -14,23 +14,33 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
 
+   private WPI_TalonFX ltMotor;
+   private WPI_TalonFX lmMotor;
+   private WPI_TalonFX lbMotor;
+   private WPI_TalonFX rtMotor;
+   private WPI_TalonFX rmMotor;
+   private WPI_TalonFX rbMotor;
+
+    
+
     // The motors on the left side of the drive.
-    private final SpeedControllerGroup leftMotors =
-    new SpeedControllerGroup(
+    // private final SpeedControllerGroup leftMotors =
+    /* new SpeedControllerGroup(
         new WPI_TalonFX(LTMotorPort),
         new WPI_TalonFX(LMMotorPort),
-        new WPI_TalonFX(LLMotorPort));
+        new WPI_TalonFX(LLMotorPort)); */
 
     // The motors on the right side of the drive.
-    private final SpeedControllerGroup rightMotors = 
-    new SpeedControllerGroup(
+   // private final SpeedControllerGroup rightMotors = 
+    /* new SpeedControllerGroup(
         new WPI_TalonFX(RTMotorPort),
         new WPI_TalonFX(RMMotorPort),
         new WPI_TalonFX(RLMotorPort));
-
+ */
     // motor properties
     private double rightPower = 0.0;
     private double leftPower = 0.0;
@@ -38,7 +48,7 @@ public class Drivetrain extends SubsystemBase {
     private boolean invertRight = false; // Whether or not to invert the right motor
     private boolean invertLeft = false; // Whether or not to invert the left motor
 
-    private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotors, rightMotors); // The robot's drive
+    //private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotors, rightMotors); // The robot's drive
 
     private final Encoder leftEncoder = new Encoder(leftEncoderPorts[0], leftEncoderPorts[1], leftEncoderReversed); // The left-side drive encoder
 
@@ -52,6 +62,14 @@ public class Drivetrain extends SubsystemBase {
      * Method use to drive the robot
      */
     public Drivetrain() {
+
+        ltMotor = new WPI_TalonFX(Constants.DrivetrainConstants.LTMotorPort);
+        lmMotor = new WPI_TalonFX(Constants.DrivetrainConstants.LMMotorPort);
+        lbMotor = new WPI_TalonFX(Constants.DrivetrainConstants.LLMotorPort);
+        rtMotor = new WPI_TalonFX(Constants.DrivetrainConstants.RTMotorPort);
+        rmMotor = new WPI_TalonFX(Constants.DrivetrainConstants.RMMotorPort);
+        rbMotor = new WPI_TalonFX(Constants.DrivetrainConstants.RLMotorPort);
+
         // Sets the distance per pulse for the encoders
         leftEncoder.setDistancePerPulse(encoderDistancePerPulse);
         rightEncoder.setDistancePerPulse(encoderDistancePerPulse);
@@ -114,7 +132,9 @@ public class Drivetrain extends SubsystemBase {
       */
      public void stopRightMotor() {
          rightPower = 0.0;
-         rightMotors.stopMotor();
+         rtMotor.stopMotor();
+         rmMotor.stopMotor();
+         rbMotor.stopMotor();
      }
 
     /**
@@ -122,7 +142,9 @@ public class Drivetrain extends SubsystemBase {
      */
     public void stopLeftMotor() {
         leftPower = 0.0;
-        leftMotors.stopMotor();
+        ltMotor.stopMotor();
+        lmMotor.stopMotor();
+        lbMotor.stopMotor();
     }
 
     /**
@@ -146,8 +168,13 @@ public class Drivetrain extends SubsystemBase {
             leftP *= INVERT_MOTOR;
         }
         
-        rightMotors.set(rightP);
-        leftMotors.set(leftP);
+        rtMotor.set(rightP);
+        rmMotor.set(rightP);
+        rbMotor.set(rightP);
+
+        ltMotor.set(leftP);
+        lmMotor.set(leftP);
+        lbMotor.set(leftP);
     }
 
     /**
@@ -206,7 +233,7 @@ public class Drivetrain extends SubsystemBase {
      * @param rot the commanded rotation
      */
     public void arcadeDrive(double fwd, double rot) {
-        diffDrive.arcadeDrive(fwd, rot);
+        //diffDrive.arcadeDrive(fwd, rot);
     }
 
     /**
@@ -214,10 +241,10 @@ public class Drivetrain extends SubsystemBase {
      * @param leftVolts the commanded left output
      * @param rightVolts the commanded right output
      */
-    public void tankDriveVolts(double leftVolts, double rightVolts) {
+   /*  public void tankDriveVolts(double leftVolts, double rightVolts) {
         leftMotors.setVoltage(leftVolts);
         rightMotors.setVoltage(-rightVolts);
-    }
+    } */
 
     /**
      * Resets the drive encoders to currently read a position of 0
@@ -239,9 +266,9 @@ public class Drivetrain extends SubsystemBase {
      * Sets the max output of the drive.  Useful for scaling the drive to drive more slowly
      * @param maxOutput the maximum output to which the drive will be constrained
      */
-    public void setMaxOutput(double maxOutput) {
+    /* public void setMaxOutput(double maxOutput) {
         diffDrive.setMaxOutput(maxOutput);
-    }
+    } */
 
     /**
      * Zeroes the heading of the robot

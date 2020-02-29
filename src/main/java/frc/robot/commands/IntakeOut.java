@@ -28,7 +28,7 @@ public class IntakeOut extends CommandBase {
         //If right trigger pressed and NOT right bumper
         if (gamepad.getRawButton(Constants.Right_Trigger_Button) &&
                  !gamepad.getRawButton(Constants.Right_Bumper_Button)){
-            intake.runIntakeOut();
+            intake.runIntakeOut(true);
         }
     }
 

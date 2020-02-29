@@ -79,18 +79,19 @@ public class RouteFinder extends SubsystemBase {
          * command does not operate on the drive at the same time as any other command
          * that uses the drive.
          */
-        RamseteCommand ramseteCommand = new RamseteCommand(trajectory, // Our desired trajectory
-                drivetrain::getPose, new RamseteController(kRamseteB, kRamseteZeta),
-                new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter),
-                new DifferentialDriveKinematics(kTrackwidthMeters), drivetrain::getWheelSpeeds,
-                new PIDController(kPDriveVel, 0, 0), new PIDController(kPDriveVel, 0, 0),
-                // RamseteCommand passes volts to the callback
-                drivetrain::tankDriveVolts,
-                // requires the drivetrain, will be interrupted if another command requires it
-                drivetrain);
+        return null;
+        // RamseteCommand ramseteCommand = new RamseteCommand(trajectory, // Our desired trajectory
+        //         drivetrain::getPose, new RamseteController(kRamseteB, kRamseteZeta),
+        //         new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter),
+        //         new DifferentialDriveKinematics(kTrackwidthMeters), drivetrain::getWheelSpeeds,
+        //         new PIDController(kPDriveVel, 0, 0), new PIDController(kPDriveVel, 0, 0),
+        //         // RamseteCommand passes volts to the callback
+        //         drivetrain::tankDriveVolts,
+        //         // requires the drivetrain, will be interrupted if another command requires it
+        //         drivetrain);
 
-        // Follow the path finding command and then stop
-        return ramseteCommand.andThen(() -> drivetrain.tankDriveVolts(0, 0));
+        // // Follow the path finding command and then stop
+        // return ramseteCommand.andThen(() -> drivetrain.tankDriveVolts(0, 0));
     }
 
     /**

@@ -6,10 +6,9 @@ import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;
 
-public class IntakeToggle extends CommandBase {
+public class IntakeDown extends CommandBase {
 
     private Intake intake;
-    private final XboxController gamepad;
 
     /**
      * 1. This command stows in the intake system and puts it out.
@@ -17,9 +16,8 @@ public class IntakeToggle extends CommandBase {
      * 3. It will toggle it from stowed in to out or vice versa.
      * 4. This is different from turning the intake direction from in and out.
      */
-    public IntakeToggle(Intake itk, XboxController gpd) {
+    public IntakeDown(Intake itk) {
         this.intake = itk;
-        this.gamepad = gpd;
         addRequirements(intake);
     }
 
@@ -28,18 +26,8 @@ public class IntakeToggle extends CommandBase {
      */
     @Override
     public void initialize() {
-        //intake.toggle();
-
-        //If user commands to engage, and we aren't already
-        if (gamepad.getRawButton(Constants.X_Button)) {
-            if (!intake.getEngaged()) {
-                intake.forceTo(true);
-            }
-        // If user commands to disengage and we are currently engaged
-        } else if (gamepad.getRawButton(Constants.Y_Button)) {
-            if (intake.getEngaged()) {
-                intake.forceTo(false);
-            }
-        }
+        intake.intakeDown();
     }
+
+
 }

@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -31,29 +34,29 @@ public final class Constants {
    */
 
   //Button definitions for gamepad
-  public static final int A_Button = 1;
-  public static final int B_Button = 2;
-  public static final int X_Button = 3;
+  public static final int A_Button = 2;
+  public static final int B_Button = 3;
+  public static final int X_Button = 1;
   public static final int Y_Button = 4;
 
-  public static final int Right_Bumper_Button = 5;
-  public static final int Right_Trigger_Button = 6;
-  public static final int Left_Bumper_Button = 7;
-  public static final int Left_Trigger_Button = 8;
+  public static final int Right_Bumper_Button = 6;
+  public static final int Right_Trigger_Button = 8;
+  public static final int Left_Bumper_Button = 5;
+  public static final int Left_Trigger_Button = 7;
 
-  public static final int Left_Joystick_Pressed = 9;
-  public static final int Right_Joystick_Pressed = 10;
+  public static final int Left_Joystick_Pressed = 11;
+  public static final int Right_Joystick_Pressed = 12;
 
-  public static final int Left_Joystick_X_Axis= 11;
-  public static final int Left_Joystick_Y_Axis= 12;
+  // public static final int Left_Joystick_X_Axis= 0;
+  // public static final int Left_Joystick_Y_Axis= 12;
 
-  public static final int Right_Joystick_X_Axis= 13;
-  public static final int Right_Joystick_Y_Axis= 14;
+  // public static final int Right_Joystick_X_Axis= 13;
+  // public static final int Right_Joystick_Y_Axis= 14;
 
-  public static final int D_Pad_Up = 15;
-  public static final int D_Pad_Down = 16;
-  public static final int D_Pad_Left = 17;
-  public static final int D_Pad_Right = 18;
+  // public static final int D_Pad_Up = Joystick.ButtonType;
+  // public static final int D_Pad_Down = 16;
+  // public static final int D_Pad_Left = 17;
+  // public static final int D_Pad_Right = 18;
 
   
 
@@ -64,7 +67,7 @@ public final class Constants {
   public static final class ClimberConstants
   {
     public static final int winchMotorPort = 8;
-    public static final int climberSolenoidPort = 3;
+    public static final int climberSolenoidPort = 2;
   }
 
    /**
@@ -128,7 +131,7 @@ public final class Constants {
     public static final int intakeBarMotorPort = 9; 
     public static final int intakeFunnelMotorPort = 6;
     public static final int intakeLowerTowerFalconPort = 12;
-    public static final int intakeSolenoidPort = 0;
+    public static final int intakeSolenoidPort = 3;
   }
 
   /**
@@ -189,7 +192,7 @@ public final class Constants {
     // Shooter spinner motors
     public static final int shooterFalcon1Port = 13;
     public static final int shooterFalcon2Port = 14;
-    public static final int shooterAngleSolenoid = 2;
+    public static final int shooterAngleSolenoid = 1;
   }
 
   /**
@@ -199,7 +202,7 @@ public final class Constants {
     // Shooter spinner and turret moving motors
     public static final int turretMotorPort = 8;
     public static final double turretMotorHardStopCurrentThreshold = 10.0;
-    public static final int turretSolenoidPort = 1;
+    public static final int turretSolenoidPort = 0;
 
   }
 
