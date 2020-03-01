@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -30,10 +31,11 @@ public class FeederRun extends CommandBase {
         //Look at the README.md for the rulesw that the below logic should match
         boolean lowerBallPresent = intake.getBallPresent();
         boolean upperBallPresent = feeder.getBallPresent();
+        Joystick j = RobotContainer.rightStick;
         //boolean lowerBallPresent = false;
         //boolean upperBallPresent = false;
         //No balls in tower at all
-        if (shooter.atSpeed()) {
+        if (shooter.isRunning() && (shooter.atSpeed() || j.getRawButton(1))) {
             feeder.run(true);
             intake.runFunnelIn(true);
             intake.runLowerTowerIn(true);

@@ -21,7 +21,7 @@ public class Intake extends SubsystemBase {
 
     private final double inSpeed = 1.0;
     private final double inHalfSpeed = .3;
-    private final double outSpeed = 0.8;
+    private final double outSpeed = 0.5;
 
     private boolean engaged = false;
 

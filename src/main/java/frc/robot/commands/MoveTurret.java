@@ -44,7 +44,7 @@ public class MoveTurret extends CommandBase {
             } else if ((turret.getPosition() < -10650) && (rightJoyStickXAxis < 0.0)) {
                 turret.setSpinPower(0.0);
             } else {
-                turret.setSpinPower(rightJoyStickXAxis * .3);
+                turret.setSpinPower(rightJoyStickXAxis * .25);
             }
         }
         else if(!rightJoyStickDown && !(rightJoyStickXAxis < -.02 || rightJoyStickXAxis > .02)){

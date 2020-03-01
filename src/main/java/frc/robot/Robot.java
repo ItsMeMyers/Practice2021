@@ -115,7 +115,6 @@ public class Robot extends TimedRobot {
     
     drivetele.schedule();
     moveTurret.schedule();
-    shooter.setSpeed(4600);
     //TODO remove by waterbury
     turret.zeroTurret();
     if (m_autonomousCommand != null) {
@@ -128,31 +127,37 @@ public class Robot extends TimedRobot {
     //This should fire off commands to the robot based on the user input to controller?
     //Every 20 ms
     CommandScheduler.getInstance().run();
-    if(gamepad.getRawButton(Constants.Right_Bumper_Button) && !gamepad.getRawButton(Constants.Right_Trigger_Button)){
+    if(gamepad.getRawButton(Constants.Right_Trigger_Button) && !gamepad.getRawButton(Constants.Right_Bumper_Button)){
       intake.runIntakeIn(true);
-    }else if(gamepad.getRawButton(Constants.Right_Trigger_Button) &&! gamepad.getRawButton(Constants.Right_Bumper_Button) ){
+    }else if(gamepad.getRawButton(Constants.Right_Bumper_Button) &&! gamepad.getRawButton(Constants.Right_Trigger_Button) ){
       intake.runIntakeOut(true);
     }else{
       intake.stopIntake();
     }
 
     if(gamepad.getRawButton(Constants.Left_Bumper_Button)){
-      if(shooter.isRunning())
-      {
-          shooter.stopShooter();
-          shooter.setRunning(false);
-      }else{
-          shooter.setRunning(true);
-          shooter.getToSpeed();
-      }
+      // if(shooter.isRunning())
+      // {
+      //     shooter.stopShooter();
+      //     shooter.setRunning(false);
+      // }else{
+      //     shooter.setRunning(true);
+      //     shooter.getToSpeed();
+      // }
+      shooter.setRunning(true);
+      shooter.getToSpeed();
+    } else {
+      shooter.stopShooter();
+      shooter.setRunning(false);
     }
+    
     if(gamepad.getRawButton(Constants.X_Button)){
-      intake.intakeUp();
-    }
-    if(gamepad.getRawButton(Constants.Y_Button)){
       intake.intakeDown();
     }
-    if(gamepad.getRawButton(Constants.Left_Trigger_Button)){
+    if(gamepad.getRawButton(Constants.Y_Button)){
+      intake.intakeUp();
+    }
+    if(gamepad.getRawButton(Constants.Left_Trigger_Button) || (gamepad.getRawButton(Constants.Right_Trigger_Button) && !gamepad.getRawButton(Constants.Right_Bumper_Button))){
       FeederRun run = new FeederRun(feeder, intake, shooter, gamepad);
       run.feed();
     }else{
@@ -176,9 +181,28 @@ public class Robot extends TimedRobot {
       if(speed < 0.0)
           speed = 0.0;
       climber.climb(speed);
-    }
-    else{
+    } else {
       climber.climb(0.0);
+    }
+
+    if(gamepad.getPOV() == Constants.D_Pad_Left){
+      double tempSpeed = shooter.getSpeed() - 100;
+      if (tempSpeed < 0) {
+        tempSpeed = 0;
+      }
+      shooter.setSpeed(tempSpeed);
+      if(shooter.isRunning()) {
+        shooter.getToSpeed();
+      }
+    } else if(gamepad.getPOV() == Constants.D_Pad_Right){
+      double tempSpeed = shooter.getSpeed() +100;
+      if (tempSpeed > 6300) {
+        tempSpeed = 6300;
+      }
+      shooter.setSpeed(tempSpeed);
+      if(shooter.isRunning()) {
+        shooter.getToSpeed();
+      }
     }
 
     // Display values to driver station
@@ -202,5 +226,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("shooter1RPM:", shooter.getLeftRPM());
     SmartDashboard.putNumber("shooter2RPM:", shooter.getRightRPM());
     SmartDashboard.putNumber("TurretPos", turret.getPosition());
+    SmartDashboard.putNumber("Shooter Target Speed", shooter.getSpeed());
   }
 }

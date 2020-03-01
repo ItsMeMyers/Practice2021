@@ -8,6 +8,7 @@ import static frc.robot.Constants.DrivetrainConstants.leftEncoderReversed;
 import static frc.robot.Constants.DrivetrainConstants.rightEncoderPorts;
 import static frc.robot.Constants.DrivetrainConstants.rightEncoderReversed;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -29,7 +30,6 @@ public class Drivetrain extends SubsystemBase {
    private WPI_TalonFX rmMotor;
    private WPI_TalonFX rbMotor;
 
-    
 
     // The motors on the left side of the drive.
     // private final SpeedControllerGroup leftMotors =
@@ -71,6 +71,20 @@ public class Drivetrain extends SubsystemBase {
         rmMotor = new WPI_TalonFX(Constants.DrivetrainConstants.RMMotorPort);
         rbMotor = new WPI_TalonFX(Constants.DrivetrainConstants.RLMotorPort);
 
+        ltMotor.configFactoryDefault();
+        lmMotor.configFactoryDefault();
+        lbMotor.configFactoryDefault();
+        rtMotor.configFactoryDefault();
+        rmMotor.configFactoryDefault();
+        rbMotor.configFactoryDefault();
+
+        ltMotor.setNeutralMode(NeutralMode.Coast);
+        lmMotor.setNeutralMode(NeutralMode.Coast);
+        lbMotor.setNeutralMode(NeutralMode.Coast);
+        rtMotor.setNeutralMode(NeutralMode.Coast);
+        rmMotor.setNeutralMode(NeutralMode.Coast);
+        rbMotor.setNeutralMode(NeutralMode.Coast);
+        
         odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
         resetEncoders();
         zeroHeading();

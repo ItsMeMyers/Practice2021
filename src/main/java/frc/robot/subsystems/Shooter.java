@@ -35,7 +35,7 @@ public class Shooter extends SubsystemBase {
     
     private boolean isRunning = false;
 
-    private double speed = 0.0;
+    private double speed = 4800.0;
 
     /**
      * Shoots the balls into the targets.
