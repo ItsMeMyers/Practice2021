@@ -23,19 +23,6 @@ public class IntakeUp extends CommandBase {
      */
     @Override
     public void initialize() {
-        //intake.toggle();
-
-        //If user commands to engage, and we aren't already
-        // if (button) {
-        //     if (!intake.getEngaged()) {
-        //         intake.forceTo(true);
-        //     }
-        // // If user commands to disengage and we are currently engaged
-        // } else if (gamepad.getRawButton(Constants.Y_Button)) {
-        //     if (intake.getEngaged()) {
-        //         intake.forceTo(false);
-        //     }
-        // }
         intake.intakeUp();
     }
 

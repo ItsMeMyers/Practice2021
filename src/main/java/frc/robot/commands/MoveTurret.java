@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Turret;
 
 public class MoveTurret extends CommandBase {
@@ -12,7 +13,7 @@ public class MoveTurret extends CommandBase {
     public static final double percentToTurnMotorWhenCommandedByButton = .05;
 
     private final Turret turret;
-    private final XboxController gamepad;
+    private final Joystick gamepad;
 
     /**
      * 1. Comply with limit switchs <br>
@@ -23,7 +24,7 @@ public class MoveTurret extends CommandBase {
      * @param trrt Turret subsystem
      * @param gmpd XboxController instance
      */
-    public MoveTurret(Turret trrt, XboxController gmpd) {
+    public MoveTurret(Turret trrt, Joystick gmpd) {
         this.turret = trrt;
         this.gamepad = gmpd;
         addRequirements(turret);
@@ -32,13 +33,13 @@ public class MoveTurret extends CommandBase {
     @Override
     public void execute() {
         double rightJoyStickXAxis = gamepad.getRawAxis(Joystick.AxisType.kY.value);
-        boolean rightJoyStickDown = gamepad.getRawButton(Joystick.AxisType.kX.value);
+        boolean rightJoyStickDown = gamepad.getRawButton(Constants.Right_Joystick_Pressed);
 
         //If right is NOT pressed down AND joystick x axis is moved (disregarding nominal movement)
         //Is .02 a good threshold?
         if (!rightJoyStickDown && (rightJoyStickXAxis < -.02 || rightJoyStickXAxis > .02)) {
             //Is this too lower, high?
-            turret.setSpinPower(rightJoyStickXAxis);
+            turret.setSpinPower(rightJoyStickXAxis * .3);
         }
 
         

@@ -20,6 +20,9 @@ public class WithdrawClimber extends CommandBase {
     @Override
     public void execute() {
         //Not assigned to any button as of right now
-        climber.climb(leftstick.getRawAxis(Constants.Left_Joystick_X_Axis));
+        double speed = leftstick.getRawAxis(Joystick.AxisType.kY.value);
+        if(speed < 0.0)
+            speed = 0.0;
+        climber.climb(speed);
     }
 }

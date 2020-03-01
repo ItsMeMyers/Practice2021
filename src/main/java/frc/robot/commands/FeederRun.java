@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
@@ -10,13 +11,13 @@ public class FeederRun extends CommandBase {
     private Feeder feeder;
     private Intake intake;
     private Shooter shooter;
-    private final XboxController gamepad;
+    private final Joystick gamepad;
     /**
      * 1. This feeds the balls to the shooter mechanism. <br>
      * 2. This starts the motors on the feeder. <br>
      * 3. The feeder is the system that takes the balls up into the shooter.
      */
-    public FeederRun(Feeder fd, Intake itk, Shooter str, XboxController gpd) {
+    public FeederRun(Feeder fd, Intake itk, Shooter str, Joystick gpd) {
         this.intake = itk;
         this.feeder = fd;
         this.shooter = str;
@@ -27,9 +28,10 @@ public class FeederRun extends CommandBase {
     @Override
     public void execute() {
         //Look at the README.md for the rulesw that the below logic should match
-        boolean lowerBallPresent = intake.getBallPresent();
-        boolean upperBallPresent = feeder.getBallPresent();
-        
+        // boolean lowerBallPresent = intake.getBallPresent();
+        // boolean upperBallPresent = feeder.getBallPresent();
+        boolean lowerBallPresent = false;
+        boolean upperBallPresent = false;
         //No balls in tower at all
         if (!lowerBallPresent && !upperBallPresent) {
             feeder.run(false);
@@ -54,14 +56,7 @@ public class FeederRun extends CommandBase {
             }                
         }   
     }
-
-    @Override
-    public void end(boolean interrupted) {
-        
-        if (interrupted) {
-            feeder.stop();
-            intake.stopLowerTower();
-            intake.stopFunnel();
-        }
+    public void feed(){
+        execute();
     }
 }

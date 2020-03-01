@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;
 
-public class IntakeIn extends CommandBase {
+public class IntakeStop extends CommandBase {
 
     private Intake intake;
     private final Joystick gamepad;
@@ -18,7 +18,7 @@ public class IntakeIn extends CommandBase {
      * 3. Balls from the intake are then stored in the feeder. <br>
      * 4. This changes the intake direction, not whether it is stowed in or not.
      */
-    public IntakeIn(Intake itk, Joystick gpd) {
+    public IntakeStop(Intake itk, Joystick gpd) {
         this.intake = itk;
         this.gamepad = gpd;
         addRequirements(intake);
@@ -30,11 +30,8 @@ public class IntakeIn extends CommandBase {
     @Override
     public void execute() {
         //if right bumper pressed and NOT right trigger pressed
-        if (gamepad.getRawButton(Constants.Right_Bumper_Button) 
-        && !gamepad.getRawButton(Constants.Right_Trigger_Button)) {
-            intake.runIntakeIn(true);
-            intake.runFunnelIn(true);
-            intake.runLowerTowerIn(true);
-        }
+        intake.stopIntake();
+        intake.stopFunnel();
+        intake.stopLowerTower();
     }
 }

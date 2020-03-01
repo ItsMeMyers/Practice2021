@@ -105,8 +105,8 @@ public class Limelight extends SubsystemBase {
     /**
      * @param state what to set the limelight LED mode to
      */
-    public void setLED(LED state) {
-        setEntry("ledMode", state.ordinal());
+    public void setLED(int state) {
+        setEntry("ledMode", state);
     }
 
     /**

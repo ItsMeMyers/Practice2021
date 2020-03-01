@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
@@ -11,7 +12,7 @@ public class RunShooter extends CommandBase {
     private final Shooter shooter;
     private final Feeder feeder;
     private final Limelight limelight;
-    private final XboxController gamepad;
+    private final Joystick gamepad;
     private double dist = 0.0;
 
     // How high the outer port is above the ground (inches)
@@ -32,7 +33,7 @@ public class RunShooter extends CommandBase {
      * @param fd Feeder subsystem
      * @param ll Limelight subsystem
      */
-    public RunShooter(Shooter sht, Feeder fd, Limelight ll, XboxController gpd) {
+    public RunShooter(Shooter sht, Feeder fd, Limelight ll, Joystick gpd) {
         this.shooter = sht;
         this.feeder = fd;
         this.limelight = ll;

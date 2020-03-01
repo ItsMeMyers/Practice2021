@@ -19,9 +19,9 @@ public class Intake extends SubsystemBase {
     private final WPI_TalonFX intakeLowerTower;
     private final TimeOfFlight ballPresentSensor;
 
-    private final double inSpeed = -1.0;
-    private final double inHalfSpeed = -.3;
-    private final double outSpeed = 1.0;
+    private final double inSpeed = 1.0;
+    private final double inHalfSpeed = .3;
+    private final double outSpeed = 0.8;
 
     private boolean engaged = false;
 
@@ -43,8 +43,6 @@ public class Intake extends SubsystemBase {
         intakeBarMotor.setNeutralMode(NeutralMode.Brake);
         intakeFunnel.setNeutralMode(NeutralMode.Brake);
         intakeLowerTower.setNeutralMode(NeutralMode.Brake);
-
-        intakeSolenoid.set(true);
 
         //Set the distance mode of the TOF sensor
         ballPresentSensor.setRangingMode(TimeOfFlight.RangingMode.Medium, 1.0);
@@ -89,9 +87,9 @@ public class Intake extends SubsystemBase {
 
     public void runLowerTowerIn(boolean fullSpeed) {
         if (fullSpeed) {
-            intakeLowerTower.set(inSpeed);
+            intakeLowerTower.set(-1.0*inSpeed);
         } else {
-            intakeLowerTower.set(inHalfSpeed);
+            intakeLowerTower.set(-1.0*inHalfSpeed);
         }
     }
 
@@ -113,7 +111,7 @@ public class Intake extends SubsystemBase {
     public void runAllIn() {
         intakeBarMotor.set(inSpeed);
         intakeFunnel.set(inSpeed);
-        intakeLowerTower.set(inSpeed);
+        intakeLowerTower.set(-1 * inSpeed);
     }
 
     /**
@@ -124,7 +122,7 @@ public class Intake extends SubsystemBase {
     */
     public void runAllOut() {
         intakeBarMotor.set(outSpeed);
-        intakeFunnel.set(outSpeed);
+        intakeFunnel.set(-1 * outSpeed);
         intakeLowerTower.set(outSpeed);
     }
 
@@ -150,11 +148,11 @@ public class Intake extends SubsystemBase {
     }
 
     public void intakeUp(){
-        intakeSolenoid.set(true);
+        intakeSolenoid.set(false);
     }
 
     public void intakeDown(){
-        intakeSolenoid.set(false);
+        intakeSolenoid.set(true);
     }
 
     /**

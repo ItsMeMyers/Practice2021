@@ -45,16 +45,16 @@ public final class Constants {
   public static final int Right_Joystick_Pressed = 12;
 
 
-  public static final int Left_Joystick_X_Axis= 0;
-  public static final int Left_Joystick_Y_Axis= 12;
+  // public static final int Left_Joystick_X_Axis = 1;
+  // public static final int Left_Joystick_Y_Axis = 0;
 
   // public static final int Right_Joystick_X_Axis= 13;
   // public static final int Right_Joystick_Y_Axis= 14;
 
-  // public static final int D_Pad_Up = Joystick.ButtonType;
-  // public static final int D_Pad_Down = 16;
-  // public static final int D_Pad_Left = 17;
-  // public static final int D_Pad_Right = 18;
+  public static final int D_Pad_Up = 0;
+  public static final int D_Pad_Down = 180;
+  public static final int D_Pad_Left = 270;
+  public static final int D_Pad_Right = 90;
 
   
 
@@ -75,12 +75,12 @@ public final class Constants {
 
     public static final double INVERT_MOTOR = -1.0;
     // Drive Train motors
-    public static final int LTMotorPort = 1;
-    public static final int LMMotorPort = 2;
-    public static final int LLMotorPort = 3;
-    public static final int RTMotorPort = 4;
-    public static final int RMMotorPort = 5;
-    public static final int RLMotorPort = 6;
+    public static final int LTMotorPort = 0;
+    public static final int LMMotorPort = 1;
+    public static final int LLMotorPort = 2;
+    public static final int RTMotorPort = 3;
+    public static final int RMMotorPort = 4; 
+    public static final int RLMotorPort = 5;
 
     // Need to edit all the numbers under this for 2020
     public static final int[] leftEncoderPorts = new int[] { 2, 3 };
@@ -111,9 +111,9 @@ public final class Constants {
     public static final int feederMotor1Port = 11;
 
     // Makes sure the speed does not increase over this number
-    public static final double speedLimiter = 0.7;
+    public static final double speedLimiter = -0.7;
 
-    public static final double speedLimiterSlow = 0.3;
+    public static final double speedLimiterSlow = -0.3;
 
     public static final int feederBallPresentSensor = 0;
   }
@@ -137,8 +137,8 @@ public final class Constants {
    */
   public static final class RobotContainerConstants {
     // Sticks
-    public static final int rightStickPort = 0;
-    public static final int leftStickPort = 1;
+    public static final int rightStickPort = 1;
+    public static final int leftStickPort = 0;
     public static final int gamepadPort = 2;
 
     // Gamepad POV values in degrees

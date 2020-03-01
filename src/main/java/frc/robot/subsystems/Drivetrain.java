@@ -50,13 +50,10 @@ public class Drivetrain extends SubsystemBase {
     private double leftPower = 0.0;
 
     private boolean invertRight = false; // Whether or not to invert the right motor
-    private boolean invertLeft = false; // Whether or not to invert the left motor
+    private boolean invertLeft = true; // Whether or not to invert the left motor
 
     //private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotors, rightMotors); // The robot's drive
 
-    private final Encoder leftEncoder = new Encoder(leftEncoderPorts[0], leftEncoderPorts[1], leftEncoderReversed); // The left-side drive encoder
-
-    private final Encoder rightEncoder = new Encoder(rightEncoderPorts[0], rightEncoderPorts[1], rightEncoderReversed); // The right-side drive encoder
 
     private final AHRS gyro = new AHRS(SPI.Port.kMXP); // The gyro sensor
 
@@ -73,10 +70,6 @@ public class Drivetrain extends SubsystemBase {
         rtMotor = new WPI_TalonFX(Constants.DrivetrainConstants.RTMotorPort);
         rmMotor = new WPI_TalonFX(Constants.DrivetrainConstants.RMMotorPort);
         rbMotor = new WPI_TalonFX(Constants.DrivetrainConstants.RLMotorPort);
-
-        // Sets the distance per pulse for the encoders
-        leftEncoder.setDistancePerPulse(encoderDistancePerPulse);
-        rightEncoder.setDistancePerPulse(encoderDistancePerPulse);
 
         odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
         resetEncoders();
@@ -194,7 +187,7 @@ public class Drivetrain extends SubsystemBase {
      */
     @Override
     public void periodic() {
-        odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getDistance(), rightEncoder.getDistance()); // Update the odometry in the periodic block (gets location on field)
+        //odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getDistance(), rightEncoder.getDistance()); // Update the odometry in the periodic block (gets location on field)
     }
 
     /**
@@ -210,7 +203,8 @@ public class Drivetrain extends SubsystemBase {
      * @return The current wheel speeds.
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-        return new DifferentialDriveWheelSpeeds(leftEncoder.getRate(), rightEncoder.getRate());
+        //return new DifferentialDriveWheelSpeeds(leftEncoder.getRate(), rightEncoder.getRate());
+        return null;
     }
 
     /**
@@ -254,8 +248,8 @@ public class Drivetrain extends SubsystemBase {
      * Resets the drive encoders to currently read a position of 0
      */
     public void resetEncoders() {
-        leftEncoder.reset();
-        rightEncoder.reset();
+        // leftEncoder.reset();
+        // rightEncoder.reset();
     }
 
     /**
@@ -263,7 +257,8 @@ public class Drivetrain extends SubsystemBase {
      * @return the average of the two encoder readings
      */
     public double getAverageEncoderDistance() {
-        return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2.0;
+        return 0.0;
+        // return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2.0;
     }
 
     /**

@@ -14,7 +14,7 @@ public class Climber extends SubsystemBase
 
     private boolean deployed = false;
 
-    private double climbMotorSpeedLimiter = .80;
+    private double climbMotorSpeedLimiter = .30;
 
     public Climber() {
         winchMotor = new WPI_TalonSRX(winchMotorPort);

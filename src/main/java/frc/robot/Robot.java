@@ -7,10 +7,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.DriveTele;
+import frc.robot.commands.FeederRun;
 import frc.robot.commands.MoveTurret;
 import frc.robot.subsystems.*;
 
@@ -42,11 +44,22 @@ public class Robot extends TimedRobot {
 
   private Command m_autonomousCommand;
   private Limelight limelight = new Limelight();
-
+  private RobotContainer m_robotContainer;
+  private Joystick gamepad;
+  private Intake intake;
+  private Shooter shooter;
+  private Feeder feeder;
+  private Climber climber;
   @Override
   public void robotInit() {
-    limelight.setLED(defaultLED[0]);
+    limelight.setLED(1);
     limelight.setCAM(defaultCAM[0]);
+    m_robotContainer = new RobotContainer();
+    gamepad = m_robotContainer.gamepad;
+    intake = m_robotContainer.intake;
+    shooter = m_robotContainer.shooter;
+    feeder = m_robotContainer.feeder;
+    climber = m_robotContainer.climber;
   }
 
   @Override
@@ -56,20 +69,28 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
-    limelight.setLED(defaultLED[1]);
+    limelight.setLED(1);
     limelight.setCAM(defaultCAM[1]);
   }
 
   @Override
   public void disabledPeriodic() {
+    limelight.setLED(1);
+    climber.stop();
+    feeder.stop();
+    intake.stopFunnel();
+    intake.stopIntake();
+    intake.stopLowerTower();
+    shooter.stopShooter();
+    intake.intakeUp();
   }
 
   @Override
   public void autonomousInit() {
-    limelight.setLED(defaultLED[2]);
+    limelight.setLED(1);
     limelight.setCAM(defaultCAM[2]);
     //m_autonomousCommand = robotContainer.getAutonomousCommand();
-
+    shooter.setSpeed(5000);
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -82,12 +103,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    limelight.setLED(defaultLED[3]);
+    limelight.setLED(1);
     limelight.setCAM(defaultCAM[3]);
     
     drivetele.schedule();
     moveTurret.schedule();
-
+    shooter.setSpeed(4600);
+    
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -98,11 +120,60 @@ public class Robot extends TimedRobot {
     //This should fire off commands to the robot based on the user input to controller?
     //Every 20 ms
     CommandScheduler.getInstance().run();
+    if(gamepad.getRawButton(Constants.Right_Bumper_Button) && !gamepad.getRawButton(Constants.Right_Trigger_Button)){
+      intake.runIntakeIn(true);
+    }else if(gamepad.getRawButton(Constants.Right_Trigger_Button) &&! gamepad.getRawButton(Constants.Right_Bumper_Button) ){
+      intake.runIntakeOut(true);
+    }else{
+      intake.stopIntake();
+    }
+
+    if(gamepad.getRawButton(Constants.Left_Bumper_Button)){
+      if(shooter.isRunning())
+      {
+          shooter.stopShooter();
+          shooter.setRunning(false);
+      }else{
+          shooter.setRunning(true);
+          shooter.getToSpeed();
+      }
+    }
+    if(gamepad.getRawButton(Constants.X_Button)){
+      intake.intakeUp();
+    }
+    if(gamepad.getRawButton(Constants.Y_Button)){
+      intake.intakeDown();
+    }
+    if(gamepad.getRawButton(Constants.Left_Trigger_Button)){
+      FeederRun run = new FeederRun(feeder, intake, shooter, gamepad);
+      run.feed();
+    }else{
+      feeder.stop();
+      intake.stopFunnel();
+      intake.stopLowerTower();
+    }
+    if(gamepad.getPOV() == Constants.D_Pad_Up){
+      if (!climber.getDeployed()) {
+          climber.deploy();
+      }
+    }
+    if(gamepad.getPOV() == Constants.D_Pad_Down){
+      intake.runAllOut();
+      shooter.reverseShooters();
+      feeder.reverse();
+    }
+    if(gamepad.getRawButton(Constants.Left_Joystick_Pressed)){
+      
+      double speed = gamepad.getRawAxis(Joystick.AxisType.kY.value);
+      if(speed < 0.0)
+          speed = 0.0;
+      climber.climb(speed);
+    }
   }
 
   @Override
   public void testInit() {
-    limelight.setLED(defaultLED[4]);
+    limelight.setLED(1);
     limelight.setCAM(defaultCAM[4]);
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();

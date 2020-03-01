@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,7 +17,7 @@ public class TargetEntity extends CommandBase {
 
 	private Limelight limelight;
 	private Turret turret;
-	private XboxController gamepad;
+	private Joystick gamepad;
 
 	private double power; // Updated by the Limelight camera
 	private double additionalPower; // Updated by the right Joystick on the gamepad
@@ -38,7 +39,7 @@ public class TargetEntity extends CommandBase {
 	 * @param trrt Turret subsystem
 	 * @param gmpd XboxController instance
 	 */
-	public TargetEntity(Limelight ll, Turret trrt, XboxController gmpd) {
+	public TargetEntity(Limelight ll, Turret trrt, Joystick gmpd) {
 		turret = trrt;
 		limelight = ll;
 		gamepad = gmpd;
@@ -56,7 +57,7 @@ public class TargetEntity extends CommandBase {
 	public void execute() {
 		// If user is pressing right joystick in... target
 		if (gamepad.getRawButton(Constants.Right_Joystick_Pressed)) {
-			limelight.setLED(Limelight.LED.ON); // Turn on the LED's if they haven't been turned on before
+			limelight.setLED(3); // Turn on the LED's if they haven't been turned on before
 			limelight.setCAM(Limelight.CAM.VISION); // Turn on vision mode if it wasn't turned on before
 
 			if (limelight.hasTarget()) {
@@ -123,6 +124,6 @@ public class TargetEntity extends CommandBase {
 	 */
 	@Override
 	public void end(boolean interrupted) {
-		limelight.setLED(Limelight.LED.OFF); //TODO Fix all limeLight.setLED() calls to right things
+		limelight.setLED(1); //TODO Fix all limeLight.setLED() calls to right things
 	}
 }
