@@ -115,7 +115,7 @@ public final class Constants {
 
     public static final double speedLimiterSlow = -0.3;
 
-    public static final int feederBallPresentSensor = 0;
+    public static final int feederBallPresentSensor = 17;
   }
 
   /**
@@ -123,7 +123,7 @@ public final class Constants {
    */
   public static final class IntakeConstants {
     //Ball Present Sensor Config
-    public static final int intakeBallPresentSensor = 1;
+    public static final int intakeBallPresentSensor = 16;
     public static final double intakeBallPresentThreshold = 125.0;
     // Power cell intake motor
     public static final int intakeBarMotorPort = 9; 
@@ -198,7 +198,7 @@ public final class Constants {
    */
   public static final class TurretConstants {
     // Shooter spinner and turret moving motors
-    public static final int turretMotorPort = 8;
+    public static final int turretMotorPort = 10;
     public static final double turretMotorHardStopCurrentThreshold = 10.0;
     public static final int turretSolenoidPort = 0;
 

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveTele;
 import frc.robot.commands.FeederRun;
 import frc.robot.commands.MoveTurret;
@@ -50,6 +51,7 @@ public class Robot extends TimedRobot {
   private Shooter shooter;
   private Feeder feeder;
   private Climber climber;
+  private Turret turret;
   @Override
   public void robotInit() {
     limelight.setLED(1);
@@ -60,6 +62,7 @@ public class Robot extends TimedRobot {
     shooter = m_robotContainer.shooter;
     feeder = m_robotContainer.feeder;
     climber = m_robotContainer.climber;
+    turret = m_robotContainer.turret;
   }
 
   @Override
@@ -83,6 +86,9 @@ public class Robot extends TimedRobot {
     intake.stopLowerTower();
     shooter.stopShooter();
     intake.intakeUp();
+
+        // Display values to driver station
+        readTalonsAndShowValues();
   }
 
   @Override
@@ -91,6 +97,7 @@ public class Robot extends TimedRobot {
     limelight.setCAM(defaultCAM[2]);
     //m_autonomousCommand = robotContainer.getAutonomousCommand();
     shooter.setSpeed(5000);
+    turret.zeroTurret();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -109,7 +116,8 @@ public class Robot extends TimedRobot {
     drivetele.schedule();
     moveTurret.schedule();
     shooter.setSpeed(4600);
-    
+    //TODO remove by waterbury
+    turret.zeroTurret();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -169,6 +177,12 @@ public class Robot extends TimedRobot {
           speed = 0.0;
       climber.climb(speed);
     }
+    else{
+      climber.climb(0.0);
+    }
+
+    // Display values to driver station
+    readTalonsAndShowValues();
   }
 
   @Override
@@ -181,5 +195,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+  }
+
+  public void readTalonsAndShowValues() {
+    // Display shooter motor speeds
+    SmartDashboard.putNumber("shooter1RPM:", shooter.getLeftRPM());
+    SmartDashboard.putNumber("shooter2RPM:", shooter.getRightRPM());
+    SmartDashboard.putNumber("TurretPos", turret.getPosition());
   }
 }

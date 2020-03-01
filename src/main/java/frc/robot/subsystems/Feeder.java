@@ -3,7 +3,8 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.FeederConstants.*;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;import com.playingwithfusion.TimeOfFlight;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.playingwithfusion.TimeOfFlight;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 

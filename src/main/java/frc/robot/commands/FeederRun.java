@@ -28,34 +28,34 @@ public class FeederRun extends CommandBase {
     @Override
     public void execute() {
         //Look at the README.md for the rulesw that the below logic should match
-        // boolean lowerBallPresent = intake.getBallPresent();
-        // boolean upperBallPresent = feeder.getBallPresent();
-        boolean lowerBallPresent = false;
-        boolean upperBallPresent = false;
+        boolean lowerBallPresent = intake.getBallPresent();
+        boolean upperBallPresent = feeder.getBallPresent();
+        //boolean lowerBallPresent = false;
+        //boolean upperBallPresent = false;
         //No balls in tower at all
-        if (!lowerBallPresent && !upperBallPresent) {
-            feeder.run(false);
-            intake.runFunnelIn(false);
-            intake.runLowerTowerIn(false);
-        //Ball at upper tower but not lower
-        } else if (!lowerBallPresent && upperBallPresent) {
-            intake.runFunnelIn(false);
-            intake.runLowerTowerIn(false);
-            feeder.stop();
-        //We have balls at upper and lower
-        } else if (lowerBallPresent && upperBallPresent) {
-            //Shooter motors are at full speed 
-            if (shooter.atSpeed()) {
-                feeder.run(true);
-                intake.runFunnelIn(true);
-                intake.runLowerTowerIn(true);
-            } else {
+        if (shooter.atSpeed()) {
+            feeder.run(true);
+            intake.runFunnelIn(true);
+            intake.runLowerTowerIn(true);
+        }else{
+            if ((!lowerBallPresent && !upperBallPresent) || (lowerBallPresent && !upperBallPresent)) {
+                feeder.run(false);
+                intake.runFunnelIn(false);
+                intake.runLowerTowerIn(false);
+            //Ball at upper tower but not lower
+            } else if (!lowerBallPresent && upperBallPresent) {
+                intake.runFunnelIn(false);
+                intake.runLowerTowerIn(false);
+                feeder.stop();
+            //We have balls at upper and lower
+            } else if (lowerBallPresent && upperBallPresent) {
                 feeder.stop();
                 intake.stopFunnel();
                 intake.stopLowerTower();
-            }                
-        }   
+            }                   
+        }  
     }
+
     public void feed(){
         execute();
     }

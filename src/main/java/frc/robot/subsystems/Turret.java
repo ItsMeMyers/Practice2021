@@ -7,6 +7,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.ctre.phoenix.motorcontrol.*;
+import com.ctre.phoenix.motorcontrol.can.*;
+
 public class Turret extends SubsystemBase {
     private final WPI_TalonSRX turretMotor;
 
@@ -19,8 +22,12 @@ public class Turret extends SubsystemBase {
         // When the motor is in neutral mode the motor will keep moving easily (coast)
         turretMotor.setNeutralMode(NeutralMode.Brake);
         turretSolenoid = new Solenoid(turretSolenoidPort);
+        turretMotor.configFactoryDefault();
+        turretMotor.setInverted(false);
+        turretMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+        turretMotor.setSelectedSensorPosition(0,0,0);
+        turretMotor.setSensorPhase(false);
     }
-
     /**
      * Sets the spin power of the turret. This makes sure that it is
      * not less than -1 or greater than 1.
@@ -74,5 +81,13 @@ public class Turret extends SubsystemBase {
     public void stopTurret() {
         spinPower = 0.0;  
         turretMotor.stopMotor();
+    }
+
+    public double getPosition(){
+        return turretMotor.getSelectedSensorPosition();
+    }
+
+    public void zeroTurret(){
+        turretMotor.setSelectedSensorPosition(0,0,0);
     }
 }

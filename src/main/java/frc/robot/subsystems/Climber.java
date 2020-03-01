@@ -26,6 +26,7 @@ public class Climber extends SubsystemBase
         deployed = true;
     }
 
+
     public void climb( Double climbSpeed) {
         winchMotor.set(climbSpeed * climbMotorSpeedLimiter);
     }

@@ -29,7 +29,7 @@ public class Shooter extends SubsystemBase {
     private boolean pancakeExpanded = true;
 
     //TODO: Tune this value
-    private final double rpmThreshold = 0.0; 
+    private final double rpmThreshold = 400.0; 
 
     private final double voltThreshold = 1.0;
     
@@ -129,7 +129,7 @@ public class Shooter extends SubsystemBase {
      * @return Updates the RPM value of the right shooter motor
      */
     public double getRightRPM() {
-        rightRPM = shooterFalcon1.getSelectedSensorVelocity() * 600.0 / (rightRatio * encoderEPR);
+        rightRPM = shooterFalcon2.getSelectedSensorVelocity() * 600.0 / (rightRatio * encoderEPR);
         return rightRPM;
     }
 
@@ -137,7 +137,7 @@ public class Shooter extends SubsystemBase {
      * @return Updates the RPM value of the left shooter motor
      */
     public double getLeftRPM() {
-        leftRPM = shooterFalcon2.getSelectedSensorVelocity() * 600.0 / (leftRatio * encoderEPR);
+        leftRPM = shooterFalcon1.getSelectedSensorVelocity() * 600.0 / (leftRatio * encoderEPR);
         return leftRPM;
     }
 
@@ -145,7 +145,7 @@ public class Shooter extends SubsystemBase {
      * Checks if both of the rpms are greater than the rpm threshold
      */
     public boolean atSpeed() {
-        return ((getRightRPM() >= rpmThreshold) && (getLeftRPM() >= rpmThreshold));
+        return ((getRightRPM() >= (speed - rpmThreshold)) || (getLeftRPM() >= (speed - rpmThreshold)));
     }
 
     // TODO: Test this method's functionality
