@@ -86,6 +86,7 @@ public class Robot extends TimedRobot {
     intake.stopLowerTower();
     shooter.stopShooter();
     intake.intakeUp();
+    climber.withdraw();
 
         // Display values to driver station
         readTalonsAndShowValues();
@@ -150,7 +151,7 @@ public class Robot extends TimedRobot {
       shooter.stopShooter();
       shooter.setRunning(false);
     }
-    
+
     if(gamepad.getRawButton(Constants.X_Button)){
       intake.intakeDown();
     }
