@@ -20,6 +20,7 @@ import frc.robot.commands.DriveTele;
 import frc.robot.commands.FeederRun;
 import frc.robot.commands.MoveTurret;
 import frc.robot.commands.SimpleAuto;
+import frc.robot.commands.SimpleAuto2;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
@@ -58,6 +59,7 @@ public class Robot extends TimedRobot {
   private Feeder feeder;
   private Climber climber;
   private Turret turret;
+  private ColorWheel colorWheel;
   private CommandBase desiredAutoCommand;
 
   @Override
@@ -73,10 +75,11 @@ public class Robot extends TimedRobot {
     feeder = m_robotContainer.feeder;
     climber = m_robotContainer.climber;
     turret = m_robotContainer.turret;
+    colorWheel = m_robotContainer.colorwheel;
     autoChooser = new SendableChooser<String>();
     autoChooser.setDefaultOption("Shoot & Scoot", Constants.SHOOT_SCOOT);
     autoChooser.setName("Autonomous Command");
-    //autoChooser.addOption("Trench Run", Constants.TRENCH_RUN);
+    autoChooser.addOption("Trench Run", Constants.TRENCH_RUN);
 
     SmartDashboard.putData(autoChooser);
   }
@@ -134,7 +137,7 @@ public class Robot extends TimedRobot {
     if (selected.equals(Constants.SHOOT_SCOOT)) {
       return new SimpleAuto(shooter, drivetrain, speed, driveTime, shootTime, feeder, intake);
     } else if (selected.equals(Constants.TRENCH_RUN)) {
-      //return new SimpleAuto();
+      return new SimpleAuto2(shooter, turret, drivetrain, speed, driveTime, shootTime, feeder, intake);
     }
 
     return null;
@@ -215,6 +218,11 @@ public class Robot extends TimedRobot {
       climber.climb(speed);
     } else {
       climber.climb(0.0);
+    }
+
+    //Below would be the check to see if the user is saying rotate the color wheel
+    if (false) {
+      colorWheel.spin();
     }
 
     if(gamepad.getPOV() == Constants.D_Pad_Left){

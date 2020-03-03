@@ -11,7 +11,6 @@ public class ColorWheel extends SubsystemBase {
     private final WPI_TalonSRX colorWheelMotor;
 
     private double spinPower;
-    private boolean folded = true;
 
     public ColorWheel() {
         colorWheelMotor = new WPI_TalonSRX(colorWheelMotorPort);
@@ -21,7 +20,7 @@ public class ColorWheel extends SubsystemBase {
     }
 
     public void spin() {
-        colorWheelMotor.set(.05);
+        colorWheelMotor.set(.5);
     }
 
     public void stop() {

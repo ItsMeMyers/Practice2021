@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ColorWheel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
@@ -62,8 +63,8 @@ public class RobotContainer {
   public static final Climber climber = new Climber();
 
   //Color Wheel
-  //private static final ColorWheel colorwheel = new ColorWheel();
-
+  // public static final ColorWheel colorwheel = new ColorWheel();
+  public static final ColorWheel colorwheel = null;
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
