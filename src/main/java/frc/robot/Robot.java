@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveTele;
 import frc.robot.commands.FeederRun;
 import frc.robot.commands.MoveTurret;
+import frc.robot.commands.SimpleAuto;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
@@ -53,6 +54,7 @@ public class Robot extends TimedRobot {
   private Joystick gamepad;
   private Intake intake;
   private Shooter shooter;
+  private Drivetrain drivetrain;
   private Feeder feeder;
   private Climber climber;
   private Turret turret;
@@ -67,6 +69,7 @@ public class Robot extends TimedRobot {
     gamepad = m_robotContainer.gamepad;
     intake = m_robotContainer.intake;
     shooter = m_robotContainer.shooter;
+    drivetrain = m_robotContainer.drivetrain;
     feeder = m_robotContainer.feeder;
     climber = m_robotContainer.climber;
     turret = m_robotContainer.turret;
@@ -112,8 +115,10 @@ public class Robot extends TimedRobot {
     
     shooter.setSpeed(5000);
     turret.zeroTurret();
-    //desiredAutoCommand = getDesiredAutoCommand();
-    //desiredAutoCommand.execute();
+    desiredAutoCommand = getDesiredAutoCommand();
+    if (desiredAutoCommand != null) {
+      desiredAutoCommand.execute();
+    }
   }
 
   @Override
@@ -123,12 +128,15 @@ public class Robot extends TimedRobot {
 
   public CommandBase getDesiredAutoCommand() {
     String selected = autoChooser.getSelected();
+    double speed = .3;
+    double driveTime = 1.0;
+    double shootTime = 1.0;
     if (selected.equals(Constants.SHOOT_SCOOT)) {
-      //return new SimpleAuto();
+      return new SimpleAuto(shooter, drivetrain, speed, driveTime, shootTime, feeder, intake);
     } else if (selected.equals(Constants.TRENCH_RUN)) {
       //return new SimpleAuto();
     }
-    //REMOVE THIS 
+
     return null;
   }
 
