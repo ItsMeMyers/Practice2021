@@ -7,11 +7,9 @@ import frc.robot.subsystems.Shooter;
 public class PancakeUp extends CommandBase {
 
     public Shooter shooter;
-    private final XboxController gamepad;
 
     public PancakeUp(Shooter str, XboxController gpd) {
         this.shooter = str;
-        this.gamepad = gpd;
         addRequirements(shooter);
     }
 

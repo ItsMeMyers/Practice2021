@@ -9,8 +9,6 @@ package frc.robot;
 
 import static frc.robot.Constants.RobotContainerConstants.gamepadPort;
 import static frc.robot.Constants.RobotContainerConstants.leftStickPort;
-import static frc.robot.Constants.RobotContainerConstants.povDown;
-import static frc.robot.Constants.RobotContainerConstants.povUp;
 import static frc.robot.Constants.RobotContainerConstants.rightStickPort;
 import static frc.robot.Constants.RouteFinderConstants.kMaxAccelerationMetersPerSecondSquared;
 import static frc.robot.Constants.RouteFinderConstants.kMaxSpeedMetersPerSecond;
@@ -26,9 +24,6 @@ import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
-import frc.robot.commands.*;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Feeder;

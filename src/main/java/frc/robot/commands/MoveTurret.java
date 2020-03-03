@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Turret;
@@ -9,7 +8,6 @@ import frc.robot.subsystems.Turret;
 public class MoveTurret extends CommandBase {
     
     // If the speed of the motor is less than this threshold, we'll just set it to zero
-    private double power = 0.0;
     public static final double percentToTurnMotorWhenCommandedByButton = .05;
 
     private final Turret turret;

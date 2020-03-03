@@ -1,16 +1,12 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Intake;
 
 public class IntakeStop extends CommandBase {
 
     private Intake intake;
-    private final Joystick gamepad;
 
     /**
      * 1. Changes the intake direction to take in balls from the ground. <br>
@@ -20,7 +16,6 @@ public class IntakeStop extends CommandBase {
      */
     public IntakeStop(Intake itk, Joystick gpd) {
         this.intake = itk;
-        this.gamepad = gpd;
         addRequirements(intake);
     }
 
