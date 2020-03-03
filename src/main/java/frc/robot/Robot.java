@@ -192,7 +192,7 @@ public class Robot extends TimedRobot {
     if(gamepad.getRawButton(Constants.Y_Button)){
       intake.intakeUp();
     }
-    if(gamepad.getRawButton(Constants.Left_Trigger_Button) || (gamepad.getRawButton(Constants.Right_Trigger_Button) && !gamepad.getRawButton(Constants.Right_Bumper_Button))){
+    if(gamepad.getRawButton(Constants.Left_Trigger_Button) || (gamepad.getRawButton(Constants.Right_Bumper_Button) && !gamepad.getRawButton(Constants.Right_Trigger_Button))){
       FeederRun run = new FeederRun(feeder, intake, shooter, gamepad);
       run.feed();
     }else{

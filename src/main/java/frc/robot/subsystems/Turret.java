@@ -63,6 +63,8 @@ public class Turret extends SubsystemBase {
     }
 
     public void targetEntity() {
+        limelight.setCAM(0);
+        limelight.setLED(3);
         hasTarget = limelight.hasTarget();
         if (hasTarget) {
           tx = limelight.x();
