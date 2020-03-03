@@ -120,7 +120,7 @@ public class Robot extends TimedRobot {
     turret.zeroTurret();
     desiredAutoCommand = getDesiredAutoCommand();
     if (desiredAutoCommand != null) {
-      desiredAutoCommand.execute();
+      desiredAutoCommand.schedule();
     }
   }
 
