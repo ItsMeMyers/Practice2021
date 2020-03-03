@@ -119,8 +119,8 @@ public class Limelight extends SubsystemBase {
     /**
      * @param state what to set the limelight camera mode to
      */
-    public void setCAM(CAM state) {
-        setEntry("camMode", state.ordinal());
+    public void setCAM(int state) {
+        setEntry("camMode", state);
     }
 
     /**

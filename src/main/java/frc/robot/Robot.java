@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     limelight = m_robotContainer.limelight;
     limelight.setLED(1);
-    limelight.setCAM(defaultCAM[0]);
+    limelight.setCAM(0);
     m_robotContainer = new RobotContainer();
     gamepad = m_robotContainer.gamepad;
     intake = m_robotContainer.intake;
@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     limelight.setLED(1);
-    limelight.setCAM(defaultCAM[1]);
+    limelight.setCAM(0);
   }
 
   @Override
@@ -110,8 +110,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    limelight.setLED(1);
-    limelight.setCAM(defaultCAM[2]);
+    limelight.setLED(3);
+    limelight.setCAM(0);
     
     shooter.setSpeed(5000);
     turret.zeroTurret();
@@ -142,8 +142,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    limelight.setLED(1);
-    limelight.setCAM(defaultCAM[3]);
+    limelight.setLED(3);
+    limelight.setCAM(0);
     
     drivetele.schedule();
     moveTurret.schedule();
@@ -243,8 +243,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
-    limelight.setLED(1);
-    limelight.setCAM(defaultCAM[4]);
+    limelight.setLED(3);
+    limelight.setCAM(0);
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
   }
