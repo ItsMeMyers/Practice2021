@@ -2,17 +2,11 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.DrivetrainConstants.GYRO_REVERSED;
 import static frc.robot.Constants.DrivetrainConstants.INVERT_MOTOR;
-import static frc.robot.Constants.DrivetrainConstants.encoderDistancePerPulse;
-import static frc.robot.Constants.DrivetrainConstants.leftEncoderPorts;
-import static frc.robot.Constants.DrivetrainConstants.leftEncoderReversed;
-import static frc.robot.Constants.DrivetrainConstants.rightEncoderPorts;
-import static frc.robot.Constants.DrivetrainConstants.rightEncoderReversed;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;

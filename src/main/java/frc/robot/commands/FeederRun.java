@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Feeder;
@@ -12,7 +11,6 @@ public class FeederRun extends CommandBase {
     private Feeder feeder;
     private Intake intake;
     private Shooter shooter;
-    private final Joystick gamepad;
     /**
      * 1. This feeds the balls to the shooter mechanism. <br>
      * 2. This starts the motors on the feeder. <br>
@@ -22,7 +20,6 @@ public class FeederRun extends CommandBase {
         this.intake = itk;
         this.feeder = fd;
         this.shooter = str;
-        this.gamepad = gpd;
         addRequirements(intake, feeder, shooter);
     }
 
