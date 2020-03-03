@@ -16,8 +16,16 @@ public class Turret extends SubsystemBase {
     private double spinPower;
     private Solenoid turretSolenoid;
     private boolean folded = true;
+    private Limelight limelight;
 
-    public Turret() {
+    private double tx = 0.0;
+    private double thresh=0.5;
+    private double turretKp = 0.03; // Initial guess, 0.03 ~ 1.0PctOutput/30degrees
+    private double minTurretCmd = 0.06;  // Min cmd to make turret move at all
+    private boolean hasTarget = false;
+    private double turretCmd = 0.0;
+
+    public Turret(Limelight llt) {
         turretMotor = new WPI_TalonSRX(turretMotorPort);
         // When the motor is in neutral mode the motor will keep moving easily (coast)
         turretMotor.setNeutralMode(NeutralMode.Brake);
@@ -27,6 +35,7 @@ public class Turret extends SubsystemBase {
         turretMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
         turretMotor.setSelectedSensorPosition(0,0,0);
         turretMotor.setSensorPhase(false);
+        this.limelight = llt;
     }
     /**
      * Sets the spin power of the turret. This makes sure that it is
@@ -51,6 +60,35 @@ public class Turret extends SubsystemBase {
     public void foldTurret() {
         turretSolenoid.set(false);
         folded = true;
+    }
+
+    public void targetEntity() {
+        hasTarget = limelight.hasTarget();
+        if (hasTarget) {
+          tx = limelight.x();
+        } else {
+          tx = 0.0;
+        }
+        // if tx is between -0.5 and +0.5 then don't move, otherwise try and get there
+        if ((tx < -thresh) || (tx > thresh)) {
+          // If tx is positive the target is to the right in the limelight frame, and need to
+          // turn to the right to bring target toward center,
+          // on the skatebot this is a negative command to the turret motor control
+          if (tx > thresh) {
+              if (!turretAtHardStop()) {
+                turretCmd = -1.0*turretKp*(tx-thresh) - minTurretCmd;
+              }
+          }
+          if (tx < -thresh) {
+              if (!turretAtHardStop()) {
+                turretCmd = -1.0*turretKp*(tx+thresh) + minTurretCmd;
+              }
+          }
+        } else {
+          turretCmd = 0.0;  // Inside threshold, command is zero
+        }
+        //Send the desired speed
+        setSpinPower(turretCmd);
     }
 
     /**

@@ -9,8 +9,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveTele;
 import frc.robot.commands.FeederRun;
@@ -43,8 +47,8 @@ public class Robot extends TimedRobot {
     Limelight.CAM.VISION
   };
 
-  private Command m_autonomousCommand;
-  private Limelight limelight = new Limelight();
+  private SendableChooser<String> autoChooser;
+  private Limelight limelight;
   private RobotContainer m_robotContainer;
   private Joystick gamepad;
   private Intake intake;
@@ -52,8 +56,11 @@ public class Robot extends TimedRobot {
   private Feeder feeder;
   private Climber climber;
   private Turret turret;
+  private CommandBase desiredAutoCommand;
+
   @Override
   public void robotInit() {
+    limelight = m_robotContainer.limelight;
     limelight.setLED(1);
     limelight.setCAM(defaultCAM[0]);
     m_robotContainer = new RobotContainer();
@@ -63,6 +70,12 @@ public class Robot extends TimedRobot {
     feeder = m_robotContainer.feeder;
     climber = m_robotContainer.climber;
     turret = m_robotContainer.turret;
+    autoChooser = new SendableChooser<String>();
+    autoChooser.setDefaultOption("Shoot & Scoot", Constants.SHOOT_SCOOT);
+    autoChooser.setName("Autonomous Command");
+    //autoChooser.addOption("Trench Run", Constants.TRENCH_RUN);
+
+    SmartDashboard.putData(autoChooser);
   }
 
   @Override
@@ -96,17 +109,27 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     limelight.setLED(1);
     limelight.setCAM(defaultCAM[2]);
-    //m_autonomousCommand = robotContainer.getAutonomousCommand();
+    
     shooter.setSpeed(5000);
     turret.zeroTurret();
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+    //desiredAutoCommand = getDesiredAutoCommand();
+    //desiredAutoCommand.execute();
   }
 
   @Override
   public void autonomousPeriodic() {
+    
+  }
 
+  public CommandBase getDesiredAutoCommand() {
+    String selected = autoChooser.getSelected();
+    if (selected.equals(Constants.SHOOT_SCOOT)) {
+      //return new SimpleAuto();
+    } else if (selected.equals(Constants.TRENCH_RUN)) {
+      //return new SimpleAuto();
+    }
+    //REMOVE THIS 
+    return null;
   }
 
   @Override
@@ -116,11 +139,7 @@ public class Robot extends TimedRobot {
     
     drivetele.schedule();
     moveTurret.schedule();
-    //TODO remove by waterbury
-    turret.zeroTurret();
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
+
   }
 
   @Override
@@ -150,6 +169,10 @@ public class Robot extends TimedRobot {
     } else {
       shooter.stopShooter();
       shooter.setRunning(false);
+    }
+
+    if (gamepad.getRawButton(Constants.Right_Joystick_Pressed)) {
+      turret.targetEntity();
     }
 
     if(gamepad.getRawButton(Constants.X_Button)){

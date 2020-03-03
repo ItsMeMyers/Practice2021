@@ -48,9 +48,6 @@ public class RobotContainer {
   // Drivetrain
   public static final Drivetrain drivetrain = new Drivetrain();
 
-  // Turret
-  public static final Turret turret = new Turret();
-
   // Shooter
   public static final Shooter shooter = new Shooter();
 
@@ -62,6 +59,9 @@ public class RobotContainer {
 
   // Limelight
   public static final Limelight limelight = new Limelight();
+
+  // Turret
+  public static final Turret turret = new Turret(limelight);
 
   //Climber
   public static final Climber climber = new Climber();
