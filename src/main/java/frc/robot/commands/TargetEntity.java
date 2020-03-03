@@ -58,7 +58,7 @@ public class TargetEntity extends CommandBase {
 		// If user is pressing right joystick in... target
 		if (gamepad.getRawButton(Constants.Right_Joystick_Pressed)) {
 			limelight.setLED(3); // Turn on the LED's if they haven't been turned on before
-			limelight.setCAM(Limelight.CAM.VISION); // Turn on vision mode if it wasn't turned on before
+			limelight.setCAM(0); // Turn on vision mode if it wasn't turned on before
 
 			if (limelight.hasTarget()) {
 				updateTurretPower();
