@@ -57,7 +57,8 @@ public final class Constants {
   public static final int D_Pad_Right = 90;
 
 
-  public static final String SHOOT_SCOOT = "Scoot & Shoot";
+  public static final String SHOOT_SCOOT = "Shoot & Scoot";
+  public static final String SCOOT_N_SHOOT = "Scoot & Shoot";
   public static final String TRENCH_RUN = "Trench Run";
   
 
