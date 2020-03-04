@@ -86,7 +86,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    
+    CommandScheduler.getInstance().run();
   }
 
   @Override
@@ -113,6 +113,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    CommandScheduler.getInstance().cancelAll();
     limelight.setLED(3);
     limelight.setCAM(0);
     
@@ -131,11 +132,11 @@ public class Robot extends TimedRobot {
 
   public CommandBase getDesiredAutoCommand() {
     String selected = autoChooser.getSelected();
-    double speed = .3;
-    double driveTime = 1.0;
-    double shootTime = 1.0;
+    double speed = -.3;
+    double driveTime = 0.5;
+    double shootTime = 3.0;
     if (selected.equals(Constants.SHOOT_SCOOT)) {
-      return new SimpleAuto(shooter, drivetrain, speed, driveTime, shootTime, feeder, intake);
+      return new SimpleAuto(shooter, drivetrain, speed, shootTime, driveTime, feeder, intake);
     } else if (selected.equals(Constants.TRENCH_RUN)) {
       return new SimpleAuto2(shooter, turret, drivetrain, speed, driveTime, shootTime, feeder, intake);
     }
@@ -145,6 +146,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    CommandScheduler.getInstance().cancelAll();
     limelight.setLED(3);
     limelight.setCAM(0);
     

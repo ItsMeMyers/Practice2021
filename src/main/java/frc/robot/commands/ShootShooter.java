@@ -14,6 +14,7 @@ public class ShootShooter extends CommandBase {
     private Timer t = new Timer();
     private Intake itk;
     private Feeder fdr;
+    private boolean first = true;
 
     public ShootShooter(Shooter str , Feeder feeder, Intake intake, Double time) {
         this.shooter = str;
@@ -24,6 +25,10 @@ public class ShootShooter extends CommandBase {
 
     @Override
     public void execute() {
+        if(first){
+            first = !first;
+            this.startTime = t.getFPGATimestamp();
+        }
         shooter.getToSpeed();
         itk.runLowerTowerIn(true);
         itk.runFunnelIn(true);
@@ -37,5 +42,12 @@ public class ShootShooter extends CommandBase {
             return true;
         }
         return false;
+    }
+    @Override
+    public void end(boolean interupted){
+        itk.stopLowerTower();
+        itk.stopFunnel();
+        fdr.stop();
+        shooter.stopShooter();
     }
 }

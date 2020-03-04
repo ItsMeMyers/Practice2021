@@ -13,19 +13,24 @@ public class DriveStraight extends CommandBase {
     private double startTime = 0.0;
     private double dur = 0.0;
     private Timer t = new Timer();
+    private boolean first = true;
 
     public DriveStraight(Drivetrain dt,Double driveSpeed, Double driveTime) {
         
         this.drivetrain = dt;
         this.speed = driveSpeed;
         this.dur = driveTime;
-        startTime = t.getFPGATimestamp();
         addRequirements(drivetrain);
     }
 
     @Override
     public void execute() {
         // Set percentage drive speed
+        
+        if(first){
+            first = !first;
+            this.startTime = t.getFPGATimestamp();
+        }
         drivetrain.setRightPower(speed);
         drivetrain.setLeftPower(speed);
         drivetrain.drive();

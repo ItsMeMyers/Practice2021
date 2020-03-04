@@ -16,9 +16,7 @@ public class SimpleAuto extends SequentialCommandGroup {
 
             new ShootShooter(shooter, feeder, intake, shootTime),
 
-            new DriveStraight(dt,speed,driveTime),
-            
-            new StopShooter(shooter)
+            new DriveStraight(dt,speed,driveTime)
         );
     }
     

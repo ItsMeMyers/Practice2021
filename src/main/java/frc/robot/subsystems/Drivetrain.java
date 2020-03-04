@@ -72,12 +72,12 @@ public class Drivetrain extends SubsystemBase {
         rmMotor.configFactoryDefault();
         rbMotor.configFactoryDefault();
 
-        ltMotor.setNeutralMode(NeutralMode.Coast);
-        lmMotor.setNeutralMode(NeutralMode.Coast);
-        lbMotor.setNeutralMode(NeutralMode.Coast);
-        rtMotor.setNeutralMode(NeutralMode.Coast);
-        rmMotor.setNeutralMode(NeutralMode.Coast);
-        rbMotor.setNeutralMode(NeutralMode.Coast);
+        ltMotor.setNeutralMode(NeutralMode.Brake);
+        lmMotor.setNeutralMode(NeutralMode.Brake);
+        lbMotor.setNeutralMode(NeutralMode.Brake);
+        rtMotor.setNeutralMode(NeutralMode.Brake);
+        rmMotor.setNeutralMode(NeutralMode.Brake);
+        rbMotor.setNeutralMode(NeutralMode.Brake);
         
         odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
         resetEncoders();
