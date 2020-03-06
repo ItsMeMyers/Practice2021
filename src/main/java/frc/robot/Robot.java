@@ -286,7 +286,7 @@ public class Robot extends TimedRobot {
 
     //Limelight
     SmartDashboard.putBoolean("Limelight has target", limelight.hasTarget());
-    SmartDashboard.putNumber("Target Distance", limelight.getTargetDistance());
+    SmartDashboard.putNumber("Target Distance (ft)", limelight.getTargetDistance());
 
   }
 }
