@@ -19,8 +19,9 @@ public class Turret extends SubsystemBase {
     private Limelight limelight;
 
     private double tx = 0.0;
+    private double ty= 0.0;
     private double thresh=0.5;
-    private double turretKp = 0.03; // Initial guess, 0.03 ~ 1.0PctOutput/30degrees
+    private double turretKp = 0.1; // Initial guess, 0.03 ~ 1.0PctOutput/30degrees
     private double minTurretCmd = 0.06;  // Min cmd to make turret move at all
     private boolean hasTarget = false;
     private double turretCmd = 0.0;
@@ -49,9 +50,10 @@ public class Turret extends SubsystemBase {
         }
         this.spinPower = spinPwr;
         //If we are below 
-        if (turretMotor.getStatorCurrent() < turretMotorHardStopCurrentThreshold) {
+        
+        //if (turretMotor.getStatorCurrent() < turretMotorHardStopCurrentThreshold) {
             turretMotor.set(spinPower);
-        }
+        // }
     }
 
     /**
@@ -66,10 +68,13 @@ public class Turret extends SubsystemBase {
         limelight.setCAM(0);
         limelight.setLED(3);
         hasTarget = limelight.hasTarget();
+        turretCmd = 0.0;
         if (hasTarget) {
           tx = limelight.x();
+          ty = limelight.y();
         } else {
           tx = 0.0;
+          ty = 0.0;
         }
         // if tx is between -0.5 and +0.5 then don't move, otherwise try and get there
         if ((tx < -thresh) || (tx > thresh)) {
@@ -77,18 +82,19 @@ public class Turret extends SubsystemBase {
           // turn to the right to bring target toward center,
           // on the skatebot this is a negative command to the turret motor control
           if (tx > thresh) {
-              if (!turretAtHardStop()) {
-                turretCmd = -1.0*turretKp*(tx-thresh) - minTurretCmd;
+              if (getPosition() >= -10650) {
+                //if (!turretAtHardStop()) {
+                turretCmd = 1.0*turretKp*(tx-thresh) - minTurretCmd;
               }
           }
           if (tx < -thresh) {
-              if (!turretAtHardStop()) {
-                turretCmd = -1.0*turretKp*(tx+thresh) + minTurretCmd;
+              if (getPosition() <= 10650) {
+                //if (!turretAtHardStop()) {
+                turretCmd = 1.0*turretKp*(tx+thresh) + minTurretCmd;
               }
           }
-        } else {
-          turretCmd = 0.0;  // Inside threshold, command is zero
         }
+
         //Send the desired speed
         setSpinPower(turretCmd);
     }
@@ -129,5 +135,9 @@ public class Turret extends SubsystemBase {
 
     public void zeroTurret(){
         turretMotor.setSelectedSensorPosition(0,0,0);
+    }
+
+    public WPI_TalonSRX getTurretMotor() {
+        return turretMotor;
     }
 }

@@ -15,6 +15,15 @@ public class Limelight extends SubsystemBase {
         DRIVER
     }
 
+    private boolean initialized = false;
+    private NetworkTableEntry tv = null;
+    private NetworkTableEntry tx = null;
+    private NetworkTableEntry ty = null;
+    private NetworkTableEntry ta = null;
+    private NetworkTableEntry ta0 = null;
+    private NetworkTableEntry ts0 = null;
+    private NetworkTableEntry ta1 = null;
+    private NetworkTableEntry ts1 = null;
     /**
      * Limelight's LED states
      */
@@ -32,6 +41,15 @@ public class Limelight extends SubsystemBase {
      */
     public Limelight() {
         limelight = NetworkTableInstance.getDefault().getTable("limelight");
+        tv = limelight.getEntry("tv");
+
+        tx = limelight.getEntry("tx");
+        ty = limelight.getEntry("ty");
+        ta = limelight.getEntry("ta");
+        ta0 = limelight.getEntry("ta0");
+        ts0 = limelight.getEntry("ts0");
+        ta1 = limelight.getEntry("ta1");
+        ts1 = limelight.getEntry("ts1");   
     }
 
     /**
@@ -73,6 +91,15 @@ public class Limelight extends SubsystemBase {
         return getBoolean("tv");
     }
 
+    public double getTargetDistance() {
+        double rVal = -1.0;
+        if (hasTarget()) {
+            double angle = y() + 18;
+            rVal = ((47.5)/12) / Math.tan(Math.toRadians(angle));
+        }
+        return rVal;
+    }
+    
     /**
      * @return Horizontal Offset From Crosshair To Target (-27 to 27 degrees)
      */

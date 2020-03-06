@@ -115,7 +115,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     CommandScheduler.getInstance().cancelAll();
-    limelight.setLED(3);
+    limelight.setLED(1);
     limelight.setCAM(0);
     
     shooter.setSpeed(5000);
@@ -152,7 +152,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     CommandScheduler.getInstance().cancelAll();
-    limelight.setLED(3);
+    limelight.setLED(1);
     limelight.setCAM(0);
     
     drivetele.schedule();
@@ -191,6 +191,9 @@ public class Robot extends TimedRobot {
 
     if (gamepad.getRawButton(Constants.Right_Joystick_Pressed)) {
       turret.targetEntity();
+    }else{
+      limelight.setLED(1);
+      limelight.setCAM(1);
     }
 
     if(gamepad.getRawButton(Constants.X_Button)){
@@ -258,7 +261,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
-    limelight.setLED(3);
+    limelight.setLED(1);
     limelight.setCAM(0);
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
@@ -272,7 +275,18 @@ public class Robot extends TimedRobot {
     // Display shooter motor speeds
     SmartDashboard.putNumber("shooter1RPM:", shooter.getLeftRPM());
     SmartDashboard.putNumber("shooter2RPM:", shooter.getRightRPM());
-    SmartDashboard.putNumber("TurretPos", turret.getPosition());
     SmartDashboard.putNumber("Shooter Target Speed", shooter.getSpeed());
+    
+    //Turret Position
+    SmartDashboard.putNumber("TurretPos", turret.getPosition());
+    
+    //Ball Present Sensors
+    SmartDashboard.putBoolean("Lower Tower Ball Present", intake.getBallPresent());
+    SmartDashboard.putBoolean("High Tower Ball Present", feeder.getBallPresent());
+
+    //Limelight
+    SmartDashboard.putBoolean("Limelight has target", limelight.hasTarget());
+    SmartDashboard.putNumber("Target Distance", limelight.getTargetDistance());
+
   }
 }
