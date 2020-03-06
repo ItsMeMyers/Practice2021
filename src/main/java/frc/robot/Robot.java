@@ -51,6 +51,7 @@ public class Robot extends TimedRobot {
   };
 
   private SendableChooser<String> autoChooser;
+  private SendableChooser<String> pushBotChooser;
   private Limelight limelight;
   private RobotContainer m_robotContainer;
   private Joystick gamepad;
@@ -82,7 +83,12 @@ public class Robot extends TimedRobot {
     autoChooser.setName("Autonomous Command");
     autoChooser.addOption("Trench Run", Constants.TRENCH_RUN);
 
+    pushBotChooser.setDefaultOption("PUSH", Constants.PUSH);
+    pushBotChooser.addOption("DONT PUSH",Constants.DONT_PUSH);
+    pushBotChooser.setName("Push Ally Bot");
+
     SmartDashboard.putData(autoChooser);
+    SmartDashboard.putData(pushBotChooser);
   }
 
   @Override
@@ -133,13 +139,18 @@ public class Robot extends TimedRobot {
 
   public CommandBase getDesiredAutoCommand() {
     String selected = autoChooser.getSelected();
+    String pushSelect = pushBotChooser.getSelected();
+    boolean push = false;
+    if(pushSelect.equals(Constants.PUSH)){
+      push = true;
+    }
     double speed = -.3;
     double driveTime = 0.5;
     double shootTime = 3.0;
     if (selected.equals(Constants.SHOOT_SCOOT)) {
-      return new SimpleAuto(shooter, drivetrain, speed, shootTime, driveTime, feeder, intake);
+      return new SimpleAuto(shooter, drivetrain, speed, shootTime, driveTime, feeder, intake, push);
     } else if (selected.equals(Constants.TRENCH_RUN)) {
-      return new SimpleAuto2(shooter, turret, drivetrain, speed, driveTime, shootTime, feeder, intake);
+      return new SimpleAuto2(shooter, turret, drivetrain, speed, driveTime, shootTime, feeder, intake, push);
     }else if (selected.equals(Constants.SCOOT_N_SHOOT)){
       driveTime = driveTime*2; 
       return new ScootNShoot(shooter, drivetrain, speed, shootTime, driveTime, feeder, intake);

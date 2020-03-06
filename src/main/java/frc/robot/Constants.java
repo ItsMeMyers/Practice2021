@@ -60,6 +60,8 @@ public final class Constants {
   public static final String SHOOT_SCOOT = "Shoot & Scoot";
   public static final String SCOOT_N_SHOOT = "Scoot & Shoot";
   public static final String TRENCH_RUN = "Trench Run";
+  public static final String PUSH = "PUSH";
+  public static final String DONT_PUSH = "DONT_PUSH";
   
 
   /**
