@@ -103,7 +103,7 @@ public class Shooter extends SubsystemBase {
     public void getToSpeed() {
         shooterFalcon1.set(ControlMode.Velocity,speed/600.0 * 2048.0);
         shooterFalcon2.set(ControlMode.Velocity,speed/600.0 * 2048.0);
-}
+    }
 
     /**
      * Reverse shooter motors

@@ -22,7 +22,6 @@ import frc.robot.commands.FeederRun;
 import frc.robot.commands.MoveTurret;
 import frc.robot.commands.SimpleAuto;
 import frc.robot.commands.SimpleAuto2;
-import frc.robot.commands.auto.ScootNShoot;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
@@ -158,8 +157,6 @@ public class Robot extends TimedRobot {
       return new SimpleAuto(shooter, drivetrain, speed, shootTime, driveTime, feeder, intake, push);
     } else if (selected.equals(Constants.TRENCH_RUN)) {
       return new SimpleAuto2(shooter, turret, drivetrain, speed, driveTime, shootTime, feeder, intake, push, waitTime);
-    }else if (selected.equals(Constants.SCOOT_N_SHOOT)){
-      return new ScootNShoot(shooter, drivetrain, speed, shootTime, driveTime, feeder, intake);
     }
 
 
