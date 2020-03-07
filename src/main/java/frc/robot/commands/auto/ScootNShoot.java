@@ -15,7 +15,7 @@ public class ScootNShoot extends SequentialCommandGroup {
         addCommands(
             new SpinUpShooter(shooter),
 
-            new DriveStraight(dt,speed,driveTime),
+            new DriveStraight(dt,speed,driveTime, true),
             
             new ShootShooter(shooter, feeder, intake, shootTime)
         );

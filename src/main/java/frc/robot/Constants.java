@@ -62,6 +62,8 @@ public final class Constants {
   public static final String TRENCH_RUN = "Trench Run";
   public static final String PUSH = "PUSH";
   public static final String DONT_PUSH = "DONT_PUSH";
+
+  public static final int RS_Shift_Switch = 3;
   
 
   /**

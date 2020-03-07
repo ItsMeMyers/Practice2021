@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
   private Limelight limelight;
   private RobotContainer m_robotContainer;
   private Joystick gamepad;
+  private Joystick rightStick;
   private Intake intake;
   private Shooter shooter;
   private Drivetrain drivetrain;
@@ -75,6 +76,7 @@ public class Robot extends TimedRobot {
     limelight.setCAM(0);
     m_robotContainer = new RobotContainer();
     gamepad = m_robotContainer.gamepad;
+    rightStick = m_robotContainer.rightStick;
     intake = m_robotContainer.intake;
     shooter = m_robotContainer.shooter;
     drivetrain = m_robotContainer.drivetrain;
@@ -157,7 +159,6 @@ public class Robot extends TimedRobot {
     } else if (selected.equals(Constants.TRENCH_RUN)) {
       return new SimpleAuto2(shooter, turret, drivetrain, speed, driveTime, shootTime, feeder, intake, push, waitTime);
     }else if (selected.equals(Constants.SCOOT_N_SHOOT)){
-      driveTime = driveTime*2; 
       return new ScootNShoot(shooter, drivetrain, speed, shootTime, driveTime, feeder, intake);
     }
 
@@ -226,7 +227,7 @@ public class Robot extends TimedRobot {
       intake.stopFunnel();
       intake.stopLowerTower();
     }
-    if(gamepad.getPOV() == Constants.D_Pad_Up){
+    if ((gamepad.getPOV() == Constants.D_Pad_Up) && (rightStick.getRawButton(Constants.RS_Shift_Switch))) {
       if (!climber.getDeployed()) {
           climber.deploy();
       }
