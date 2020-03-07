@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -63,6 +64,9 @@ public class Robot extends TimedRobot {
   private Turret turret;
   private ColorWheel colorWheel;
   private CommandBase desiredAutoCommand;
+  private ShuffleboardTab tab = Shuffleboard.getTab("Things Tab");
+  private NetworkTableEntry waitNT = tab.add("WaitTime",0.0).getEntry();
+  private double waitTime = 0;
 
   @Override
   public void robotInit() {
@@ -147,10 +151,11 @@ public class Robot extends TimedRobot {
     double speed = -.3;
     double driveTime = 0.5;
     double shootTime = 3.0;
+    waitTime = waitNT.getDouble(0.0);
     if (selected.equals(Constants.SHOOT_SCOOT)) {
       return new SimpleAuto(shooter, drivetrain, speed, shootTime, driveTime, feeder, intake, push);
     } else if (selected.equals(Constants.TRENCH_RUN)) {
-      return new SimpleAuto2(shooter, turret, drivetrain, speed, driveTime, shootTime, feeder, intake, push);
+      return new SimpleAuto2(shooter, turret, drivetrain, speed, driveTime, shootTime, feeder, intake, push, waitTime);
     }else if (selected.equals(Constants.SCOOT_N_SHOOT)){
       driveTime = driveTime*2; 
       return new ScootNShoot(shooter, drivetrain, speed, shootTime, driveTime, feeder, intake);
@@ -291,7 +296,7 @@ public class Robot extends TimedRobot {
     //Turret Position
     SmartDashboard.putNumber("TurretPos", turret.getPosition());
     
-    //Ball Present Sensors
+    //Ball Present SensorsS
     SmartDashboard.putBoolean("Lower Tower Ball Present", intake.getBallPresent());
     SmartDashboard.putBoolean("High Tower Ball Present", feeder.getBallPresent());
 

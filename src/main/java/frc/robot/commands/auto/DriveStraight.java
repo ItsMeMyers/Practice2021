@@ -15,11 +15,13 @@ public class DriveStraight extends CommandBase {
     private Timer t = new Timer();
     private boolean first = true;
 
-    public DriveStraight(Drivetrain dt,Double driveSpeed, Double driveTime) {
+    public DriveStraight(Drivetrain dt,Double driveSpeed, Double driveTime, Boolean push) {
         
         this.drivetrain = dt;
         this.speed = driveSpeed;
         this.dur = driveTime;
+        if(push)
+            this.dur = 2 * dur;
         addRequirements(drivetrain);
     }
 

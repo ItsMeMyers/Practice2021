@@ -13,13 +13,14 @@ public class SimpleAuto extends SequentialCommandGroup {
 
     public SimpleAuto(Shooter shooter, Drivetrain dt, Double speed, Double shootTime, Double driveTime, Feeder feeder, Intake intake, Boolean push){
         addCommands(
-            new PushBot(push,dt, -speed, driveTime),
             
             new SpinUpShooter(shooter),
 
             new ShootShooter(shooter, feeder, intake, shootTime),
 
-            new DriveStraight(dt,speed,2*driveTime)
+            new PushBot(push, dt, -speed, driveTime),
+
+            new DriveStraight(dt,speed,driveTime,push)
         );
     }
     

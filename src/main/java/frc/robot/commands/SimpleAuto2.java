@@ -8,15 +8,18 @@ import frc.robot.subsystems.*;
 
 public class SimpleAuto2 extends SequentialCommandGroup {
 
-    public SimpleAuto2(Shooter shooter, Turret turret, Drivetrain dt, Double speed, Double shootTime, Double driveTime, Feeder feeder, Intake intake, Boolean push){
+    public SimpleAuto2(Shooter shooter, Turret turret, Drivetrain dt, Double speed, Double shootTime, Double driveTime, Feeder feeder, Intake intake, Boolean push, Double waitTime){
         addCommands(
-            new PushBot(push,dt, -speed, driveTime),
+            
+            new SpinUpShooter(shooter),
+
+            new Wait(waitTime),
 
             new SpinUpShooter(shooter),
-            
-            new ShootShooter(shooter, feeder, intake, shootTime),
 
-            new DriveStraight(dt,speed,driveTime),
+            new DriveStraight(dt,speed, 2 * driveTime,push),
+
+            new ShootShooter(shooter, feeder, intake, shootTime)
             
         );
     }
