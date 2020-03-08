@@ -4,6 +4,7 @@ import static frc.robot.Constants.DrivetrainConstants.GYRO_REVERSED;
 import static frc.robot.Constants.DrivetrainConstants.INVERT_MOTOR;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -78,6 +79,13 @@ public class Drivetrain extends SubsystemBase {
         rtMotor.setNeutralMode(NeutralMode.Brake);
         rmMotor.setNeutralMode(NeutralMode.Brake);
         rbMotor.setNeutralMode(NeutralMode.Brake);
+
+        ltMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,0,0);
+        lmMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,0,0);
+        lbMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,0,0);
+        rtMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,0,0);
+        rmMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,0,0);
+        rbMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,0,0);
         
         odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
         resetEncoders();
@@ -181,6 +189,17 @@ public class Drivetrain extends SubsystemBase {
         lmMotor.set(leftP);
         lbMotor.set(leftP);
     }
+
+    public void checkmotors(){
+        rtMotor.getSelectedSensorVelocity();
+        rmMotor.getSelectedSensorVelocity();
+        rbMotor.getSelectedSensorVelocity();
+        ltMotor.getSelectedSensorVelocity();
+        lmMotor.getSelectedSensorVelocity();
+        lbMotor.getSelectedSensorVelocity();
+
+    }
+        
 
     /**
      * Stops the drive train

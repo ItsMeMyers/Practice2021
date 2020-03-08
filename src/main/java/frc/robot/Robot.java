@@ -84,6 +84,8 @@ public class Robot extends TimedRobot {
     turret = m_robotContainer.turret;
     colorWheel = m_robotContainer.colorwheel;
     autoChooser = new SendableChooser<String>();
+    pushBotChooser = new SendableChooser<String>();
+
     autoChooser.setDefaultOption("Shoot & Scoot", Constants.SHOOT_SCOOT);
     autoChooser.setName("Autonomous Command");
     autoChooser.addOption("Trench Run", Constants.TRENCH_RUN);
@@ -224,7 +226,7 @@ public class Robot extends TimedRobot {
       intake.stopFunnel();
       intake.stopLowerTower();
     }
-    if ((gamepad.getPOV() == Constants.D_Pad_Up) && (rightStick.getRawButton(Constants.RS_Shift_Switch))) {
+    if ((gamepad.getPOV() == Constants.D_Pad_Up) && (!rightStick.getRawButton(Constants.RS_Shift_Switch))) {
       if (!climber.getDeployed()) {
           climber.deploy();
       }
@@ -290,6 +292,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("shooter1RPM:", shooter.getLeftRPM());
     SmartDashboard.putNumber("shooter2RPM:", shooter.getRightRPM());
     SmartDashboard.putNumber("Shooter Target Speed", shooter.getSpeed());
+
+    intake.checkLowerTower();
+
+    drivetrain.checkmotors();
     
     //Turret Position
     SmartDashboard.putNumber("TurretPos", turret.getPosition());

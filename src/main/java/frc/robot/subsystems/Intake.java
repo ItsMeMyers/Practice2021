@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.IntakeConstants.*;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.playingwithfusion.TimeOfFlight;
@@ -21,6 +22,7 @@ public class Intake extends SubsystemBase {
 
     private final double inSpeed = 1.0;
     private final double inHalfSpeed = .3;
+    private final double inHalfSpeedFunnel = .5;
     private final double outSpeed = 0.5;
 
     private boolean engaged = false;
@@ -46,6 +48,8 @@ public class Intake extends SubsystemBase {
 
         //Set the distance mode of the TOF sensor
         ballPresentSensor.setRangingMode(TimeOfFlight.RangingMode.Medium, 1.0);
+
+        intakeLowerTower.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,0,0);
     }
 
     public void runIntakeIn(boolean fullSpeed) {
@@ -73,7 +77,7 @@ public class Intake extends SubsystemBase {
         if (fullSpeed) {
             intakeFunnel.set(inSpeed);
         } else {
-            intakeFunnel.set(inHalfSpeed);
+            intakeFunnel.set(inHalfSpeedFunnel);
         }
     }
 
@@ -101,6 +105,9 @@ public class Intake extends SubsystemBase {
         intakeLowerTower.set(0.0);
     }
 
+    public void checkLowerTower(){
+        intakeLowerTower.getSelectedSensorVelocity();
+    }
 
     /**
     * 1. Changes the intake direction to take in balls from the ground. <br>
