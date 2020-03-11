@@ -32,6 +32,8 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret; 
+import frc.robot.subsystems.NavxGyro;
+import edu.wpi.first.wpilibj.SPI;
 
 public class RobotContainer {
   // Subsystems should be private here and have to be passed to commands because it is better coding practice.
@@ -61,6 +63,9 @@ public class RobotContainer {
 
   //Climber
   public static final Climber climber = new Climber();
+
+  //Gyro
+  public static final NavxGyro navx = new NavxGyro(SPI.Port.kMXP);
 
   //Color Wheel
   // public static final ColorWheel colorwheel = new ColorWheel();

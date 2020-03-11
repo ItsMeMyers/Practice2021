@@ -219,4 +219,9 @@ public final class Constants {
     public static final int colorWheelMotorPort = 8;
 
   }
+
+  public static final class StopAtCollisionConstants {
+      public static boolean collision = true;
+      public static final double kCollisionThreshold_DeltaG = 1.2; 
+  }
 }

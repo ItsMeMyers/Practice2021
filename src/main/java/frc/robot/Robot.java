@@ -23,11 +23,13 @@ import frc.robot.commands.MoveTurret;
 import frc.robot.commands.SimpleAuto;
 import frc.robot.commands.SimpleAuto2;
 import frc.robot.subsystems.*;
+import frc.robot.commands.StopAtCollision;
 
 public class Robot extends TimedRobot {
   
   private DriveTele drivetele = new DriveTele(RobotContainer.drivetrain, RobotContainer.rightStick, RobotContainer.leftStick);
   private MoveTurret moveTurret = new MoveTurret(RobotContainer.turret, RobotContainer.gamepad);
+  private StopAtCollision stopAtCollision = new StopAtCollision(RobotContainer.navx, RobotContainer.drivetrain);
   // Default Limelight modes for when the different robot states initialize
   // 0: Initial State (RobotInit)
   // 1: Disabled
@@ -67,6 +69,7 @@ public class Robot extends TimedRobot {
   private ShuffleboardTab tab = Shuffleboard.getTab("Things Tab");
   private NetworkTableEntry waitNT = tab.add("WaitTime",0.0).getEntry();
   private double waitTime = 0;
+  private NavxGyro navx;
 
   @Override
   public void robotInit() {
@@ -85,6 +88,7 @@ public class Robot extends TimedRobot {
     colorWheel = m_robotContainer.colorwheel;
     autoChooser = new SendableChooser<String>();
     pushBotChooser = new SendableChooser<String>();
+    navx = m_robotContainer.navx;
 
     autoChooser.setDefaultOption("Shoot & Scoot", Constants.SHOOT_SCOOT);
     autoChooser.setName("Autonomous Command");
@@ -137,6 +141,7 @@ public class Robot extends TimedRobot {
     if (desiredAutoCommand != null) {
       desiredAutoCommand.schedule();
     }
+    stopAtCollision.schedule();
   }
 
   @Override
@@ -173,7 +178,7 @@ public class Robot extends TimedRobot {
     
     drivetele.schedule();
     moveTurret.schedule();
-
+    stopAtCollision.schedule();
   }
 
   @Override
