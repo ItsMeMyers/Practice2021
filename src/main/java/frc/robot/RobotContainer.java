@@ -17,13 +17,28 @@ import static frc.robot.Constants.RouteFinderConstants.kaVoltSecondsSquaredPerMe
 import static frc.robot.Constants.RouteFinderConstants.ksVolts;
 import static frc.robot.Constants.RouteFinderConstants.kvVoltSecondsPerMeter;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorWheel;
 import frc.robot.subsystems.Drivetrain;
@@ -34,6 +49,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret; 
 import frc.robot.subsystems.NavxGyro;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.controller.PIDController;
 
 public class RobotContainer {
   // Subsystems should be private here and have to be passed to commands because it is better coding practice.
@@ -70,6 +86,10 @@ public class RobotContainer {
   //Color Wheel
   // public static final ColorWheel colorwheel = new ColorWheel();
   public static final ColorWheel colorwheel = null;
+
+  //Trajectory
+  public static Trajectory trajectory;
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -161,20 +181,36 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  /* public Command getAutonomousCommand() {
-    var kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
+    public Command getAutonomousCommand() {
+      var kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
 
-    // An example trajectory to follow. All units in meters.
-    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(0, 0, new Rotation2d(0)),
-        // Pass through these waypoints
-        List.of(new Translation2d(2, 0), new Translation2d(5, 0)),
-        // End at this location
-        new Pose2d(5, 0, new Rotation2d(0)),
-        // Pass config
-        getConfig());
- */
+      String trajectoryJSON = "Paths/UnderTrench.path";
+      try {
+        Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+        Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+      } catch (IOException ex) {
+        DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+      }
+
+    // Create a voltage constraint to ensure we don't accelerate too fast
+      DifferentialDriveVoltageConstraint autoVoltageConstraint =
+        new DifferentialDriveVoltageConstraint(
+        new SimpleMotorFeedforward(Constants.RouteFinderConstants.ksVolts,
+                                      Constants.RouteFinderConstants.kvVoltSecondsPerMeter,
+                                       Constants.RouteFinderConstants.kaVoltSecondsSquaredPerMeter),
+            kDriveKinematics,
+            10);
+
+    // //An example trajectory to follow. All units in meters.
+    // Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+    //     //Start at the origin facing the +X direction
+    //     new Pose2d(0, 0, new Rotation2d(0)),
+    //     //Pass through these waypoints
+    //     List.of(new Translation2d(2, 0), new Translation2d(5, 0)),
+    //     //End at this location
+    //     new Pose2d(5, 0, new Rotation2d(0)),
+    //     //Pass config
+    //     getConfig());
     /**
      * This declaration is fairly substantial, so we’ll go through it
      * argument-by-argument:
@@ -217,13 +253,14 @@ public class RobotContainer {
      * command does not operate on the drive at the same time as any other command
      * that uses the drive.
      */
-//     RamseteCommand ramseteCommand = new RamseteCommand(trajectory, // We input our desired trajectory here
-//         drivetrain::getPose, new RamseteController(kRamseteB, kRamseteZeta),
-//         new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter), kDriveKinematics,
-//         drivetrain::getWheelSpeeds, new PIDController(kPDriveVel, 0, 0), new PIDController(kPDriveVel, 0, 0),
-//         // RamseteCommand passes volts to the callback
-//         drivetrain::tankDriveVolts, drivetrain);
+    RamseteCommand ramseteCommand = new RamseteCommand(trajectory, // We input our desired trajectory here
+        drivetrain::getPose, new RamseteController(Constants.RouteFinderConstants.kRamseteB, Constants.RouteFinderConstants.kRamseteZeta),
+        new SimpleMotorFeedforward(ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter), kDriveKinematics,
+        drivetrain::getWheelSpeeds, new PIDController(Constants.RouteFinderConstants.kPDriveVel, 0, 0), new PIDController(Constants.RouteFinderConstants.kPDriveVel, 0, 0),
+        // RamseteCommand passes volts to the callback
+        drivetrain::tankDriveVolts, drivetrain);
 
-//     // Reset odometry, then run path following command, then stop at the end.
-//     return ramseteCommand.beforeStarting(drivetrain::resetOdometry).andThen(() -> drivetrain.tankDriveVolts(0, 0));
+     // Reset odometry, then run path following command, then stop at the end.
+    return ramseteCommand.beforeStarting(drivetrain::resetOdometry).andThen(() -> drivetrain.tankDriveVolts(0, 0));
+  }
 }

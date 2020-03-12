@@ -231,7 +231,7 @@ public class Drivetrain extends SubsystemBase {
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         //return new DifferentialDriveWheelSpeeds(leftEncoder.getRate(), rightEncoder.getRate());
-        return null;
+        return new DifferentialDriveWheelSpeeds(ltMotor.getSelectedSensorVelocity(), rtMotor.getSelectedSensorVelocity());
     }
 
     /**
@@ -266,10 +266,14 @@ public class Drivetrain extends SubsystemBase {
      * @param leftVolts the commanded left output
      * @param rightVolts the commanded right output
      */
-   /*  public void tankDriveVolts(double leftVolts, double rightVolts) {
-        leftMotors.setVoltage(leftVolts);
-        rightMotors.setVoltage(-rightVolts);
-    } */
+    public void tankDriveVolts(double leftVolts, double rightVolts) {
+        ltMotor.setVoltage(leftVolts);
+        lmMotor.setVoltage(leftVolts);
+        lbMotor.setVoltage(leftVolts);
+        rtMotor.setVoltage(-rightVolts);
+        rmMotor.setVoltage(-rightVolts);
+        rbMotor.setVoltage(-rightVolts);
+    } 
 
     /**
      * Resets the drive encoders to currently read a position of 0
