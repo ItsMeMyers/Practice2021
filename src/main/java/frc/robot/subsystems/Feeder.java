@@ -22,9 +22,7 @@ public class Feeder extends SubsystemBase {
      */
     public Feeder() {
 
-        feederMotor1 = new WPI_TalonSRX(feederMotor1Port);
         // When the motors are in neutral mode the motors will keep moving easily (coast)
-        feederMotor1.setNeutralMode(NeutralMode.Coast);
         ballPresentSensor = new TimeOfFlight(feederBallPresentSensor);
 
         //Set the distance mode of the TOF sensor
@@ -35,25 +33,18 @@ public class Feeder extends SubsystemBase {
      * Runs the feeder. This feeds the balls to the shooter.
      */
     public void run(boolean fullSpeed) {
-        if (fullSpeed) {
-            feederMotor1.set(speedLimiter);
-        } else {
-            feederMotor1.set(speedLimiterSlow);
-        }
     }
 
     /**
      * Runs the feeder in reverse. This clears the feeder
      */
     public void reverse() {
-        feederMotor1.set(-speedLimiter);
     }
 
     /**
      * Stops the feeder.
      */
     public void stop() {
-        feederMotor1.stopMotor();
     }
 
     // TODO: Unimplemented method addBall
@@ -61,14 +52,12 @@ public class Feeder extends SubsystemBase {
      * Increments the ball count by 1.
      */
     public void addBall() {
-        ballCounter++;
     }
 
     /**
      * Decrements the ball count by 1.
      */
     public void shotBall() {
-        ballCounter--;
     }
 
     public int getCounter() {

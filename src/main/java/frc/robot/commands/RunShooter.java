@@ -44,17 +44,6 @@ public class RunShooter extends CommandBase {
     public void execute() {
         // updateLimelightTracking();
         // dist = findDistance();
-        if(shooter.isRunning())
-        {
-            shooter.stopShooter();
-            shooter.setRunning(false);
-        }else{
-            shooter.setRunning(true);
-            while (!shooter.atSpeed()) {
-                shooter.getToSpeed();
-            }
-        }
-
         
         /*
         if (shooter.voltageSpike()) {

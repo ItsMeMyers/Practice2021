@@ -82,7 +82,6 @@ public class Shooter extends SubsystemBase {
         shooterFalcon2.config_kD(0,0.0,0);
         shooterFalcon2.config_IntegralZone(0,3,0);
 
-        pancakeSolenoid = new Solenoid(shooterAngleSolenoid);
     }
 
     public boolean getPancakeExpanded() {
@@ -101,8 +100,6 @@ public class Shooter extends SubsystemBase {
      * Starts the shooter motors
      */
     public void getToSpeed() {
-        shooterFalcon1.set(ControlMode.Velocity,speed/600.0 * 2048.0);
-        shooterFalcon2.set(ControlMode.Velocity,speed/600.0 * 2048.0);
     }
 
     /**
@@ -110,7 +107,6 @@ public class Shooter extends SubsystemBase {
      */
     public void reverseShooters() {
         //Is this 1%?
-        shooterFalcon1.set(-.01);
     }
 
     /**
@@ -118,34 +114,24 @@ public class Shooter extends SubsystemBase {
      * @return Required rpm of turret motor to shoot that far
      */
     public int DistanceToRPM(double distance){
-        distance = distance / 2;
-        double val = distance * 32.6;
-        val = val / (Math.sin(2 * degreesOfTurret));
-        val = Math.sqrt(val);
-        return (int)(val / (Math.PI * (diameterOfTurretWheelInches / 12))) * 60;
     }
 
     /**
      * @return Updates the RPM value of the right shooter motor
      */
     public double getRightRPM() {
-        rightRPM = shooterFalcon2.getSelectedSensorVelocity() * 600.0 / (rightRatio * encoderEPR);
-        return rightRPM;
     }
 
     /**
      * @return Updates the RPM value of the left shooter motor
      */
     public double getLeftRPM() {
-        leftRPM = shooterFalcon1.getSelectedSensorVelocity() * 600.0 / (leftRatio * encoderEPR);
-        return leftRPM;
     }
 
     /**
      * Checks if both of the rpms are greater than the rpm threshold
      */
     public boolean atSpeed() {
-        return ((getRightRPM() >= (speed - rpmThreshold)) || (getLeftRPM() >= (speed - rpmThreshold)));
     }
 
     // TODO: Test this method's functionality
@@ -153,15 +139,12 @@ public class Shooter extends SubsystemBase {
      * Checks if the motor voltages are greater than the acceptable voltage threshold
      */
     public boolean voltageSpike() {
-        return ((shooterFalcon1.getBusVoltage() >= voltThreshold) || (shooterFalcon2.getBusVoltage() >= voltThreshold));
     }
 
     /**
      * Stops the shooter
      */
     public void stopShooter() {
-        shooterFalcon1.stopMotor();
-        shooterFalcon2.stopMotor();
     }
 
     public boolean isRunning() {

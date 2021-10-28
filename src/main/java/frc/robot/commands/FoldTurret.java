@@ -19,8 +19,5 @@ public class FoldTurret extends CommandBase {
     @Override
     public void execute() {
         //If not folded already and user is pressing A button
-        if (!turret.getFolded() && gamepad.getRawButtonPressed(Constants.A_Button)) {
-            turret.foldTurret();
-        }
     }
 }

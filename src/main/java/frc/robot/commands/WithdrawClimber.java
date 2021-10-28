@@ -11,18 +11,9 @@ public class WithdrawClimber extends CommandBase {
 
     public WithdrawClimber(Climber cl, Joystick j) {
         
-        this.climber = cl;
-         
-        this.leftstick = j;
-        addRequirements(climber);
     }
 
     @Override
     public void execute() {
-        //Not assigned to any button as of right now
-        double speed = leftstick.getRawAxis(Joystick.AxisType.kY.value);
-        if(speed < 0.0)
-            speed = 0.0;
-        climber.climb(speed);
     }
 }

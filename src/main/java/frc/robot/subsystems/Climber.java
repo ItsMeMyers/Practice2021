@@ -16,9 +16,8 @@ public class Climber extends SubsystemBase
 
     private double climbMotorSpeedLimiter = 1.0;
 
+    // instanciate motors and solenoids
     public Climber() {
-        winchMotor = new WPI_TalonSRX(winchMotorPort);
-        liftSolenoid = new Solenoid(climberSolenoidPort);
     }
 
     public void deploy() {
@@ -26,18 +25,16 @@ public class Climber extends SubsystemBase
         deployed = true;
     }
 
-
+    // set speed of motor
     public void climb( Double climbSpeed) {
-        winchMotor.set(climbSpeed * climbMotorSpeedLimiter);
     }
 
+    // retract climber
     public void withdraw() {
-        liftSolenoid.set(false);
-        deployed = false;
     }
 
+    // stop climbing
     public void stop() {
-        winchMotor.stopMotor();
     }
 
     public boolean getDeployed() {

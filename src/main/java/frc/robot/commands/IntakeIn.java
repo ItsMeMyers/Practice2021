@@ -28,11 +28,5 @@ public class IntakeIn extends CommandBase {
     @Override
     public void execute() {
         //if right bumper pressed and NOT right trigger pressed
-        if (gamepad.getRawButton(Constants.Right_Bumper_Button) 
-        && !gamepad.getRawButton(Constants.Right_Trigger_Button)) {
-            intake.runIntakeIn(true);
-            intake.runFunnelIn(true);
-            intake.runLowerTowerIn(true);
-        }
     }
 }

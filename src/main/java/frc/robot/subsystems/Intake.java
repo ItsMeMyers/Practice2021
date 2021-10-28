@@ -33,80 +33,48 @@ public class Intake extends SubsystemBase {
      * The intake can be stowed in or stowed out.
      * The direction of the intake can also be switched.
      */
-    public Intake() {
-        intakeBarMotor = new WPI_TalonSRX(intakeBarMotorPort);
-        intakeFunnel = new WPI_TalonSRX(intakeFunnelMotorPort);
-        intakeLowerTower = new WPI_TalonFX(intakeLowerTowerFalconPort);
 
-        intakeSolenoid = new Solenoid(intakeSolenoidPort);
+     //instanciate motors and solenoids
+    public Intake() {
         ballPresentSensor = new TimeOfFlight(intakeBallPresentSensor);
 
         // When the motor is in neutral mode the motor will keep moving easily (coast)
-        intakeBarMotor.setNeutralMode(NeutralMode.Brake);
-        intakeFunnel.setNeutralMode(NeutralMode.Brake);
-        intakeLowerTower.setNeutralMode(NeutralMode.Brake);
+
 
         //Set the distance mode of the TOF sensor
         ballPresentSensor.setRangingMode(TimeOfFlight.RangingMode.Medium, 1.0);
 
-        intakeLowerTower.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,0,0);
     }
 
     public void runIntakeIn(boolean fullSpeed) {
-        if (fullSpeed) {
-            intakeBarMotor.set(inSpeed);
-        } else {
-            intakeBarMotor.set(inHalfSpeed); 
-        }
         
     }
 
     public void runIntakeOut(boolean fullSpeed) {
-        if (fullSpeed) {
-            intakeBarMotor.set(-1*inSpeed);
-        } else {
-            intakeBarMotor.set(-1*inHalfSpeed); 
-        }
     }
 
     public void stopIntake() {
-        intakeBarMotor.set(0.0);
     }
 
     public void runFunnelIn(boolean fullSpeed) {
-        if (fullSpeed) {
-            intakeFunnel.set(inSpeed);
-        } else {
-            intakeFunnel.set(inHalfSpeedFunnel);
-        }
     }
 
     public void runFunnelOut() {
-        intakeFunnel.set(outSpeed);
     }
 
     public void stopFunnel() {
-        intakeFunnel.set(0.0);
     }
 
     public void runLowerTowerIn(boolean fullSpeed) {
-        if (fullSpeed) {
-            intakeLowerTower.set(-1.0*inSpeed);
-        } else {
-            intakeLowerTower.set(-1.0*inHalfSpeed);
-        }
     }
 
     public void runLowerTowerOut() {
-        intakeLowerTower.set(outSpeed);
     }
 
     public void stopLowerTower() {
-        intakeLowerTower.set(0.0);
     }
 
     public void checkLowerTower(){
-        intakeLowerTower.getSelectedSensorVelocity();
     }
 
     /**
@@ -116,9 +84,6 @@ public class Intake extends SubsystemBase {
     * 4. This changes the intake direction, not whether it is stowed in or not.
     */
     public void runAllIn() {
-        intakeBarMotor.set(inSpeed);
-        intakeFunnel.set(inSpeed);
-        intakeLowerTower.set(-1 * inSpeed);
     }
 
     /**
@@ -128,9 +93,6 @@ public class Intake extends SubsystemBase {
     * 4. This changes the intake direction, not whether it is stowed out or not.
     */
     public void runAllOut() {
-        intakeBarMotor.set(outSpeed);
-        intakeFunnel.set(-1 * outSpeed);
-        intakeLowerTower.set(outSpeed);
     }
 
 
@@ -142,8 +104,6 @@ public class Intake extends SubsystemBase {
     * 5. This is different from turning the intake direction from in and out.
     */
     public void toggle() {
-        intakeSolenoid.set(!intakeSolenoid.get());
-        engaged = intakeSolenoid.get();
     }
 
     /**
@@ -155,11 +115,9 @@ public class Intake extends SubsystemBase {
     }
 
     public void intakeUp(){
-        intakeSolenoid.set(false);
     }
 
     public void intakeDown(){
-        intakeSolenoid.set(true);
     }
 
     /**

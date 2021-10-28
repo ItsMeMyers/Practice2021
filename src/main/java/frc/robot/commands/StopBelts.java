@@ -26,13 +26,6 @@ public class StopBelts extends CommandBase {
     @Override
     public void execute() {
         //If user is pressing d pad down
-        int dpadval = gamepad.getPOV();
-
-        intake.stopLowerTower();
-        intake.stopFunnel();
-        intake.stopIntake();
-        shooter.stopShooter();
-        feeder.stop();
         
     }
 }

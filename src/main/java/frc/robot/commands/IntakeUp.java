@@ -23,7 +23,6 @@ public class IntakeUp extends CommandBase {
      */
     @Override
     public void initialize() {
-        intake.intakeUp();
     }
 
 

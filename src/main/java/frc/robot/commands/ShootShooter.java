@@ -25,14 +25,6 @@ public class ShootShooter extends CommandBase {
 
     @Override
     public void execute() {
-        if(first){
-            first = !first;
-            this.startTime = t.getFPGATimestamp();
-        }
-        shooter.getToSpeed();
-        itk.runLowerTowerIn(true);
-        itk.runFunnelIn(true);
-        fdr.run(true);
     }
 
     @Override

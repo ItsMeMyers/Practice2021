@@ -26,16 +26,8 @@ public class Turret extends SubsystemBase {
     private boolean hasTarget = false;
     private double turretCmd = 0.0;
 
+    // setup turret motor and solenoid
     public Turret(Limelight llt) {
-        turretMotor = new WPI_TalonSRX(turretMotorPort);
-        // When the motor is in neutral mode the motor will keep moving easily (coast)
-        turretMotor.setNeutralMode(NeutralMode.Brake);
-        turretSolenoid = new Solenoid(turretSolenoidPort);
-        turretMotor.configFactoryDefault();
-        turretMotor.setInverted(false);
-        turretMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
-        turretMotor.setSelectedSensorPosition(0,0,0);
-        turretMotor.setSensorPhase(false);
         this.limelight = llt;
     }
     /**

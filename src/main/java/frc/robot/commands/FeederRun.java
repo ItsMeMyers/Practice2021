@@ -23,36 +23,18 @@ public class FeederRun extends CommandBase {
         addRequirements(intake, feeder, shooter);
     }
 
+    // check sensors to see if ball is present at locations.
+    // if present then run all but that locations motors
     @Override
     public void execute() {
         //Look at the README.md for the rulesw that the below logic should match
         boolean lowerBallPresent = intake.getBallPresent();
         boolean upperBallPresent = feeder.getBallPresent();
-        Joystick j = RobotContainer.rightStick;
+
         //boolean lowerBallPresent = false;
         //boolean upperBallPresent = false;
         //No balls in tower at all
-        if (shooter.isRunning() && (shooter.atSpeed() || j.getRawButton(1))) {
-            feeder.run(true);
-            intake.runFunnelIn(true);
-            intake.runLowerTowerIn(true);
-        }else{
-            if ((!lowerBallPresent && !upperBallPresent) || (lowerBallPresent && !upperBallPresent)) {
-                feeder.run(false);
-                intake.runFunnelIn(false);
-                intake.runLowerTowerIn(false);
-            //Ball at upper tower but not lower
-            } else if (!lowerBallPresent && upperBallPresent) {
-                intake.runFunnelIn(false);
-                intake.runLowerTowerIn(false);
-                feeder.stop();
-            //We have balls at upper and lower
-            } else if (lowerBallPresent && upperBallPresent) {
-                feeder.stop();
-                intake.stopFunnel();
-                intake.stopLowerTower();
-            }                   
-        }  
+
     }
 
     public void feed(){

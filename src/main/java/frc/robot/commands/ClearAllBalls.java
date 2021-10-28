@@ -26,10 +26,6 @@ public class ClearAllBalls extends CommandBase {
     @Override
     public void execute() {
         //If user is pressing d pad down
-
-        intake.runAllOut();
-        shooter.reverseShooters();
-        feeder.reverse();
         
     }
 }

@@ -30,24 +30,10 @@ public class MoveTurret extends CommandBase {
     
     @Override
     public void execute() {
-        double rightJoyStickXAxis = gamepad.getRawAxis(Joystick.AxisType.kZ.value);
-        boolean rightJoyStickDown = gamepad.getRawButton(Constants.Right_Joystick_Pressed);
 
-        //If right is NOT pressed down AND joystick x axis is moved (disregarding nominal movement)
+        //If right stick is NOT pressed down AND joystick x axis is moved (disregarding nominal movement)
         //Is .02 a good threshold?
-        if (!rightJoyStickDown && (rightJoyStickXAxis < -.02 || rightJoyStickXAxis > .02)) {
-            //Is this too lower, high?
-            if ((turret.getPosition() > 10650) && (rightJoyStickXAxis > 0.0)) {
-                turret.setSpinPower(0.0);
-            } else if ((turret.getPosition() < -10650) && (rightJoyStickXAxis < 0.0)) {
-                turret.setSpinPower(0.0);
-            } else {
-                turret.setSpinPower(rightJoyStickXAxis * .4);
-            }
-        }
-        else if(!rightJoyStickDown && !(rightJoyStickXAxis < -.02 || rightJoyStickXAxis > .02)){
-            turret.setSpinPower(0.0);
-        }        
+        
     }
 
     /**

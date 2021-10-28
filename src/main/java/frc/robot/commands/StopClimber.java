@@ -15,7 +15,5 @@ public class StopClimber extends CommandBase {
 
     @Override
     public void execute() {
-        //Not assigned to any button as of right now
-        climber.stop() ;
     }
 }

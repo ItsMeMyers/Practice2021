@@ -25,8 +25,5 @@ public class IntakeStop extends CommandBase {
     @Override
     public void execute() {
         //if right bumper pressed and NOT right trigger pressed
-        intake.stopIntake();
-        intake.stopFunnel();
-        intake.stopLowerTower();
     }
 }

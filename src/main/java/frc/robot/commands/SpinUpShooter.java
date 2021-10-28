@@ -11,7 +11,6 @@ public class SpinUpShooter extends CommandBase {
 
     @Override
     public void execute() {
-        shooter.getToSpeed();
     }
 
     @Override
